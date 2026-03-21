@@ -1,0 +1,32 @@
+﻿@using CoAntiCor.Core.Domain
+@if (Activities is null)
+{
+    <p>Loading activity...</p>
+}
+else if (!Activities.Any())
+{
+    <p>No activity recorded yet.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var a in Activities.OrderByDescending(a => a.TimestampUtc))
+        {
+            <li class="list-group-item">
+                <strong>@a.Action</strong>
+                @if (a.StepNumber is not null)
+                {
+                    <span> (Step @a.StepNumber)</span>
+                }
+                <br />
+                <small class="text-muted">
+                    @a.TimestampUtc.ToLocalTime() — @a.DeviceType (@a.Browser)
+                </small>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter] public List<ComplaintDraftActivity>? Activities { get; set; }
+}

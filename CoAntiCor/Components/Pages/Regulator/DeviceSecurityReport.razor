@@ -1,0 +1,82 @@
+﻿@page "/regulator/device-security/{DraftId:guid}"
+@using CoAntiCor.Core.DTO
+@inject HttpClient Http
+
+<h3>Device Security Report</h3>
+
+@if (_report is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h4>Access History</h4>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Device</th>
+                <th>Browser</th>
+                <th>IP</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in _report.AccessEntries)
+            {
+                <tr>
+                    <td>@a.TimestampUtc.ToLocalTime()</td>
+                    <td>@a.DeviceType</td>
+                    <td>@a.Browser</td>
+                    <td>@a.IpAddress</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Device Linking Attempts</h4>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Method</th>
+                <th>Success</th>
+                <th>IP</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in _report.LinkAttempts)
+            {
+                <tr>
+                    <td>@a.TimestampUtc.ToLocalTime()</td>
+                    <td>@a.Method</td>
+                    <td>@(a.Success ? "Yes" : "No")</td>
+                    <td>@a.IpAddress</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    /*
+     * This component displays the device security report for a complaint draft. It fetches the report data from the API using the provided DraftId parameter and renders tables for access history and device linking attempts.
+    This gives regulators a forensic-level view of device activity.
+    2. Device Security Report (Regulators)
+        This report helps regulators audit:
+        - Suspicious device activity
+        - Multiple devices accessing the same draft
+        - Unusual IP changes
+        - Possible tampering
+        - Device linking attempts
+        - Failed PIN/QR attempts
+
+    */
+    [Parameter] public Guid DraftId { get; set; }
+    private DeviceSecurityReportDto? _report;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _report = await Http.GetFromJsonAsync<DeviceSecurityReportDto>(
+            $"api/complaints/drafts/{DraftId}/device-security");
+    }
+}

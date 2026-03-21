@@ -1,0 +1,29 @@
+﻿@using CoAntiCor.Components.Account.Shared
+@using CoAntiCor.Services
+@inject AuditedNavigationManager AuditedNav
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" />
+
+           @*  <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Shared.MainLayout)">
+                <NotAuthorized>
+                    <RedirectToLogin />
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="routeData" Selector="h1" /> *@
+        </Found>
+        <NotFound>
+            <p>Page not found.</p>
+        </NotFound>
+
+    </Router>
+</CascadingAuthenticationState>
+@* <CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData"    NotAuthorized="@(() => Nav.NavigateTo("/login"))" />
+        </Found>
+    </Router>
+</CascadingAuthenticationState> *@

@@ -1,0 +1,19 @@
+﻿<div class="wizard-step">
+    <h4>Step 5: Confirmation</h4>
+
+    <p>Your complaint has been submitted successfully.</p>
+
+    <p>
+        <strong>Your complaint number:</strong>
+        <span class="fw-bold">@ComplaintNumber</span>
+    </p>
+
+    <p>
+        Please keep this number for follow-up. You should receive an email or SMS confirmation
+        within the next 24 hours if you provided contact information.
+    </p>
+</div>
+
+@code {
+    [Parameter] public string? ComplaintNumber { get; set; }
+}

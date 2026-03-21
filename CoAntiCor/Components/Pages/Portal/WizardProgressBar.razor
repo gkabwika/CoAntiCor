@@ -1,0 +1,22 @@
+﻿<!-- A simple progress bar for a multi-step wizard. It highlights completed steps in green and pending steps in gray. -->
+3. Wizard Progress Bar (synced with timeline)
+This gives a visual representation of progress across the 5 steps.
+-->
+<div class="progress mb-3">
+    @for (int i = 1; i <= TotalSteps; i++)
+    {
+        var completed = StepsCompleted.Contains(i);
+        var width = 100 / TotalSteps;
+
+        <div class="progress-bar @(completed ? "bg-success" : "bg-secondary")"
+             role="progressbar"
+             style="width:@width%">
+            Step @i
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int TotalSteps { get; set; } = 5;
+    [Parameter] public HashSet<int> StepsCompleted { get; set; } = new();
+}

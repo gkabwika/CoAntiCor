@@ -1,0 +1,70 @@
+﻿@page "/regulator/heat-map"
+@using CoAntiCor.Core.Model
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient Http
+@using CoAntiCor.Core.DTO
+<h3>Draft Heatmap</h3>
+<!-- This gives you a clear temporal + geographic visualization. -->
+@if (_heatmap is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h4>By Province</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Province</th>
+                <th>Draft Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var kv in _heatmap.DraftsByProvince)
+            {
+                <tr>
+                    <td>@kv.Key</td>
+                    <td>@kv.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>By Hour of Day</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Hour</th>
+                <th>Draft Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var kv in _heatmap.DraftsByHour.OrderBy(k => k.Key))
+            {
+                <tr>
+                    <td>@kv.Key:00</td>
+                    <td>@kv.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    /// <summary>
+    /// 2. Draft Heatmap Visualization (Per Province, Per Hour)
+    /// This shows:
+    /// - When citizens are most active
+    /// - Which provinces generate the most drafts
+    /// - Patterns of reporting behavior
+    /// This is extremely useful for UX optimization and anti-corruption outreach.
+    /// </summary>
+
+    private DraftHeatmapDto? _heatmap;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _heatmap = await Http.GetFromJsonAsync<DraftHeatmapDto>("api/internal/drafts/heatmap");
+    }
+}

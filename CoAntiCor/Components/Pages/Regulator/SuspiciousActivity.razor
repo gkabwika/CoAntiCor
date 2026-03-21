@@ -1,0 +1,41 @@
+﻿@page "/regulator/suspicious-activity"
+@using CoAntiCor.Core.Model
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient Http
+@attribute [Authorize(Roles = "Executive,Regulator")]
+
+@using CoAntiCor.Core.Model
+@using static System.Net.WebRequestMethods
+@if (_result is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h3>Risk Score: @_result.RiskScore</h3>
+
+    @if (_result.RequiresReview)
+    {
+        <div class="alert alert-danger">
+            This draft requires immediate review.
+        </div>
+    }
+
+    <h4>Flags</h4>
+    <ul>
+        @foreach (var f in _result.Flags)
+        {
+            <li>@f</li>
+        }
+    </ul>
+}
+@code {
+    private SuspiciousActivityResult? _result;
+    protected override async Task OnInitializedAsync()
+    {
+        var draftId = await Http.GetFromJsonAsync<string>("api/complaintdraft/drafts/latest");
+        _result = await Http.GetFromJsonAsync<SuspiciousActivityResult>($"api/complaintdraft/drafts/{draftId}/suspicious-activity");
+    }
+}
+
+

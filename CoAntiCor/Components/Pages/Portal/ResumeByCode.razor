@@ -1,0 +1,48 @@
+﻿@page "/resume-by-code"
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<!--
+Multi‑Device Resume Flow (Phone → Laptop → Tablet)
+This is where your architecture shines.
+3.1. How it works
+- Authenticated users:
+Drafts are tied to ReporterUserId.
+They can resume from any device by visiting /resume-draft.
+- Anonymous users:
+Draft ID is stored in local storage.
+If they want multi-device resume, you offer a “Save Draft Code”
+
+
+-->
+<h3>Resume Draft</h3>
+
+<div class="mb-3">
+    <label class="form-label">Enter your draft code</label>
+    <input class="form-control" @bind="_code" />
+</div>
+
+<button class="btn btn-primary" @onclick="Resume">Resume</button>
+
+@if (_error is not null)
+{
+    <div class="alert alert-danger mt-3">@_error</div>
+}
+
+@code {
+    private string _code = "";
+    private string? _error;
+
+    private async Task Resume()
+    {
+        var response = await Http.PostAsJsonAsync("api/complaints/drafts/access", _code);
+        if (!response.IsSuccessStatusCode)
+        {
+            _error = "Invalid code.";
+            return;
+        }
+
+        var draftId = await response.Content.ReadFromJsonAsync<Guid>();
+        Nav.NavigateTo($"/wizard?draftId={draftId}");
+    }
+}

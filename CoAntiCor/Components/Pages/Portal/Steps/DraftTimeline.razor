@@ -1,0 +1,21 @@
+﻿@if (Steps is not null)
+{
+    <ul class="timeline">
+        @foreach (var step in Steps.OrderBy(s => s.Key))
+        {
+            <li>
+                <strong>Step @step.Key</strong>
+                <div class="text-muted">
+                    Completed @Format(step.Value)
+                </div>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter] public Dictionary<int, DateTime>? Steps { get; set; }
+
+    private string Format(DateTime dt)
+        => dt.ToLocalTime().ToString("g");
+}

@@ -1,0 +1,18 @@
+﻿@if (!string.IsNullOrWhiteSpace(QrUrl))
+{
+    <div class="text-center">
+        <img src="@QrUrl" alt="QR Code" class="img-fluid" />
+        <p class="mt-2 text-muted">Scan this QR code to continue on another device.</p>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid DraftId { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        QrUrl = $"api/complaints/drafts/{DraftId}/qr";
+    }
+
+    private string? QrUrl;
+}

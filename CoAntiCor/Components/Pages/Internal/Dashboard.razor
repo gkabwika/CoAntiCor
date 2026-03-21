@@ -1,0 +1,50 @@
+﻿@page "/internal/dashboard"
+@using CoAntiCor.Core.DTO
+@inject HttpClient Http
+
+<h3>Internal Dashboard</h3>
+
+<DashboardFilters OnFilterChanged="LoadData" />
+
+@if (_kpis is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <DashboardKpiCards Kpis="_kpis" />
+
+    <DashboardComplaintTable 
+        Items="_result.Items" 
+        Page="_result.Page" 
+        TotalPages="_result.TotalPages"
+        OnPageChanged="LoadPage" />
+}
+
+@code {
+    private ComplaintDashboardFilter _filter = new();
+    private DashboardKpis? _kpis;
+    private ComplaintDashboardResult _result = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData(_filter);
+    }
+
+    private async Task LoadData(ComplaintDashboardFilter filter)
+    {
+        _filter = filter;
+
+        _kpis = await Http.GetFromJsonAsync<DashboardKpis>("api/reporting/kpis");
+
+        var response = await Http.PostAsJsonAsync("api/complaints/dashboard", filter);
+        _result = await response.Content.ReadFromJsonAsync<ComplaintDashboardResult>() 
+                  ?? new ComplaintDashboardResult();
+    }
+
+    private async Task LoadPage(int page)
+    {
+        _filter.Page = page;
+        await LoadData(_filter);
+    }
+}

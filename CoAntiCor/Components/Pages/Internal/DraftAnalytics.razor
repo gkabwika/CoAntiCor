@@ -1,0 +1,76 @@
+﻿@page "/internal/draft-analytics"
+@using CoAntiCor.Core.DTO
+@inject HttpClient Http
+/*  This gives managers and executives a clear view of how citizens interact with the wizard.
+    * This page is for internal use only and should not be linked from anywhere.
+    * It provides analytics on complaint drafts to help identify where users are dropping off.
+    * It is not styled or optimized for performance, but serves as a quick way to get insights.
+    */
+<h3>Draft Analytics Dashboard</h3>
+
+@if (_analytics is null)
+{
+    <p>Loading analytics...</p>
+}
+else
+{
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card p-3">
+                <h5>Total Drafts</h5>
+                <h3>@_analytics.TotalDrafts</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3">
+                <h5>Active Drafts</h5>
+                <h3>@_analytics.ActiveDrafts</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3">
+                <h5>Completed Drafts</h5>
+                <h3>@_analytics.CompletedDrafts</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3">
+                <h5>Abandoned Drafts</h5>
+                <h3>@_analytics.AbandonedDrafts</h3>
+            </div>
+        </div>
+    </div>
+
+    <h4>Step Drop-off</h4>
+    <ul>
+        @foreach (var kv in _analytics.StepDropoffCounts)
+        {
+            <li>Step @kv.Key: @kv.Value drafts dropped</li>
+        }
+    </ul>
+
+    <h4>Device Types</h4>
+    <ul>
+        @foreach (var kv in _analytics.DeviceTypeCounts)
+        {
+            <li>@kv.Key: @kv.Value</li>
+        }
+    </ul>
+
+    <h4>Browsers</h4>
+    <ul>
+        @foreach (var kv in _analytics.BrowserCounts)
+        {
+            <li>@kv.Key: @kv.Value</li>
+        }
+    </ul>
+}
+
+@code {
+    private DraftAnalyticsDto? _analytics;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _analytics = await Http.GetFromJsonAsync<DraftAnalyticsDto>("api/complaints/drafts/analytics");
+    }
+}

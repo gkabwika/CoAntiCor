@@ -1,0 +1,37 @@
+﻿@page "/internal/ux-report"
+@using CoAntiCor.Core.Model
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient Http
+@using CoAntiCor.Core.DTO
+<h3>Citizen UX Optimization Report</h3>
+
+@if (_report is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h4>Key Findings</h4>
+    <ul>
+        @foreach (var f in _report.KeyFindings)
+        {
+            <li>@f</li>
+        }
+    </ul>
+
+    <h4>Recommendations</h4>
+    <ul>
+        @foreach (var r in _report.Recommendations)
+        {
+            <li>@r</li>
+        }
+    </ul>
+}
+@code{
+    private UxOptimizationReport? _report;
+    protected override async Task OnInitializedAsync()
+    {
+        _report = await Http.GetFromJsonAsync<UxOptimizationReport>("api/internal/ux-report");
+    }
+}
+}

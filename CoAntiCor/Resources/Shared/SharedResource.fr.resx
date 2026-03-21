@@ -1,0 +1,1539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SearchCreateCompany" xml:space="preserve">
+    <value>Rechercher ou créer une société</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Message de Bienvenue</value>
+  </data>
+  <data name="Site_Error_New" xml:space="preserve">
+    <value>Une erreur s’est produite lors du traitement de votre demande. Veuillez contacter votre administrateur</value>
+  </data>
+  <data name="Website_DateModified" xml:space="preserve">
+    <value>2024-09-30</value>
+  </data>
+  <data name="Website_Version" xml:space="preserve">
+    <value>1.0.0.10</value>
+  </data>
+  <data name="Site_Error" xml:space="preserve">
+    <value>Une erreur s’est produite lors du traitement de votre demande. Veuillez contacter votre administrateur</value>
+  </data>
+  <data name="Site_ErrorHead" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="Login_RedirectMSG" xml:space="preserve">
+    <value>La page à laquelle vous accédez nécessite une connexion. Vous êtes maintenant redirigé vers la page de connexion. Veuillez patienter..</value>
+  </data>
+  <data name="LanguageSelection" xml:space="preserve">
+    <value>Sélection de la langue</value>
+  </data>
+  <data name="LanguageToChange" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageToChangeISO" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="RedirectURL_EN" xml:space="preserve">
+    <value>https://eguce.rdc.cd</value>
+  </data>
+  <data name="RedirectURL_FR" xml:space="preserve">
+    <value>https://eguce.rdc.cd</value>
+  </data>
+  <data name="Privacy_Head" xml:space="preserve">
+    <value>Énoncé d'avis de confidentialité</value>
+  </data>
+  <data name="Guchet_Unique" xml:space="preserve">
+    <value>Guchet Unique</value>
+  </data>
+  <data name="Security_notice" xml:space="preserve">
+    <value>Avis de sécurité : jusqu'à Protégé B uniquement</value>
+  </data>
+  <data name="Security_notice_Text" xml:space="preserve">
+    <value>&lt;p&gt;Ce site n'est pas approuvé par Guchet Unique/le service du Ministère de Justice de la RDC pour le stockage au-dessus des informations Protégées B. Seules les informations jusqu'à Protégé B peuvent être stockées sur ce site.&lt;/p&gt;</value>
+  </data>
+  <data name="Instruction" xml:space="preserve">
+    <value>Directive</value>
+  </data>
+  <data name="Return_to_instruction" xml:space="preserve">
+    <value>Retour à la directive</value>
+  </data>
+  <data name="referrer" xml:space="preserve">
+    <value>referrer</value>
+  </data>
+  <data name="Choose_XML_File" xml:space="preserve">
+    <value>Choisissez un dossier XML pour compléter le formulaire</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Télécharger une ébauche XML</value>
+  </data>
+  <data name="FileA" xml:space="preserve">
+    <value>Pour continuer de remplir un formulaire, parcourez votre répertoire de fichiers pour récupérer l’ébauche (en format XML) ici :</value>
+  </data>
+  <data name="(required)" xml:space="preserve">
+    <value>  (obligatoire) </value>
+  </data>
+  <data name="Load_Draft" xml:space="preserve">
+    <value>Télécharger ébauche</value>
+  </data>
+  <data name="Load_Draft_File_type_Err" xml:space="preserve">
+    <value>Télécharger une ébauche XML: Le type de fichier n’est pas valide</value>
+  </data>
+  <data name="Save_as_DOC" xml:space="preserve">
+    <value>Sauvegarder finale</value>
+  </data>
+  <data name="Save_Draft" xml:space="preserve">
+    <value>Sauvegarder ébauche</value>
+  </data>
+  <data name="Clear_Form" xml:space="preserve">
+    <value>Effacer le formulaire</value>
+  </data>
+  <data name="Applicant_Information" xml:space="preserve">
+    <value>Information du demandeur</value>
+  </data>
+  <data name="Name_of_applicant" xml:space="preserve">
+    <value>Nom du demandeur</value>
+  </data>
+  <data name="Name_of_notification_agent" xml:space="preserve">
+    <value>Nom de l'agent chargé des avis</value>
+  </data>
+  <data name="Postal_Delivery_Address" xml:space="preserve">
+    <value>Adresse postale réglementaire</value>
+  </data>
+  <data name="City_Town" xml:space="preserve">
+    <value>Ville</value>
+  </data>
+  <data name="Province_State" xml:space="preserve">
+    <value>Province / État</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Pays</value>
+  </data>
+  <data name="Postal_Code" xml:space="preserve">
+    <value>Code postal / ZIP</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Téléphone</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Adresse électronique</value>
+  </data>
+  <data name="Purpose" xml:space="preserve">
+    <value>But</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="Declaration" xml:space="preserve">
+    <value>Déclaration</value>
+  </data>
+  <data name="Declaration_Text" xml:space="preserve">
+    <value> &lt;p&gt;Je certifie, par la présente, que les renseignements susmentionnés sont corrects sur tous les plans.&lt;/p&gt;</value>
+  </data>
+  <data name="Signature" xml:space="preserve">
+    <value>Signature ou nom du demandeur</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date (YYYY-MM-DD)</value>
+  </data>
+  <data name="Consent" xml:space="preserve">
+    <value>En transmettant vos renseignements personnels, vous consentez à ce qu'ils soient recueillis, utilisés et communiqués, conformément aux dispositions de l'énoncé d'avis de confidentialité.</value>
+  </data>
+  <data name="Consent_Error" xml:space="preserve">
+    <value>Case à cocher- Avis de confidentialité - Ce champ est obligatoire.</value>
+  </data>
+  <data name="Confirm_Signature" xml:space="preserve">
+    <value>Ne pas oublier de remplir le champ «Signature» soit dans la version DOC téléchargée du formulaire, soit dans la version papier, s'il y a lieu.</value>
+  </data>
+  <data name="Confirm_Signature_Error" xml:space="preserve">
+    <value>Case à cocher - Signature - Ce champ est obligatoire.</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>complet</value>
+  </data>
+  <data name="Incomplete" xml:space="preserve">
+    <value>incomplet</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>optionnel</value>
+  </data>
+  <data name="Instructions" xml:space="preserve">
+    <value>Directives</value>
+  </data>
+  <data name="Contact_Name" xml:space="preserve">
+    <value>Nom de la personne-ressource</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Job_Title" xml:space="preserve">
+    <value>Titre du poste</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Télécopieur</value>
+  </data>
+  <data name="Submission_Contact" xml:space="preserve">
+    <value>Personne-ressource au sujet de la demande</value>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>En Ligne</value>
+  </data>
+  <data name="Removed" xml:space="preserve">
+    <value>Supprimé</value>
+  </data>
+  <data name="Form_ID" xml:space="preserve">
+    <value>Code du formulaire</value>
+  </data>
+  <data name="Form_Format" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Form_Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Form_Last_Modified" xml:space="preserve">
+    <value>Date modifiée</value>
+  </data>
+  <data name="App_PageNotFound" xml:space="preserve">
+    <value>Désolé, il n'y a rien à cette adresse.</value>
+  </data>
+  <data name="Forms_for_Registrants_and_applicants" xml:space="preserve">
+    <value>Formulaires pour les titulaires et les demandeurs</value>
+  </data>
+  <data name="Index_Instructions_Detail_3" xml:space="preserve">
+    <value>&lt;p&gt;Veuillez noter qu'une réponse vous sera envoyée uniquement pendant les heures ouvrables du lundi au vendredi.&lt;/p&gt;</value>
+  </data>
+  <data name="Index_Available_Forms" xml:space="preserve">
+    <value>Formulaires disponibles</value>
+  </data>
+  <data name="PDF_Available" xml:space="preserve">
+    <value>PDF disponible sur demande</value>
+  </data>
+  <data name="PhysicPerson" xml:space="preserve">
+    <value>Personne Physique</value>
+  </data>
+  <data name="ShoppingCart" xml:space="preserve">
+    <value>Panier</value>
+  </data>
+  <data name="MyShoppingCart" xml:space="preserve">
+    <value>Mon Panier</value>
+  </data>
+  <data name="NaturalPerson" xml:space="preserve">
+    <value>Personne Naturelle</value>
+  </data>
+  <data name="PaymentInfo" xml:space="preserve">
+    <value>Informations de paiement</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Paiement</value>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="AvailableOffers" xml:space="preserve">
+    <value>Offres disponibles</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Actif</value>
+  </data>
+  <data name="MoveToWishlist" xml:space="preserve">
+    <value>Réserver pour future</value>
+  </data>
+  <data name="EnterPromoCode" xml:space="preserve">
+    <value>Entrez le code promo</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="BagTotal" xml:space="preserve">
+    <value>Panier total</value>
+  </data>
+  <data name="CouponDiscount" xml:space="preserve">
+    <value>Coupon de réduction</value>
+  </data>
+  <data name="OrderTotal" xml:space="preserve">
+    <value>Total de la commande</value>
+  </data>
+  <data name="DeliveryCharges" xml:space="preserve">
+    <value>Frais de livraison</value>
+  </data>
+  <data name="Free" xml:space="preserve">
+    <value>Gratuit</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Offer" xml:space="preserve">
+    <value>Offre</value>
+  </data>
+  <data name="ContinueAndCreateBusiness" xml:space="preserve">
+    <value>Continuer et Créer votre entreprise</value>
+  </data>
+  <data name="PriceDetails" xml:space="preserve">
+    <value>Détail de tarification</value>
+  </data>
+  <data name="ApplyCoupon" xml:space="preserve">
+    <value>Utiliser le coupon</value>
+  </data>
+  <data name="UpdateQuantity" xml:space="preserve">
+    <value>Actualiser Qté</value>
+  </data>
+  <data name="ShowingTotalOf" xml:space="preserve">
+    <value>Montrant un total de</value>
+  </data>
+  <data name="SelectToEdit" xml:space="preserve">
+    <value>Sélectionner pour modifier</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Editer titre</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="ProceduresList" xml:space="preserve">
+    <value>Liste des Procedures</value>
+  </data>
+  <data name="LetUsWhatDoYouWantToDo" xml:space="preserve">
+    <value>Dites-nous ce que vous voulez faire!</value>
+  </data>
+  <data name="IndustryType" xml:space="preserve">
+    <value>Type d'industrie</value>
+  </data>
+  <data name="ActivitySector" xml:space="preserve">
+    <value>Secteur d'activité</value>
+  </data>
+  <data name="Principale" xml:space="preserve">
+    <value>principale</value>
+  </data>
+  <data name="SelectProcedure" xml:space="preserve">
+    <value>Sélectionnez la procédure</value>
+  </data>
+  <data name="ContinueAndModifyBusiness " xml:space="preserve">
+    <value>Confirmer la modification</value>
+  </data>
+  <data name="Entrepreneur" xml:space="preserve">
+    <value>Entreprenant</value>
+  </data>
+  <data name="Civility" xml:space="preserve">
+    <value>Civilité</value>
+  </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>Sélectionner SVP</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Noms</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Post-nom</value>
+  </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Date Of Birth</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="EnterYourPersonalInformation" xml:space="preserve">
+    <value>Enter Your Personal Information</value>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="CriminalRecordProduced" xml:space="preserve">
+    <value>Casier judiciaire produit</value>
+  </data>
+  <data name="CriminalRecordExtract" xml:space="preserve">
+    <value>Extrait casier judiciaire</value>
+  </data>
+  <data name="Qu_Title_Desc" xml:space="preserve">
+    <value>Si vous souhaitez ajouter des commentaires pour l'examen e-GUCE, veuillez le faire dans le domaine ci-dessous.</value>
+  </data>
+  <data name="Qu_Title" xml:space="preserve">
+    <value>Notes pour la considération e-GUCE</value>
+  </data>
+  <data name="File_Name" xml:space="preserve">
+    <value>Entrez le nom du fichier</value>
+  </data>
+  <data name="Add_File_Name" xml:space="preserve">
+    <value>Ajouter un nom de fichier:</value>
+  </data>
+  <data name="Save_Name" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="Cancel_Name" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="PreviewDraftLabel" xml:space="preserve">
+    <value>Aperçu du brouillon d'étiquette</value>
+  </data>
+  <data name="ValidatethisInput" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>A Propos</value>
+  </data>
+  <data name="Contactus" xml:space="preserve">
+    <value>Contactez-nous</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Conditions générales d'utilisation</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="Dashboards" xml:space="preserve">
+    <value>Tableaux de bord</value>
+  </data>
+  <data name="Billing" xml:space="preserve">
+    <value>Facturation</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Quitter</value>
+  </data>
+  <data name="LegalGuidances" xml:space="preserve">
+    <value>Guides  juridiques</value>
+  </data>
+  <data name="Procedures" xml:space="preserve">
+    <value>Procédures</value>
+  </data>
+  <data name="CreationsSocietyAndAssociation" xml:space="preserve">
+    <value>Création de Société et d'Associations</value>
+  </data>
+  <data name="YouAreOnPortalForEGuceProcedures" xml:space="preserve">
+    <value>Vous êtes sur le portail d'accès aux procédures de e-GUCE.</value>
+  </data>
+  <data name="AllFormalitiesInOnePlace" xml:space="preserve">
+    <value>Toutes les formalités au même endroit</value>
+  </data>
+  <data name="WhichCompanyToChoose" xml:space="preserve">
+    <value>Quelle société choisir</value>
+  </data>
+  <data name="NewProcesses" xml:space="preserve">
+    <value>Nouveaux Processus</value>
+  </data>
+  <data name="LegalStatus" xml:space="preserve">
+    <value>Status juridique</value>
+  </data>
+  <data name="WeHelpYouChooseTheTypeOfCompany" xml:space="preserve">
+    <value>NOUS VOUS AIDONS A CHOISIR LE TYPE DE SOCIETE QUI VOUS CONVIENT LE MIEUX</value>
+  </data>
+  <data name="Reliability" xml:space="preserve">
+    <value>Fiabilité</value>
+  </data>
+  <data name="OnlinePaymentAndLimitation" xml:space="preserve">
+    <value>PAIEMENT EN LIGNE ET LIMITATION DES INTERVENTIONS HUMAINES</value>
+  </data>
+  <data name="SimplicityAndEfficiency" xml:space="preserve">
+    <value>Simplicité et Efficité</value>
+  </data>
+  <data name="QuickEasycheap" xml:space="preserve">
+    <value>RAPIDE – FACILE – PAS CHER</value>
+  </data>
+  <data name="WhatSNew" xml:space="preserve">
+    <value>Quoi de Neuf</value>
+  </data>
+  <data name="TheProcedureIsNowSimpleAndEffective" xml:space="preserve">
+    <value>LA PROCÉDURE EST DÉSORMAIS SIMPLE ET EFFICACE POUR LE REQUÉRANT</value>
+  </data>
+  <data name="Creations" xml:space="preserve">
+    <value>Créations</value>
+  </data>
+  <data name="StartCreationProcedure" xml:space="preserve">
+    <value>Démarrez votre procédure de créations</value>
+  </data>
+  <data name="StartYourBusinessOnline" xml:space="preserve">
+    <value>Démarrez votre société en ligne</value>
+  </data>
+  <data name="EasyAndQuickRegistration" xml:space="preserve">
+    <value>Inscription simplifiée et rapide</value>
+  </data>
+  <data name="EasyAndQuickDeclaration" xml:space="preserve">
+    <value>Déclaration Simple et Rapide</value>
+  </data>
+  <data name="FileProcessUnder24h" xml:space="preserve">
+    <value>Dossier traité en moins de 24h !</value>
+  </data>
+  <data name="CreateMyAccount" xml:space="preserve">
+    <value>Créer mon compte</value>
+  </data>
+  <data name="BusinessCreationIsDoneOnceYouCreateAnAccount" xml:space="preserve">
+    <value>La création d'entreprise se fait une fois que vous avez créé une fiche d’identification ou un compte sur nore application e-GUCE pour recevoir des documents personnels et confidentiels. e-GUCE a été créé pour vous simplifier et faciliter vos démarches dans la création de votre structure en toute sécurité.</value>
+  </data>
+  <data name="VerificationOfBusinessName" xml:space="preserve">
+    <value>Vérification de la dénomination sociale</value>
+  </data>
+  <data name="DoneBeforeFromOurDatabaseToReserveNewName" xml:space="preserve">
+    <value>Elle se fait instantanément en ligne au début du dossier sur nos bases des données pour se rassurer de réserver le nom commercial unique de votre socièté</value>
+  </data>
+  <data name="PayOnlineDGRAD" xml:space="preserve">
+    <value>Payer en ligne (DGRAD )</value>
+  </data>
+  <data name="ThePaymentReceivedOnlineWillGenerate" xml:space="preserve">
+    <value>Le paiement peçu en ligne va générer la remise de la note de perception établie et délivrée életroniquement la part de DGRAD</value>
+  </data>
+  <data name="ProvideInfo" xml:space="preserve">
+    <value>Fournir les infos</value>
+  </data>
+  <data name="RegistrationTheConditionsHavingBeenMet" xml:space="preserve">
+    <value>Enregistrement: les conditions étant remplies et validées en ligne, vous remplissez le formulaire et enregistrez les informations requises.</value>
+  </data>
+  <data name="GetYourNumbers" xml:space="preserve">
+    <value>Obtenez vos numéros</value>
+  </data>
+  <data name="FromThisMomentOnTheOtherServices" xml:space="preserve">
+    <value>A partir de cet instant : interviennent les autres services de manière électronique, pour le traitement automatique de votre dossier. Chrono en marche… pour les 3 heures</value>
+  </data>
+  <data name="DownloadYourDocuments" xml:space="preserve">
+    <value>Télécharger vos documents</value>
+  </data>
+  <data name="ForRapidSupportWeProvideYou" xml:space="preserve">
+    <value>Pour un accompagnement rapide nous mettons à votre disposition vos documents à télécharger une fois la procédure est complète.</value>
+  </data>
+  <data name="Otherformalities" xml:space="preserve">
+    <value>Autres formalités</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>et</value>
+  </data>
+  <data name="OfyourProcedure" xml:space="preserve">
+    <value>de votre Procédure</value>
+  </data>
+  <data name="TransferOfHeadOfficeChangeOfAddressEtc" xml:space="preserve">
+    <value>Transfert de siège social, changement d'adresse, changement de dirigeant, ventes de parts sociales etc.</value>
+  </data>
+  <data name="DissolutionLiquidationCancellation" xml:space="preserve">
+    <value>Dissolution, liquidation, radiation</value>
+  </data>
+  <data name="WhyUseEGUCE" xml:space="preserve">
+    <value>Pourquoi utiliser e-GUCE ?</value>
+  </data>
+  <data name="CentPercentUpToDateLegalDocuments" xml:space="preserve">
+    <value>Des documents juridiques 100% à jour. Nos juristes intègrent tous les jours les dernières évolutions de la loi, des décrets et de la jurisprudence.</value>
+  </data>
+  <data name="AQuickAndEasySolution" xml:space="preserve">
+    <value>Une solution simple et rapide. Vous gagnez en efficacité en remplisant en quelques minutes nos formulaires en ligne et en téléchargeant immédiatement vos documents.</value>
+  </data>
+  <data name="ImpressiveSavings" xml:space="preserve">
+    <value>Des économies impressionnantes. Notre outil e-GUCE nous permet de vous offrir des services à des coûts 10 à 20 fois moins chers.</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+  <data name="Modification" xml:space="preserve">
+    <value>Modification</value>
+  </data>
+  <data name="Modifications" xml:space="preserve">
+    <value>Modifications</value>
+  </data>
+  <data name="Cessation" xml:space="preserve">
+    <value>Cessation</value>
+  </data>
+  <data name="PhysicalPersons" xml:space="preserve">
+    <value>Personnes physiques</value>
+  </data>
+  <data name="MainRegistration" xml:space="preserve">
+    <value>Immatriculation principale</value>
+  </data>
+  <data name="ModificationClosureofsecondaryregistration" xml:space="preserve">
+    <value>Modification / fermeture immatriculation secondaire</value>
+  </data>
+  <data name="Mainregistrationchange" xml:space="preserve">
+    <value>Modification immatriculation principale</value>
+  </data>
+  <data name="Totalcessationofactivityradiation" xml:space="preserve">
+    <value>Cessation totale d'activité, radiation</value>
+  </data>
+  <data name="Secondaryregistration" xml:space="preserve">
+    <value>Immatriculation secondaire</value>
+  </data>
+  <data name="Secondaryregistrationchange" xml:space="preserve">
+    <value>Modification immatriculation secondaire</value>
+  </data>
+  <data name="Radiationforseattransfer" xml:space="preserve">
+    <value>Radiation pour transfert de siège</value>
+  </data>
+  <data name="Registrationbytransferofseat" xml:space="preserve">
+    <value>Immatriculation par transfert de siège</value>
+  </data>
+  <data name="Recoveryofarchives" xml:space="preserve">
+    <value>Reprise d'archives</value>
+  </data>
+  <data name="CommercialCompanies" xml:space="preserve">
+    <value>Sociétés commerciales</value>
+  </data>
+  <data name="Dissolutionpermanentcessationofactivityradiation" xml:space="preserve">
+    <value>Dissolution, cessation définitive d'activité, radiation</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Dépôt</value>
+  </data>
+  <data name="Depositofaccounts" xml:space="preserve">
+    <value>Dépôt de comptes</value>
+  </data>
+  <data name="Filingofdocuments" xml:space="preserve">
+    <value>Dépôt d'actes</value>
+  </data>
+  <data name="EconomicInterestGrouping" xml:space="preserve">
+    <value>Groupement d’Intérêt Economique</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Immatriculation</value>
+  </data>
+  <data name="Dissolutioncancellation" xml:space="preserve">
+    <value>Dissolution, radiation</value>
+  </data>
+  <data name="OtherProcedures" xml:space="preserve">
+    <value>Autres procédures</value>
+  </data>
+  <data name="TheLimitedLiabilityCompany" xml:space="preserve">
+    <value>La Société A Responsabilité Limitée (SARL)</value>
+  </data>
+  <data name="TheLimitedCompany" xml:space="preserve">
+    <value>La Société Anonyme (SA)</value>
+  </data>
+  <data name="TheSimplifiedJointStockCompany" xml:space="preserve">
+    <value>La Société par Actions Simplifiée (SAS)</value>
+  </data>
+  <data name="TheCompanyinCollectiveName" xml:space="preserve">
+    <value>La Société en Nom Collectif (SNC)</value>
+  </data>
+  <data name="TheLimitedPartnership" xml:space="preserve">
+    <value>La Société en Commandite Simple (SCS)</value>
+  </data>
+  <data name="TheEconomicInterestGrouping" xml:space="preserve">
+    <value>Le Groupement d’Intérêt Economique (GIE)</value>
+  </data>
+  <data name="CreationofCompaniesandAssociations" xml:space="preserve">
+    <value>Création de Société et d'Associations</value>
+  </data>
+  <data name="SeeAllNotifications" xml:space="preserve">
+    <value>Voir toutes les notifications</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="Thisapplicationmaynolongerrespond" xml:space="preserve">
+    <value>Fr - An error has occurred. This application may no longer respond until reloaded.</value>
+  </data>
+  <data name="Seebrowserdevtools" xml:space="preserve">
+    <value>Fr - An unhandled exception has occurred. See browser dev tools for details.</value>
+  </data>
+  <data name="CRM" xml:space="preserve">
+    <value>GRC</value>
+  </data>
+  <data name="eCommerce" xml:space="preserve">
+    <value>commerce électronique</value>
+  </data>
+  <data name="Layouts" xml:space="preserve">
+    <value>Dispositions</value>
+  </data>
+  <data name="Contentnavbar" xml:space="preserve">
+    <value>Barre de navigation du contenu</value>
+  </data>
+  <data name="ContentnavSidebar" xml:space="preserve">
+    <value>Navigation dans le contenu + barre latérale</value>
+  </data>
+  <data name="Navbarfull" xml:space="preserve">
+    <value>Barre de navigation pleine</value>
+  </data>
+  <data name="NavbarfullSidebar" xml:space="preserve">
+    <value>Navbar complet + Sidebar</value>
+  </data>
+  <data name="Horizontal" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="Vertical" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="Withoutmenu" xml:space="preserve">
+    <value>Sans menu</value>
+  </data>
+  <data name="Withoutnavbar" xml:space="preserve">
+    <value>Sans barre de navigation</value>
+  </data>
+  <data name="Fluid" xml:space="preserve">
+    <value>Fluide</value>
+  </data>
+  <data name="Container" xml:space="preserve">
+    <value>Récipient</value>
+  </data>
+  <data name="Blank" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Discuter</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendrier</value>
+  </data>
+  <data name="Kanban" xml:space="preserve">
+    <value>Enseigne</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Produits</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>Ajouter un produit</value>
+  </data>
+  <data name="Productlist" xml:space="preserve">
+    <value>Liste de produits</value>
+  </data>
+  <data name="Categorylist" xml:space="preserve">
+    <value>Liste de catégories</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Commande</value>
+  </data>
+  <data name="Orderlist" xml:space="preserve">
+    <value>Liste des commandes</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Détails de la commande</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="AllCustomer" xml:space="preserve">
+    <value>Tous les clients</value>
+  </data>
+  <data name="CustomerDetails" xml:space="preserve">
+    <value>Détails du client</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Aperçu</value>
+  </data>
+  <data name="AddressBilling" xml:space="preserve">
+    <value>Adresse et facturation</value>
+  </data>
+  <data name="Managereviews" xml:space="preserve">
+    <value>Gérer les avis</value>
+  </data>
+  <data name="Referrals" xml:space="preserve">
+    <value>Parrainages</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="Payments" xml:space="preserve">
+    <value>Paiements</value>
+  </data>
+  <data name="Storedetails" xml:space="preserve">
+    <value>Détails du magasin</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Vérifier</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>Emplacements</value>
+  </data>
+  <data name="RolesPermissions" xml:space="preserve">
+    <value>Rôles et autorisations</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Les rôles</value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>Autorisation</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Utilisateurs</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Vue</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Éditer</value>
+  </data>
+  <data name="Logistics" xml:space="preserve">
+    <value>Logistique</value>
+  </data>
+  <data name="Fleet" xml:space="preserve">
+    <value>Flotte</value>
+  </data>
+  <data name="Invoice" xml:space="preserve">
+    <value>Facture d'achat</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Aperçu</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="Pages" xml:space="preserve">
+    <value>Pages</value>
+  </data>
+  <data name="UserProfile" xml:space="preserve">
+    <value>Profil de l'utilisateur</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Équipes</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projets</value>
+  </data>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>Paramètres du compte</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Compte</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Sécurité</value>
+  </data>
+  <data name="BillingPlans" xml:space="preserve">
+    <value>Facturation et forfaits</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Connections" xml:space="preserve">
+    <value>Connexions</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+  <data name="FrontPages" xml:space="preserve">
+    <value>Première page</value>
+  </data>
+  <data name="HelpCenter" xml:space="preserve">
+    <value>Centre d'aide</value>
+  </data>
+  <data name="Landing" xml:space="preserve">
+    <value>Atterrissage</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Catégories</value>
+  </data>
+  <data name="Article" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>Tarification</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Bientôt disponible</value>
+  </data>
+  <data name="UnderMaintenance" xml:space="preserve">
+    <value>En maintenance</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>Pas autorisé</value>
+  </data>
+  <data name="Authentications" xml:space="preserve">
+    <value>Authentification</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Se Connecter</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>S'inscrire</value>
+  </data>
+  <data name="VerifyEmail" xml:space="preserve">
+    <value>Vérifier les courriels</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>réinitialiser le mot de passe</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Mot de passe oublié</value>
+  </data>
+  <data name="TwoSteps" xml:space="preserve">
+    <value>Deux étapes</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>De base</value>
+  </data>
+  <data name="Cover" xml:space="preserve">
+    <value>Couverture</value>
+  </data>
+  <data name="Multi-steps" xml:space="preserve">
+    <value>Multi-étapes</value>
+  </data>
+  <data name="ModalExamples" xml:space="preserve">
+    <value>Exemples modaux</value>
+  </data>
+  <data name="WizardExamples" xml:space="preserve">
+    <value>Exemples d'assistant</value>
+  </data>
+  <data name="PropertyListing" xml:space="preserve">
+    <value>Liste des propriétés</value>
+  </data>
+  <data name="CreateDeal" xml:space="preserve">
+    <value>Créer une offre</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Créer</value>
+  </data>
+  <data name="Cancellation" xml:space="preserve">
+    <value>Radiation</value>
+  </data>
+  <data name="Liquidation" xml:space="preserve">
+    <value>Liquidation</value>
+  </data>
+  <data name="Dissolution" xml:space="preserve">
+    <value>Dissolution</value>
+  </data>
+  <data name="Icons" xml:space="preserve">
+    <value>Icônes</value>
+  </data>
+  <data name="Boxicons" xml:space="preserve">
+    <value>Boxicons</value>
+  </data>
+  <data name="Fontawesome" xml:space="preserve">
+    <value>Fontawesome</value>
+  </data>
+  <data name="Userinterface" xml:space="preserve">
+    <value>Interface utilisateur</value>
+  </data>
+  <data name="Accordion" xml:space="preserve">
+    <value>Accordéon</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Alertes</value>
+  </data>
+  <data name="AppBrand" xml:space="preserve">
+    <value>Marque d'application</value>
+  </data>
+  <data name="Badges" xml:space="preserve">
+    <value>Badges</value>
+  </data>
+  <data name="Buttons" xml:space="preserve">
+    <value>Boutons</value>
+  </data>
+  <data name="Cards" xml:space="preserve">
+    <value>Cartes</value>
+  </data>
+  <data name="Advance" xml:space="preserve">
+    <value>Avance</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistiques</value>
+  </data>
+  <data name="Analytics" xml:space="preserve">
+    <value>Analytique</value>
+  </data>
+  <data name="Gamifications" xml:space="preserve">
+    <value>Ludifications</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Carousel" xml:space="preserve">
+    <value>Carrousel</value>
+  </data>
+  <data name="Collapse" xml:space="preserve">
+    <value>Effondrer</value>
+  </data>
+  <data name="Dropdowns" xml:space="preserve">
+    <value>Dropdowns</value>
+  </data>
+  <data name="Footer" xml:space="preserve">
+    <value>Bas de page</value>
+  </data>
+  <data name="ListGroups" xml:space="preserve">
+    <value>Liste des groupes</value>
+  </data>
+  <data name="Modals" xml:space="preserve">
+    <value>Modaux</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="Navbar" xml:space="preserve">
+    <value>Navbar</value>
+  </data>
+  <data name="Offcanvas" xml:space="preserve">
+    <value>Hors-toile</value>
+  </data>
+  <data name="Pagination &amp; Breadcrumbs" xml:space="preserve">
+    <value>Pagination et fil d'Ariane</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Le progrès</value>
+  </data>
+  <data name="Spinners" xml:space="preserve">
+    <value>Spinners</value>
+  </data>
+  <data name="TabsPills" xml:space="preserve">
+    <value>Onglets et pilules</value>
+  </data>
+  <data name="Toasts" xml:space="preserve">
+    <value>Toasts</value>
+  </data>
+  <data name="TooltipsPopovers" xml:space="preserve">
+    <value>Info-bulles et popovers</value>
+  </data>
+  <data name="Typography" xml:space="preserve">
+    <value>Typographie</value>
+  </data>
+  <data name="ExtendedUI" xml:space="preserve">
+    <value>UI étendue</value>
+  </data>
+  <data name="Avatar" xml:space="preserve">
+    <value>Avatar</value>
+  </data>
+  <data name="BlockUI" xml:space="preserve">
+    <value>BlockUI</value>
+  </data>
+  <data name="DragDrop" xml:space="preserve">
+    <value>Glisser-déposer</value>
+  </data>
+  <data name="MediaPlayer" xml:space="preserve">
+    <value>Lecteur multimédia</value>
+  </data>
+  <data name="PerfectScrollbar" xml:space="preserve">
+    <value>Barre de défilement parfaite</value>
+  </data>
+  <data name="StarRatings" xml:space="preserve">
+    <value>Classement par étoiles</value>
+  </data>
+  <data name="SweetAlert2" xml:space="preserve">
+    <value>SweetAlert2</value>
+  </data>
+  <data name="TextDivider" xml:space="preserve">
+    <value>Séparateur de texte</value>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>Chronologie</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Plein écran</value>
+  </data>
+  <data name="Tour" xml:space="preserve">
+    <value>Tour</value>
+  </data>
+  <data name="Treeview" xml:space="preserve">
+    <value>Affichage arborescent</value>
+  </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>Divers</value>
+  </data>
+  <data name="Misc" xml:space="preserve">
+    <value>Divers</value>
+  </data>
+  <data name="FormElements" xml:space="preserve">
+    <value>Eléments de formulaire</value>
+  </data>
+  <data name="BasicInputs" xml:space="preserve">
+    <value>Entrées de base</value>
+  </data>
+  <data name="Inputgroups" xml:space="preserve">
+    <value>Groupes d'entrée</value>
+  </data>
+  <data name="CustomOptions" xml:space="preserve">
+    <value>Options personnalisées</value>
+  </data>
+  <data name="Editors" xml:space="preserve">
+    <value>Editeurs</value>
+  </data>
+  <data name="FileUpload" xml:space="preserve">
+    <value>Téléchargement de fichiers</value>
+  </data>
+  <data name="Pickers" xml:space="preserve">
+    <value>Cueilleurs</value>
+  </data>
+  <data name="SelectTags" xml:space="preserve">
+    <value>Sélectionner et balises</value>
+  </data>
+  <data name="Sliders" xml:space="preserve">
+    <value>Glissières</value>
+  </data>
+  <data name="Switches" xml:space="preserve">
+    <value>Commutateurs</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Suppléments</value>
+  </data>
+  <data name="FormLayouts" xml:space="preserve">
+    <value>Disposition des formulaires</value>
+  </data>
+  <data name="VerticalForm" xml:space="preserve">
+    <value>Forme verticale</value>
+  </data>
+  <data name="HorizontalForm" xml:space="preserve">
+    <value>Forme horizontale</value>
+  </data>
+  <data name="StickyActions" xml:space="preserve">
+    <value>Actions collantes</value>
+  </data>
+  <data name="FormWizard" xml:space="preserve">
+    <value>Assistant Formulaire</value>
+  </data>
+  <data name="Numbered" xml:space="preserve">
+    <value>Numérotée</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Avancée</value>
+  </data>
+  <data name="FormValidation" xml:space="preserve">
+    <value>Validation de formulaire</value>
+  </data>
+  <data name="Tables" xml:space="preserve">
+    <value>Les tables</value>
+  </data>
+  <data name="Datatables" xml:space="preserve">
+    <value>Tables de données</value>
+  </data>
+  <data name="Extensions" xml:space="preserve">
+    <value>Extensions</value>
+  </data>
+  <data name="Charts" xml:space="preserve">
+    <value>Graphiques</value>
+  </data>
+  <data name="ApexCharts" xml:space="preserve">
+    <value>Graphiques Apex</value>
+  </data>
+  <data name="ChartJS" xml:space="preserve">
+    <value>ChartJS</value>
+  </data>
+  <data name="LeafletMaps" xml:space="preserve">
+    <value>Dépliant Cartes</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="Academy" xml:space="preserve">
+    <value>Académie</value>
+  </data>
+  <data name="MyCourse" xml:space="preserve">
+    <value>Mon cours</value>
+  </data>
+  <data name="CourseDetails" xml:space="preserve">
+    <value>Détails du cours</value>
+  </data>
+  <data name="FAST–EASY–CHEAP" xml:space="preserve">
+    <value>RAPIDE – FACILE – PAS CHER</value>
+  </data>
+  <data name="CustomerID" xml:space="preserve">
+    <value>Identifiant Client</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Bienvenue</value>
+  </data>
+  <data name="youareontheportalforaccesstoe-GUCEprocedures" xml:space="preserve">
+    <value>vous êtes sur le portail d'accès aux procédures de e-GUCE</value>
+  </data>
+  <data name="SelectTheProcedureCorresponding" xml:space="preserve">
+    <value>Sélectionnez la procédure correspondant à l'opération que vous souhaitez réaliser</value>
+  </data>
+  <data name="AvailableProcedures" xml:space="preserve">
+    <value>Procédures Disponibles</value>
+  </data>
+  <data name="CompanyCreationFormalities" xml:space="preserve">
+    <value>6 Formalités de Création de Société</value>
+  </data>
+  <data name="Procedure" xml:space="preserve">
+    <value>Procédure</value>
+  </data>
+  <data name="StartANewProcedureByClickingRegister" xml:space="preserve">
+    <value>Commencer une nouvelle procedure en cliquant sur le button Enregistrer</value>
+  </data>
+  <data name="FilePreparation" xml:space="preserve">
+    <value>Préparation du dossier</value>
+  </data>
+  <data name="In48hours" xml:space="preserve">
+    <value>En 48 heures</value>
+  </data>
+  <data name="In" xml:space="preserve">
+    <value>En</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>heures</value>
+  </data>
+  <data name="NeedHelpContactUs" xml:space="preserve">
+    <value>Besoin d'aide, contactez-nous</value>
+  </data>
+  <data name="SendYourQuestion" xml:space="preserve">
+    <value>Envoyez votre question</value>
+  </data>
+  <data name="SelectCompanyType" xml:space="preserve">
+    <value>Sélectionnez le type d'entreprise</value>
+  </data>
+  <data name="GuichetUniqueContact" xml:space="preserve">
+    <value>Guichet Unique - Contact</value>
+  </data>
+  <data name="ViewLargeMap" xml:space="preserve">
+    <value>Afficher une grande carte</value>
+  </data>
+  <data name="MandatoryParts" xml:space="preserve">
+    <value>Pièces Obligatoires</value>
+  </data>
+  <data name="LegalEntity" xml:space="preserve">
+    <value>Personne morale</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Nouveau</value>
+  </data>
+  <data name="EconomicInterestGroups" xml:space="preserve">
+    <value>Groupements d’Intérêt Économique(GIE)</value>
+  </data>
+  <data name="LegaNotices" xml:space="preserve">
+    <value>Mentions légales</value>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>Conditions d'Utilisation</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Politique De Confidentialité</value>
+  </data>
+  <data name="ReadMore" xml:space="preserve">
+    <value>En savoir plus</value>
+  </data>
+  <data name="ForTheCongolese" xml:space="preserve">
+    <value>Pour les congolais, par les congolais.</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>Mon compte</value>
+  </data>
+  <data name="HelpDesk" xml:space="preserve">
+    <value>Help Desk</value>
+  </data>
+  <data name="ObtainAllRequiredDocumentsAndRegistrationNumbers" xml:space="preserve">
+    <value>Obtenez tous les documents et numéros d'immatriculation requis</value>
+  </data>
+  <data name="LegalInfo" xml:space="preserve">
+    <value>Info Juridique</value>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>En Savoir Plus</value>
+  </data>
+  <data name="designedanddevelopped" xml:space="preserve">
+    <value>conçu avec fierté</value>
+  </data>
+  <data name="by" xml:space="preserve">
+    <value>par</value>
+  </data>
+  <data name="Personaldata" xml:space="preserve">
+    <value>Données personnelles</value>
+  </data>
+  <data name="Collapsedmenu" xml:space="preserve">
+    <value>Menu réduit</value>
+  </data>
+  <data name="Shippingdelivery" xml:space="preserve">
+    <value>Expédition et livraison</value>
+  </data>
+  <data name="Noresultsfoundfor" xml:space="preserve">
+    <value>Aucun résultat trouvé pour</value>
+  </data>
+  <data name="Youcancreateanewcompanyname" xml:space="preserve">
+    <value>Vous pouvez créer un nouveau nom d'entreprise</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Recherche</value>
+  </data>
+  <data name="CreateRequest" xml:space="preserve">
+    <value>Créer une demande</value>
+  </data>
+  <data name="RequestReview" xml:space="preserve">
+    <value>Révision de la demande</value>
+  </data>
+  <data name="PaymentReview" xml:space="preserve">
+    <value>Examen du paiement</value>
+  </data>
+  <data name="InvoiceCreation" xml:space="preserve">
+    <value>Création de facture</value>
+  </data>
+  <data name="InvoiceReview" xml:space="preserve">
+    <value>Révision des factures</value>
+  </data>
+  <data name="SubmissionStatus" xml:space="preserve">
+    <value>Soumission et statut</value>
+  </data>
+  <data name="Certificate" xml:space="preserve">
+    <value>Certificats</value>
+  </data>
+  <data name="ServiceRequest" xml:space="preserve">
+    <value>Demande de service</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Suivant</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="ProcedureCode" xml:space="preserve">
+    <value>Code de procédure</value>
+  </data>
+  <data name="ServiceType" xml:space="preserve">
+    <value>Type de service</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantité</value>
+  </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>Prix ​​unitaire</value>
+  </data>
+  <data name="AdditionalNotes" xml:space="preserve">
+    <value>Notes complémentaires</value>
+  </data>
+  <data name="ConfirmContinue" xml:space="preserve">
+    <value>Confirmer et continuer</value>
+  </data>
+  <data name="Choosepaymentmethodprovidedetails." xml:space="preserve">
+    <value>Choisissez un mode de paiement et fournissez les informations requises.</value>
+  </data>
+  <data name="CreditDebitCard" xml:space="preserve">
+    <value>Carte de crédit/débit</value>
+  </data>
+  <data name="Bank Transfer" xml:space="preserve">
+    <value>Virement bancaire</value>
+  </data>
+  <data name="PayPal" xml:space="preserve">
+    <value>PayPal</value>
+  </data>
+  <data name="MobileMoney" xml:space="preserve">
+    <value>Argent mobile</value>
+  </data>
+  <data name="ReviewPayment" xml:space="preserve">
+    <value>Vérifier le paiement</value>
+  </data>
+  <data name="CardholderName" xml:space="preserve">
+    <value>Nom du titulaire de la carte</value>
+  </data>
+  <data name="Card Number" xml:space="preserve">
+    <value>Numéro de carte</value>
+  </data>
+  <data name="ExpiryMonth" xml:space="preserve">
+    <value>Mois d'expiration</value>
+  </data>
+  <data name="ExpiryYear" xml:space="preserve">
+    <value>Année d'expiration</value>
+  </data>
+  <data name="CVV" xml:space="preserve">
+    <value>CVV</value>
+  </data>
+  <data name="AccountHolderName" xml:space="preserve">
+    <value>Nom du titulaire du compte</value>
+  </data>
+  <data name="BankName" xml:space="preserve">
+    <value>Nom de la banque</value>
+  </data>
+  <data name="IBANAccountNumber" xml:space="preserve">
+    <value>IBAN / Numéro de compte</value>
+  </data>
+  <data name="SWIFTRoutingNumber" xml:space="preserve">
+    <value>Numéro SWIFT / de routage</value>
+  </data>
+  <data name="PayPalEmail" xml:space="preserve">
+    <value>E-mail de PayPal</value>
+  </data>
+  <data name="PayerIDoptional" xml:space="preserve">
+    <value>Identifiant du payeur (facultatif)</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Numéro de téléphone</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Fournisseur</value>
+  </data>
+  <data name="SelectProvider" xml:space="preserve">
+    <value>Sélectionnez le fournisseur</value>
+  </data>
+  <data name="CurrentStatus" xml:space="preserve">
+    <value>Statut actuel</value>
+  </data>
+  <data name="RefreshContinue" xml:space="preserve">
+    <value>Actualiser et continuer</value>
+  </data>
+  <data name="CreateInvoice" xml:space="preserve">
+    <value>Créer une facture</value>
+  </data>
+  <data name="Step" xml:space="preserve">
+    <value>Étape</value>
+  </data>
+  <data name="ReviewInvoice" xml:space="preserve">
+    <value>Vérifier la facture</value>
+  </data>
+  <data name="SubmitServiceRequest" xml:space="preserve">
+    <value>Soumettre une demande de service</value>
+  </data>
+  <data name="Iconfirmtheabovedetailscorrect" xml:space="preserve">
+    <value>Je confirme que les informations ci-dessus sont exactes</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Soumettre</value>
+  </data>
+  <data name="SendbyEmail" xml:space="preserve">
+    <value>Envoyer par email</value>
+  </data>
+  <data name="SendbySMS" xml:space="preserve">
+    <value>Envoyer par SMS</value>
+  </data>
+  <data name="GenerateCertificates" xml:space="preserve">
+    <value>Générer des certificats</value>
+  </data>
+  <data name="Searching" xml:space="preserve">
+    <value>Recherche</value>
+  </data>
+  <data name="CompanyNames" xml:space="preserve">
+    <value>Noms de sociétés</value>
+  </data>
+  <data name="NewCompanyName" xml:space="preserve">
+    <value>Nouveau nom de l'entreprise</value>
+  </data>
+  <data name="NewProcedure" xml:space="preserve">
+    <value>Nouvelle Procédure</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="SelectCompanyTypeToSeeDetailsandProceed" xml:space="preserve">
+    <value>Sélectionnez un type d'entreprise ci-dessus pour afficher les détails et passer à l'étape suivante.</value>
+  </data>
+  <data name="ShowingNumberItem" xml:space="preserve">
+    <value>Affichage de ## élément</value>
+  </data>
+</root>

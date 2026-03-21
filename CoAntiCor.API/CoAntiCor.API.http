@@ -1,0 +1,6 @@
+@CoAntiCor.API_HostAddress = http://localhost:5023
+
+GET {{CoAntiCor.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

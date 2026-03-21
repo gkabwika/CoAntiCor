@@ -1,0 +1,38 @@
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using CoAntiCor.Data
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Nav
+@inject SignInManager<ApplicationUser> SignInManager
+
+<header class="top-header">
+    <div class="top-header-center">
+        @if (authUser?.Identity?.IsAuthenticated == true)
+        {
+            <span>Hello, @authUser.Identity.Name</span>
+            <a href="/dashboard">Dashboard</a>
+            <a href="#" @onclick="Logout">Logout</a>
+        }
+        else
+        {
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        }
+    </div>
+</header>
+
+@code {
+    ClaimsPrincipal? authUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthStateProvider.GetAuthenticationStateAsync();
+        authUser = state.User;
+    }
+
+    async Task Logout()
+    {
+        await SignInManager.SignOutAsync();
+        Nav.NavigateTo("/");
+    }
+}

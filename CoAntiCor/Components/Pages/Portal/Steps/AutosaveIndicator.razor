@@ -1,0 +1,25 @@
+﻿@if (IsSaving)
+{
+    <span class="text-muted">Saving...</span>
+}
+else if (LastSavedUtc is not null)
+{
+    <span class="text-success">
+        Saved @GetRelativeTime(LastSavedUtc.Value)
+    </span>
+}
+
+@code {
+    [Parameter] public bool IsSaving { get; set; }
+    [Parameter] public DateTime? LastSavedUtc { get; set; }
+
+    private string GetRelativeTime(DateTime saved)
+    {
+        var diff = DateTime.UtcNow - saved;
+        if (diff.TotalSeconds < 60)
+            return $"{(int)diff.TotalSeconds} seconds ago";
+        if (diff.TotalMinutes < 60)
+            return $"{(int)diff.TotalMinutes} minutes ago";
+        return saved.ToLocalTime().ToString("g");
+    }
+}

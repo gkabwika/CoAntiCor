@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-CoAntiCor-abf5d2fb-b4ab-4e3c-9a2b-c78b5ec43096</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.20" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Pages\Admin\" />
+    <Folder Include="Components\Pages\Citizen\" />
+    <Folder Include="Components\Pages\HelpDesk\" />
+    <Folder Include="Components\Pages\Executive\" />
+    <Folder Include="Components\Pages\Inspector\" />
+    <Folder Include="Models\" />
+    <Folder Include="Templates\" />
+    <Folder Include="wwwroot\uploads\temp\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoAntiCor.Core\CoAntiCor.Core.csproj" />
+    <ProjectReference Include="..\CoAntiCor.Infrastructure\CoAntiCor.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

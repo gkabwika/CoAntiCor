@@ -1,0 +1,50 @@
+﻿@page "/my-complaints"
+@using CoAntiCor.Core.DTO
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient Http
+@attribute [Authorize(Roles = "Citizen")]
+
+@* authenticated citizen’s list *@
+<h3>My complaints</h3>
+
+@if (_items is null)
+{
+    <p>Loading...</p>
+}
+else if (!_items.Any())
+{
+    <p>You have not submitted any complaints yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in _items)
+            {
+                <tr>
+                    <td>@c.ComplaintNumber</td>
+                    <td>@c.Title</td>
+                    <td>@c.Status</td>
+                    <td>@c.CreatedAt.ToLocalTime()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<MyComplaintListItemDto>? _items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _items = await Http.GetFromJsonAsync<List<MyComplaintListItemDto>>("api/complaints/mine");
+    }
+}

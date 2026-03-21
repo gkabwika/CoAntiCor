@@ -1,0 +1,49 @@
+﻿@using CoAntiCor.Core.DTO
+<div class="wizard-step">
+    <h4>Step 4: Review your complaint</h4>
+
+    <h5>Summary</h5>
+    <p><strong>Title:</strong> @State.Title</p>
+    <p><strong>Description:</strong> @State.Description</p>
+    <p><strong>Province:</strong> @State.Province</p>
+    <p><strong>City:</strong> @State.City</p>
+
+    <h5>Reporter</h5>
+    @if (State.IsAnonymous)
+    {
+        <p>This complaint will be submitted anonymously.</p>
+    }
+    else
+    {
+        <p><strong>Name:</strong> @State.ReporterName</p>
+        <p><strong>Email:</strong> @State.ReporterEmail</p>
+        <p><strong>Phone:</strong> @State.ReporterPhone</p>
+    }
+
+    <h5>Evidence</h5>
+    @if (State.EvidenceFiles.Any())
+    {
+        <ul>
+            @foreach (var file in State.EvidenceFiles)
+            {
+                <li>@file.FileName (@(file.Size / 1024) KB)</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No files attached.</p>
+    }
+
+    <button class="btn btn-secondary me-2" @onclick="HandleBack">Back</button>
+    <button class="btn btn-success" @onclick="HandleSubmit">Submit complaint</button>
+</div>
+
+@code {
+    [Parameter] public ReportIncidentWizardState State { get; set; } = default!;
+    [Parameter] public EventCallback OnBack { get; set; }
+    [Parameter] public EventCallback OnSubmit { get; set; }
+
+    private Task HandleBack() => OnBack.InvokeAsync();
+    private Task HandleSubmit() => OnSubmit.InvokeAsync();
+}

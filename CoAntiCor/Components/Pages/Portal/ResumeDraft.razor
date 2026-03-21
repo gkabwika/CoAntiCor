@@ -1,0 +1,77 @@
+﻿@page "/resume-draft"
+@using CoAntiCor.Core.DTO
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient Http
+@attribute [Authorize(Roles = "Citizen")]
+
+<h3>Resume My Draft</h3>
+
+@if (_drafts is null)
+{
+    <p>Loading drafts...</p>
+}
+else if (!_drafts.Any())
+{
+    <div class="alert alert-info">
+        You have no saved drafts.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Draft ID</th>
+                <th>Current Step</th>
+                <th>Last Updated</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in _drafts)
+            {
+                <tr>
+                    <td>@d.DraftId</td>
+                    <td>@d.CurrentStep</td>
+                    <td>@d.LastUpdatedUtc.ToLocalTime()</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm"
+                                @onclick="() => Resume(d.DraftId)">
+                            Resume
+                        </button>
+                        <button class="btn btn-danger btn-sm ms-2"
+                                @onclick="() => Delete(d.DraftId)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ComplaintDraftListItemDto>? _drafts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _drafts = await Http.GetFromJsonAsync<List<ComplaintDraftListItemDto>>("api/complaints/drafts");
+    }
+
+    private void Resume(Guid draftId)
+    {
+        Navigation.NavigateTo($"/wizard?draftId={draftId}");
+    }
+
+    private async Task Delete(Guid draftId)
+    {
+        var response = await Http.DeleteAsync($"api/complaints/drafts/{draftId}");
+        if (response.IsSuccessStatusCode)
+        {
+            _drafts = _drafts!.Where(d => d.DraftId != draftId).ToList();
+            StateHasChanged();
+        }
+    }
+
+    [Inject] NavigationManager Navigation { get; set; } = default!;
+}

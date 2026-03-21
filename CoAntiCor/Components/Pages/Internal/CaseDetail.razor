@@ -1,0 +1,97 @@
+﻿@page "/internal/cases/{Id:guid}"
+@inject HttpClient Http
+@using System.Net.Http.Json
+@using CoAntiCor.Core.DTO
+
+<h3>Case Detail</h3>
+
+@if (_case is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="mb-3">
+        <h4>@_case.ComplaintNumber - @_case.Title</h4>
+        <p><strong>Status:</strong> @_case.Status</p>
+        <p><strong>Type:</strong> @_case.IncidentType</p>
+        <p><strong>Category:</strong> @_case.IncidentCategory</p>
+        <p><strong>Location:</strong> @_case.Province, @_case.City</p>
+        <p><strong>Created:</strong> @_case.CreatedAt.ToLocalTime()</p>
+        <p><strong>Reporter:</strong> @(_case.IsAnonymous ? "Anonymous" : _case.ReporterName)</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h5>Description</h5>
+            <p>@_case.Description</p>
+
+            <h5>Attachments</h5>
+            @if (_case.Attachments.Any())
+            {
+                <ul>
+                    @foreach (var a in _case.Attachments)
+                    {
+                        <li>@a.FileName (@a.FileType) - @a.UploadedAt.ToLocalTime()</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No attachments.</p>
+            }
+
+            <h5>Workflow actions</h5>
+            <CaseWorkflowActions ComplaintId="_case.Id" CurrentStatus="_case.Status" OnUpdated="Reload" />
+        </div>
+
+        <div class="col-md-4">
+            <h5>Timeline</h5>
+            <ul class="list-group">
+                @foreach (var h in _case.History.OrderByDescending(h => h.ChangedAt))
+                {
+                    <li class="list-group-item">
+                        <strong>@h.ChangedAt.ToLocalTime()</strong><br />
+                        @h.ChangedBy changed status from @h.OldStatus to @h.NewStatus<br />
+                        <em>@h.Comment</em>
+                    </li>
+                }
+            </ul>
+
+            <h5 class="mt-3">Processing phases</h5>
+            <ul class="list-group">
+                @foreach (var p in _case.Phases)
+                {
+                    <li class="list-group-item">
+                        <strong>@p.PhaseType</strong> - @p.Status<br />
+                        Started: @p.StartedAt.ToLocalTime()<br />
+                        @if (p.CompletedAt.HasValue)
+                        {
+                            <span>Completed: @p.CompletedAt.Value.ToLocalTime()</span><br />
+                        }
+                        <span>Assigned to: @p.AssignedTo</span><br />
+                        <em>@p.Comments</em>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private ComplaintDetailDto? _case;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        _case = await Http.GetFromJsonAsync<ComplaintDetailDto>($"api/complaints/{Id}");
+    }
+
+    private async Task Reload() => await Load();
+}

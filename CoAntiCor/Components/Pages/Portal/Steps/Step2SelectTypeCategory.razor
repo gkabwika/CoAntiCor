@@ -1,0 +1,93 @@
+﻿@using CoAntiCor.Core.DTO
+@inject HttpClient Http
+
+<div class="wizard-step">
+    <h4>Step 2: Select incident type and category</h4>
+
+    <div class="mb-3">
+        <label class="form-label">Incident Type</label>
+        <select class="form-select" @bind="State.IncidentTypeId">
+            <option value="">-- Select type --</option>
+            @foreach (var type in _incidentTypes)
+            {
+                <option value="@type.Id">@type.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Incident Category</label>
+        <select class="form-select" @bind="State.IncidentCategoryId">
+            <option value="">-- Select category --</option>
+            @foreach (var cat in _incidentCategories)
+            {
+                <option value="@cat.Id">@cat.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Title of your complaint</label>
+        <input class="form-control" @bind="State.Title" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Describe the incident in detail</label>
+        <textarea class="form-control" rows="5" @bind="State.Description"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Province</label>
+        <input class="form-control" @bind="State.Province" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">City</label>
+        <input class="form-control" @bind="State.City" />
+    </div>
+
+    <button class="btn btn-secondary me-2" @onclick="@OnBackClicked">Back</button>
+    <button class="btn btn-primary" @onclick="NextIfValid">Next</button>
+</div>
+
+@code {
+    [Parameter] public ReportIncidentWizardState State { get; set; } = default!;
+    [Parameter] public EventCallback OnBack { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+
+    private List<IncidentTypeDto> _incidentTypes = new();
+    private List<IncidentCategoryDto> _incidentCategories = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _incidentTypes = await Http.GetFromJsonAsync<List<IncidentTypeDto>>("api/lookups/incident-types")
+                         ?? new();
+        _incidentCategories = await Http.GetFromJsonAsync<List<IncidentCategoryDto>>("api/lookups/incident-categories")
+                             ?? new();
+    }
+
+    private async Task NextIfValid()
+    {
+        if (State.IncidentTypeId is null || State.IncidentCategoryId is null || string.IsNullOrWhiteSpace(State.Description))
+        {
+            // TODO: show validation messages
+            return;
+        }
+
+        await OnNext.InvokeAsync();
+    }
+
+    private Task OnBackClicked() => OnBack.InvokeAsync();
+
+    public class IncidentTypeDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = default!;
+    }
+
+    public class IncidentCategoryDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = default!;
+    }
+}

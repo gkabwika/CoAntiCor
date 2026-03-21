@@ -1,0 +1,35 @@
+﻿@using CoAntiCor.Core.Interfaces
+@inject IComplaintDraftService DraftService
+@inject IJSRuntime JS
+
+@*  Recovery modal component *@
+@if (Show)
+{
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resume your draft?</h5>
+                </div>
+                <div class="modal-body">
+                    <p>We found an unfinished report. Would you like to continue where you left off?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="Discard">Start new</button>
+                    <button class="btn btn-primary" @onclick="Resume">Resume draft</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback OnResume { get; set; }
+    [Parameter] public EventCallback OnDiscard { get; set; }
+
+     private Task Resume() => OnResume.InvokeAsync();
+     private Task Discard() => OnDiscard.InvokeAsync();
+
+
+}

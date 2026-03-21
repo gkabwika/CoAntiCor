@@ -1,0 +1,91 @@
+﻿@page "/track-complaint"
+@using CoAntiCor.Core.Model
+@inject HttpClient Http
+
+@* public tracking *@
+<h3>Track my complaint</h3>
+
+<div class="card p-3 mb-3">
+    <div class="mb-3">
+        <label class="form-label">Complaint number</label>
+        <input class="form-control" @bind="_request.ComplaintNumber" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email (if provided when submitting)</label>
+        <input class="form-control" @bind="_request.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Phone (if provided when submitting)</label>
+        <input class="form-control" @bind="_request.Phone" />
+    </div>
+
+    <button class="btn btn-primary" @onclick="TrackAsync" disabled="@_isLoading">
+        @_isLoading ? "Checking..." : "Track"
+    </button>
+</div>
+
+@if (_result is not null)
+{
+    <div class="card p-3">
+        <h5>Complaint @(_result.ComplaintNumber)</h5>
+        <p><strong>Status:</strong> @_result.Status</p>
+        <p><strong>Created:</strong> @_result.CreatedAt.ToLocalTime()</p>
+        <p><strong>Location:</strong> @_result.Province, @_result.City</p>
+        @if (!string.IsNullOrWhiteSpace(_result.LastPublicComment))
+        {
+            <p><strong>Latest update:</strong> @_result.LastPublicComment</p>
+        }
+    </div>
+}
+else if (_error is not null)
+{
+    <div class="alert alert-danger">@_error</div>
+}
+
+@code {
+    private TrackComplaintRequest _request = new();
+    private TrackComplaintResponse? _result;
+    private bool _isLoading;
+    private string? _error;
+
+    private async Task TrackAsync()
+    {
+        _error = null;
+        _result = null;
+
+        if (string.IsNullOrWhiteSpace(_request.ComplaintNumber))
+        {
+            _error = "Please enter a complaint number.";
+            return;
+        }
+
+        _isLoading = true;
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/complaints/track", _request);
+            if (response.IsSuccessStatusCode)
+            {
+                _result = await response.Content.ReadFromJsonAsync<TrackComplaintResponse>();
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                _error = "Complaint not found.";
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                _error = "The contact information does not match our records.";
+            }
+            else
+            {
+                _error = "Unable to track complaint at this time.";
+            }
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+}

@@ -1,0 +1,112 @@
+﻿@page "/internal/assignments"
+@using CoAntiCor.Core.DTO
+@using CoAntiCor.Core.Model
+@inject HttpClient Http
+
+<h3>Assignment Console</h3>
+
+<div class="row">
+    <div class="col-md-3">
+        <h5>Filters</h5>
+        <select class="form-select mb-2" @bind="_filter.Status">
+            <option value="">All statuses</option>
+            <option value="@ComplaintStatus.Open">Open</option>
+            <option value="@ComplaintStatus.UnderReview">Under review</option>
+            <option value="@ComplaintStatus.Escalated">Escalated</option>
+        </select>
+
+        <button class="btn btn-primary" @onclick="LoadComplaints">Apply</button>
+    </div>
+
+    <div class="col-md-9">
+        <h5>Unassigned / Open Complaints</h5>
+
+        @if (_complaints is null)
+        {
+            <p>Loading...</p>
+        }
+        else if (!_complaints.Any())
+        {
+            <p>No complaints found.</p>
+        }
+        else
+        {
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Province</th>
+                        <th>Created</th>
+                        <th>Assign to</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in _complaints)
+                    {
+                        <tr>
+                            <td>@c.ComplaintNumber</td>
+                            <td>@c.Title</td>
+                            <td>@c.IncidentType</td>
+                            <td>@c.Province</td>
+                            <td>@c.CreatedAt.ToLocalTime()</td>
+                            <td>
+                                <select class="form-select form-select-sm"
+                                        @onchange="e => Assign(c.Id, Guid.Parse(e.Value?.ToString()!))">
+                                    <option value="">Select inspector</option>
+                                    @foreach (var u in _inspectors)
+                                    {
+                                        <option value="@u.Id">@u.UserName</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@code {
+    private ComplaintDashboardFilter _filter = new() { Status = ComplaintStatus.Open };
+    private List<ComplaintListItemDto>? _complaints;
+    private List<UserDto> _inspectors = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _inspectors = await Http.GetFromJsonAsync<List<UserDto>>("api/users?role=Inspector") ?? new();
+        await LoadComplaints();
+    }
+
+    private async Task LoadComplaints()
+    {
+        var response = await Http.PostAsJsonAsync("api/complaints/dashboard", _filter);
+        var result = await response.Content.ReadFromJsonAsync<ComplaintDashboardResult>();
+        _complaints = result?.Items ?? new();
+    }
+
+    private async Task Assign(Guid complaintId, Guid userId)
+    {
+        if (userId == Guid.Empty) return;
+
+        var request = new AssignComplaintRequest
+        {
+            ComplaintId = complaintId,
+            AssignedToUserId = userId
+        };
+
+        var response = await Http.PostAsJsonAsync($"api/complaints/{complaintId}/assign", request);
+        if (response.IsSuccessStatusCode)
+        {
+            await LoadComplaints();
+        }
+    }
+
+    public class UserDto
+    {
+        public Guid Id { get; set; }
+        public string UserName { get; set; } = default!;
+    }
+}

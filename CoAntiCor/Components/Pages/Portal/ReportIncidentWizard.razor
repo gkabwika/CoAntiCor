@@ -1,0 +1,411 @@
+﻿@page "/report-incident"
+@using CoAntiCor.Components.Pages.Portal.Modal
+@using CoAntiCor.Components.Pages.Portal.Steps
+@using CoAntiCor.Core.DTO
+@using CoAntiCor.Core.Domain
+@using CoAntiCor.Core.Interfaces
+@using CoAntiCor.Core.Services
+@using CoAntiCor.Infrastructure.Context
+@using Microsoft.AspNetCore.WebUtilities
+@inject IComplaintDraftService _draftService
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore
+@using System.Security.Cryptography
+@using System.Net
+@using System.Text.Json
+@inject IHttpContextAccessor _httpContextAccessor
+@inject IAttachmentService _attachmentService
+
+<h3>Report an Incident</h3>
+@* Autosave indicator component *@
+<WizardProgressBar TotalSteps="5"
+                   StepsCompleted="@_stateSavedDraft.StepCompletedUtc.Keys.ToHashSet()" />
+<AutosaveIndicator IsSaving="_state.IsSaving" LastSavedUtc="_state.LastSavedUtc" />
+<DraftTimeline Steps="_stateSavedDraft.StepCompletedUtc" />
+@if (_currentStep == 1)
+{
+    <Step1SearchExistingIncidents State="_state" OnNext="GoToStep2" />
+}
+else if (_currentStep == 2)
+{
+    <Step2SelectTypeCategory State="_state" OnBack="GoToStep1" OnNext="GoToStep3" />
+}
+else if (_currentStep == 3)
+{
+    <Step3ReporterAndEvidence State="_state" OnBack="GoToStep2" OnNext="GoToStep4" />
+}
+else if (_currentStep == 4)
+{
+    <Step4Review State="_state" OnBack="GoToStep3" OnSubmit="SubmitComplaintAsync" />
+}
+else if (_currentStep == 5)
+{
+    <Step5Confirmation ComplaintNumber="_complaintNumber" />
+}
+@if (!_state.IsAnonymous)
+{
+    <p>Your draft is saved to your account.</p>
+}
+else
+{
+    <p>
+        To resume on another device, enter this code:
+        <strong>@_stateSavedDraft.AccessCode</strong>
+        <strong>@_state.DraftAccessCode</strong>
+    </p>
+}
+
+@if (_stateSavedDraft.DraftId != Guid.Empty)
+{
+    <!-- Show QR code in wizard footer
+        This gives citizens a seamless way to switch devices mid-report.
+    -->
+    <DraftQrCode DraftId="_stateSavedDraft.DraftId" />
+}
+<DevicePromptModal 
+    Show="_showDevicePrompt"
+    OnResume="ResumeLocalDraft"
+    OnDiscard="DiscardLocalDraft" />
+
+<DraftRecoveryModal Show="_showRecoveryModal"
+                   OnResume="ResumeDraft"
+                   OnDiscard="DiscardDraft" />
+<!-- Use it in the wizard sidebar: -->
+<DraftActivityLog Activities="_draftActivities" />
+<!-- Use it in the wizard sidebar: -->
+<DraftConflictModal Show="_showConflictModal"
+                    OnUseLocal="UseLocalVersion"
+                    OnUseServer="UseServerVersion" />
+
+ <!--
+                       ✔ A Continue on This Device modal for returning users
+✔ A QR Code Resume Flow for multi-device continuity
+✔ All components integrated with your existing draft system
+✔ A polished, modern UX that builds trust and reduces friction
+
+  -->
+
+@code {
+    // Add a private field for the DbContext (replace 'YourDbContextType' with your actual DbContext type)
+    [Inject]
+    private CoAntiCorDbContext _db { get; set; } = default!;
+    private int _currentStep = 1;
+    private readonly ReportIncidentWizardState _state = new();
+    private string? _complaintNumber;
+    private ComplaintDraftState _stateSavedDraft = new();
+    private bool _isSaving;
+    private int _loadedVersion;
+
+    // FIX: Add missing _draftActivities field
+    private List<ComplaintDraftActivity> _draftActivities = new();
+
+    private void GoToStep1() => _currentStep = 1;
+    private void GoToStep2() => _currentStep = 2;
+    private void GoToStep3() => _currentStep = 3;
+    private void GoToStep4() => _currentStep = 4;
+
+    private bool _showRecoveryModal;
+    private bool _showDevicePrompt;
+    private Guid _recoveryDraftId;
+    private Guid _localDraftId;
+
+    private bool _showConflictModal;
+    private ComplaintDraftState? _serverState;
+    private int _serverVersion;
+
+
+    protected override async Task OnInitializedAsync()
+    {      
+        //Draft Recovery Modal(“We found an unfinished report.Resume ?”)
+        //When a citizen returns to the wizard, you check for:
+        //-A draft tied to their user ID
+        //- Or a draft ID stored in local storage(anonymous users)
+        //If found → show a modal/Device Prompt Modal
+
+        // 1.Check local storage(anonymous users)
+        var localDraftId = await JS.InvokeAsync<string>("draftStorage.getDraftId");
+
+        if (Guid.TryParse(localDraftId, out var draftIdLocal))
+        {
+            var draft = await _draftService.LoadDraftAsync(draftIdLocal, GetCurrentUserIdOrNull());
+            if (draft is not null)
+            {
+                _recoveryDraftId = draftIdLocal; //localDraftId
+                _showRecoveryModal = true; //showDevicePrompt
+                return;
+            }
+        }
+
+        //2. Optionally load draftId from query string
+        var uri = Nav.ToAbsoluteUri(Nav.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("draftId", out var draftIdStr) &&
+            Guid.TryParse(draftIdStr, out var draftId))
+        {
+            var userId = GetCurrentUserIdOrNull();
+            var loaded = await _draftService.LoadDraftAsync(draftId, userId);
+            if (loaded is not null)
+                _stateSavedDraft = loaded;
+
+            _loadedVersion = _stateSavedDraft.Version;
+
+        }
+
+        // 3.Load draft activities if a draft is loaded
+        if (_stateSavedDraft.DraftId != Guid.Empty)
+        {
+            _draftActivities = await _db.ComplaintDraftActivities
+                .Where(a => a.DraftId == _stateSavedDraft.DraftId)
+                .OrderByDescending(a => a.TimestampUtc)
+                .ToListAsync();
+        }
+
+        // No draft found → start fresh
+    }
+
+    // old submit method, now we do it in the last step with a review page
+    private async Task SubmitComplaintAsync()
+    {
+       // var finalPath = await _attachmentService.MoveFromTempAsync(file.TempStoragePath);
+
+        foreach (var file in _stateSavedDraft.Attachments)
+        {
+            var finalPath = await _attachmentService.MoveFromTempAsync(file.TempId);
+            // Save finalPath to the ComplaintAttachment table
+        }
+
+        var request = new CreateComplaintRequest
+        {
+            // Get everything from draft state
+            // todo: map all fields from _state to the request
+            Title = _stateSavedDraft.Title,
+            Description = _stateSavedDraft.Description,
+            IncidentTypeId = _stateSavedDraft.IncidentTypeId!.Value,
+            IncidentCategoryId = _stateSavedDraft.IncidentCategoryId!.Value,
+            IsAnonymous = _stateSavedDraft.IsAnonymous,
+            ReporterName = _stateSavedDraft.IsAnonymous ? null : _stateSavedDraft.ReporterName,
+            ReporterEmail = _stateSavedDraft.IsAnonymous ? null : _stateSavedDraft.ReporterEmail,
+            ReporterPhone = _stateSavedDraft.IsAnonymous ? null : _stateSavedDraft.ReporterPhone,
+            Province = _stateSavedDraft.Province,
+            City = _stateSavedDraft.City,
+            GovernmentOfficeId = _state.GovernmentOfficeId,
+            Attachments = _stateSavedDraft.Attachments.Select(f => new CreateComplaintAttachmentRequest
+            {
+                FileName = f.FileName,
+                ContentType = f.ContentType,
+                Size = f.Size,
+               TempStoragePath = f.StoragePath
+            }).ToList()
+        };
+
+        var response = await Http.PostAsJsonAsync("api/complaints", request);
+        response.EnsureSuccessStatusCode();
+
+        var result = await response.Content.ReadFromJsonAsync<CreateComplaintResponse>();
+        _complaintNumber = result!.ComplaintNumber;
+
+        _currentStep = 5;
+    }
+
+    //    This gives you:
+    // - Per‑step state in memory
+    // - Draft persisted on each navigation
+    // - Ability to reload by draftId if the browser crashes or network drops
+
+    //Using in the wizard (auto‑save per step)
+    private async Task GoNextAsync()
+    {
+        _stateSavedDraft.CurrentStep++;
+        await SaveDraftAsync();
+    }
+
+    private async Task GoBackAsync()
+    {
+        if (_stateSavedDraft.CurrentStep > 1)
+            _stateSavedDraft.CurrentStep--;
+        await SaveDraftAsync();
+    }
+
+
+    //Update autosave logic to save on each step change and when the user makes changes. You can debounce saves to avoid excessive calls.
+    //This gives you a smooth, modern autosave experience.
+    private async Task SaveDraftAsync()
+    {
+        _state.IsSaving = true;
+        StateHasChanged();
+
+        //Wizard Conflict Handling: When saving the draft, include the current version number. If the server detects a version mismatch, it returns a 409 Conflict with the latest server state. Show a modal with options to:
+        var response1 = await Http.PostAsJsonAsync("api/complaints/drafts/save", _state);
+        if (response1.StatusCode == HttpStatusCode.Conflict)
+        {
+            var conflict = await response1.Content.ReadFromJsonAsync<DraftConflictDto>();
+            _serverState = JsonSerializer.Deserialize<ComplaintDraftState>(conflict.ServerStateJson);
+            _serverVersion = conflict.ServerVersion;
+            _showConflictModal = true;
+            return;
+        }
+        var userId = GetCurrentUserIdOrNull();
+        bool isClickLinkAnotherDevice = false; // Set this based on your UI logic when the user clicks "Link Another Device"
+
+       
+
+        //var response = await Http.PostAsJsonAsync("api/drafts/v2/save", _state);
+        var response = await Http.PostAsJsonAsync("api/drafts/v2/save", _stateSavedDraft);
+
+        if (response.StatusCode == HttpStatusCode.Conflict)
+        {
+            var conflict = await response.Content.ReadFromJsonAsync<DraftConflictDto>();
+            _serverState = JsonSerializer.Deserialize<ComplaintDraftState>(conflict.ServerStateJson);
+            _serverVersion = conflict.ServerVersion;
+            _showConflictModal = true;
+            return;
+        }
+        //_stateSavedDraft.DraftId = await _draftService.SaveDraftAsync(_stateSavedDraft, userId);
+        //_state.DraftId = await _draftService.SaveDraftAsync(_stateSavedDraft, userId);
+
+        //When no conflickt, save normally and update local draft ID for anonymous users
+        _state.LastSavedUtc = DateTime.UtcNow;
+        _state.IsSaving = false;
+   
+        await JS.InvokeVoidAsync("draftStorage.saveDraftId", _stateSavedDraft.DraftId.ToString());
+        StateHasChanged();
+
+        // Update activities after saving
+        if (_stateSavedDraft.DraftId != Guid.Empty)
+        {
+            _draftActivities = await _db.ComplaintDraftActivities
+                .Where(a => a.DraftId == _stateSavedDraft.DraftId)
+                .OrderByDescending(a => a.TimestampUtc)
+                .ToListAsync();
+        }
+    }
+
+    private Guid? GetCurrentUserIdOrNull()
+    {
+        // For authenticated citizens; anonymous can be null
+        // Implement via AuthenticationStateProvider or claims
+        return null;
+    }
+
+    private async Task ResumeDraft()
+    {
+        var loaded = await _draftService.LoadDraftAsync(_recoveryDraftId, GetCurrentUserIdOrNull());
+        if (loaded is not null)
+            _stateSavedDraft = loaded;
+
+        _showRecoveryModal = false;
+
+        // Load activities for resumed draft
+        if (_stateSavedDraft.DraftId != Guid.Empty)
+        {
+            _draftActivities = await _db.ComplaintDraftActivities
+                .Where(a => a.DraftId == _stateSavedDraft.DraftId)
+                .OrderByDescending(a => a.TimestampUtc)
+                .ToListAsync();
+        }
+    }
+
+    private async Task DiscardDraft()
+    {
+        await JS.InvokeVoidAsync("draftStorage.clearDraft");
+        _showRecoveryModal = false;
+    }
+
+    private async Task ResumeLocalDraft()
+    {
+        var draft = await _draftService.LoadDraftAsync(_localDraftId, GetCurrentUserIdOrNull());
+        if (draft is not null)
+            _stateSavedDraft = draft;
+
+        _showDevicePrompt = false;
+
+        // Load activities for resumed draft
+        if (_stateSavedDraft.DraftId != Guid.Empty)
+        {
+            _draftActivities = await _db.ComplaintDraftActivities
+                .Where(a => a.DraftId == _stateSavedDraft.DraftId)
+                .OrderByDescending(a => a.TimestampUtc)
+                .ToListAsync();
+        }
+    }
+
+    private async Task DiscardLocalDraft()
+    {
+        await JS.InvokeVoidAsync("draftStorage.clearDraft");
+        _showDevicePrompt = false;
+    }
+
+    //Whenever a step is completed:
+    private async Task MarkStepCompleted(int step)
+    {
+       // _state.StepCompletedUtc[step] = DateTime.UtcNow;
+        _stateSavedDraft.StepCompletedUtc[step] = DateTime.UtcNow;
+       
+        //update in-memory state to trigger UI updates - Activity Log
+        await LogDraftActivity("StepCompleted", step);
+        await LogDraftActivity("Autosave");
+        
+        await SaveDraftAsync();
+    }
+
+
+
+    private async Task LogDraftActivity(string action, int? step = null)
+    {
+        var http = _httpContextAccessor.HttpContext;
+
+        var activity = new ComplaintDraftActivity
+        {
+            Id = Guid.NewGuid(),
+            DraftId = _stateSavedDraft.DraftId,
+            TimestampUtc = DateTime.UtcNow,
+            Action = action,
+            StepNumber = step,
+            DeviceName = http?.Request.Headers["X-Device-Name"].ToString() ?? "Unknown",
+            DeviceType = http?.Request.Headers["X-Device-Type"].ToString() ?? "Unknown",
+            Browser = http?.Request.Headers["User-Agent"].ToString() ?? "Unknown",
+            IpAddress = http?.Connection.RemoteIpAddress?.ToString() ?? "Unknown"
+        };
+
+        _db.ComplaintDraftActivities.Add(activity);
+        await _db.SaveChangesAsync();
+
+        // Update activities after logging
+        if (_stateSavedDraft.DraftId != Guid.Empty)
+        {
+            _draftActivities = await _db.ComplaintDraftActivities
+                .Where(a => a.DraftId == _stateSavedDraft.DraftId)
+                .OrderByDescending(a => a.TimestampUtc)
+                .ToListAsync();
+        }
+    }
+
+    //Whenever a step is completed:
+    private async Task LinkAnotherDevice(int step)
+    {
+
+        var userId = GetCurrentUserIdOrNull();
+        _stateSavedDraft.DraftId = await _draftService.SaveDraftAsync(_stateSavedDraft, userId, true);
+        // Generate a short PIN code for device linking- Generate a 6‑digit PIN:
+        var pin = RandomNumberGenerator.GetInt32(100000, 999999).ToString();
+    }
+
+    // Show the PIN and instructions in a modal, along with a QR code that encodes the PIN and draft ID for easy scanning.
+    // Conflict Resolution Action. When the server detects a version mismatch during save, it returns the latest server state. Show a modal with options to:
+    private async Task UseLocalVersion()
+    {
+        // Force overwrite
+        _stateSavedDraft.Version = _serverVersion + 1;
+        await SaveDraftAsync();
+        _showConflictModal = false;
+    }
+
+    private async Task UseServerVersion()
+    {
+        _stateSavedDraft = _serverState!;
+        _loadedVersion = _serverVersion;
+        _showConflictModal = false;
+    }
+}

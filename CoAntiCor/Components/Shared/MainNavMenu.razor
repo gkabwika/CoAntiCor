@@ -1,0 +1,39 @@
+﻿@using CoAntiCor.Data.Entities
+@using CoAntiCor.Services.Menu
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IMenuService MenuService
+@inject NavigationManager Nav
+
+<nav class="main-nav">
+    @if (Menu is not null)
+    {
+        @foreach (var item in Menu)
+        {
+            <a href="@item.Url"
+               class="nav-item @(IsActive(item.Url) ? "active" : "")">
+                <i class="@item.Icon"></i>
+                <span>@item.Title</span>
+            </a>
+        }
+    }
+</nav>
+
+@code {
+    List<MenuItem>? Menu;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        string? role = user.Identity?.IsAuthenticated == true
+            ? user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
+            : null;
+
+        Menu = await MenuService.GetMenuAsync(role);
+    }
+
+    bool IsActive(string url) =>
+        Nav.Uri.Contains(url, StringComparison.OrdinalIgnoreCase);
+}

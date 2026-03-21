@@ -1,0 +1,31 @@
+﻿@if (Show)
+{
+    <div class="modal fade show d-block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Draft Conflict Detected</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Your draft was modified on another device.
+                        What would you like to do?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" @onclick="UseLocal">Use My Version</button>
+                    <button class="btn btn-primary" @onclick="UseServer">Use Server Version</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback OnUseLocal { get; set; }
+    [Parameter] public EventCallback OnUseServer { get; set; }
+
+    private Task UseLocal() => OnUseLocal.InvokeAsync();
+    private Task UseServer() => OnUseServer.InvokeAsync();
+}
