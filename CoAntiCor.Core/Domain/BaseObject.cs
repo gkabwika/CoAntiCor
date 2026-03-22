@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-
+﻿
 namespace CoAntiCor.Core.Domain
 {
     public class BaseObject : IEntityChangeData

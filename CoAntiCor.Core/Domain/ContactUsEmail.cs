@@ -8,13 +8,8 @@ namespace CoAntiCor.Core.Domain
 {
     public class ContactUsEmail : EntityBaseObject
     {
-        //public int EmailTemplateID { get; set; }
-
-        //[Required(ErrorMessage = "Product Required")]
-        public string Product { get; set; }
-        //[Required(ErrorMessage = "Description Required")]
-        public string TemplateName { get; set; }
-        //[Required(ErrorMessage = "EmailFrom Required")]
+        
+         //[Required(ErrorMessage = "EmailFrom Required")]
         [Display(Name = "Email From"), StringLength(256, MinimumLength = 1)]
         public string EmailFrom { get; set; }
         //[Required(ErrorMessage = "EmailTo Required")]

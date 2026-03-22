@@ -1,4 +1,4 @@
-﻿namespace CoAntiCor.Data.Entities
+﻿namespace CoAntiCor.Core.Domain
 {
     public class NavigationAudit
     {

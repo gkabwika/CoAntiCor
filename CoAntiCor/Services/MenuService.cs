@@ -1,6 +1,5 @@
 ﻿// /Services/Menu/MenuService.cs
 using CoAntiCor.Core.Domain;
-using CoAntiCor.Data.Entities;
 using CoAntiCor.Infrastructure.Context;
 using CoAntiCor.Services.Menu;
 using Microsoft.EntityFrameworkCore;

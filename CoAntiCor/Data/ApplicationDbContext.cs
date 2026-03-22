@@ -1,4 +1,4 @@
-using CoAntiCor.Data.Entities;
+using CoAntiCor.Core.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

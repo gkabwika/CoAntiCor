@@ -1,7 +1,7 @@
 ﻿// /Services/Menu/IMenuService.cs
 
 
-using CoAntiCor.Data.Entities;
+using CoAntiCor.Core.Domain;
 
 namespace CoAntiCor.Services.Menu;
 

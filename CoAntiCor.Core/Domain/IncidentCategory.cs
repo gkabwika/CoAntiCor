@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace CoAntiCor.Core.Domain
 {
+    /// <summary>
+    /// We already have IncidentType (the specific misconduct).
+    /// Now we want IncidentCategory — the parent grouping.
+    /// This is exactly how national anti‑corruption systems structure their taxonomies:
+    /// Incident Category → Incident Type → Complaint
+    /// </summary>
     public class IncidentCategory : EntityBaseObject
     {
         public string Code { get; set; } = default!; 
@@ -13,6 +19,8 @@ namespace CoAntiCor.Core.Domain
         public string? Description { get; set; }
         public string NameFrench { get; set; } = default!; // Government Fraud, Local Bribery, etc.
         public string? DescriptionFrench { get; set; }
+
+        public ICollection<IncidentType> IncidentTypes { get; set; } = new List<IncidentType>();
 
         public ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
     }
