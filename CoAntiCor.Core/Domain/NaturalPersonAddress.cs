@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace CoAntiCor.Core.Domain.Person
 {
-    public class NaturalPersonAddress
+    public class NaturalPersonAddress : EntityBaseObject
     {      
         public Guid AddressId { get; set; }
         [ForeignKey(nameof(AddressId))]

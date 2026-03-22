@@ -19,9 +19,9 @@ namespace CoAntiCor.Core.Domain
         public string? Description { get; set; }
         public string NameFrench { get; set; } = default!; // Government Fraud, Local Bribery, etc.
         public string? DescriptionFrench { get; set; }
-
+      
+        public ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
         public ICollection<IncidentType> IncidentTypes { get; set; } = new List<IncidentType>();
 
-        public ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
     }
 }

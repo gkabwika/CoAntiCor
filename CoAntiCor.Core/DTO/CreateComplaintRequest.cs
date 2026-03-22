@@ -11,8 +11,8 @@ namespace CoAntiCor.Core.DTO
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
 
-        public int IncidentTypeId { get; set; }
-        public int IncidentCategoryId { get; set; }
+        public Guid IncidentTypeId { get; set; }
+        public Guid IncidentCategoryId { get; set; }
 
         public bool IsAnonymous { get; set; }
 

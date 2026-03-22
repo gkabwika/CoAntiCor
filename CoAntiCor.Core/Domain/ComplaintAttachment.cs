@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoAntiCor.Core.Domain.FredTicketCreation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,11 @@ using System.Threading.Tasks;
 namespace CoAntiCor.Core.Domain
 {
     public class ComplaintAttachment : EntityBaseObject
-    {
+    {     
         public Guid ComplaintId { get; set; }
         public Complaint Complaint { get; set; } = default!;
+        public bool IsOfficialEvidence { get; set; } = false;
+        public string EvidenceByOfficialUser { get; set; } = default!;
 
         public string FileName { get; set; } = default!;
         public string OriginalFileName { get; set; } = default!;

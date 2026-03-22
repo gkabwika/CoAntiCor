@@ -20,8 +20,8 @@ namespace CoAntiCor.Core.Domain
         public string? AccessCode { get; set; }
 
         // Step 2
-        public int? IncidentTypeId { get; set; }
-        public int? IncidentCategoryId { get; set; }
+        public Guid? IncidentTypeId { get; set; }
+        public Guid? IncidentCategoryId { get; set; }
 
         // Step 3
         public bool IsAnonymous { get; set; } = true;

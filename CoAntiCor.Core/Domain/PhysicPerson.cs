@@ -20,9 +20,10 @@ namespace CoAntiCor.Core.Domain.Organization.OrganizationDetails
         [Display(Name = "Organization Description")]
         public string? OrganizationDescription { get; set; } = string.Empty;
         [Display(Name = "Natural Person")]
-        public ICollection<NaturalPerson> NaturalPersons { get; set; } = new List<NaturalPerson>();
+        public Guid NaturalPersonId { get; set; }
+        public NaturalPerson NaturalPerson { get; set; } = default!;
 
-         [Display(Name = "Organization Address")]
+        [Display(Name = "Organization Address")]
         public List<OrganizationAddress> OrganizationAddress { get; set; } = new List<OrganizationAddress>();
         //public int ActivitySectorId { get; set; }
         [Display(Name = "Email")]
@@ -45,9 +46,8 @@ namespace CoAntiCor.Core.Domain.Organization.OrganizationDetails
         [Display(Name = "IdNumP")]
         public string IdNumP { get; set; } = string.Empty; //????IdnumP
         public EnterpriseType? EnterpriseType { get; set; } // Reference navigation property
-         [Display(Name = "Other Natural Person")]
-        public List<NaturalPerson> OtherNaturalPerson { get; set; } = new List<NaturalPerson>();
-   
 
+        public Guid ComplaintId { get; set; }
+        public Complaint Complaint { get; set; } = default!;
     }
 }

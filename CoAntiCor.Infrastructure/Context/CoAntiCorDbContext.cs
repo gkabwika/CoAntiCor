@@ -9,6 +9,7 @@ using CoAntiCor.Core.Domain.Organization.Document;
 using CoAntiCor.Core.Domain.Organization.OrganizationDetails;
 using CoAntiCor.Core.Domain.Organization.PaymentInfo;
 using CoAntiCor.Core.Domain.Organization.PaymentMethods;
+using CoAntiCor.Core.Domain.PaymentMethods;
 using CoAntiCor.Core.Domain.Person;
 using CoAntiCor.Core.Domain.Processing;
 using CoAntiCor.Core.Model;
@@ -207,8 +208,26 @@ namespace CoAntiCor.Infrastructure.Context
                 .WithOne(c => c.Reward)
                 .HasForeignKey<ComplaintReward>(r => r.ComplaintId);
 
-            // AUDIT CONFIGURATION -------------------------------------
+            /*
+             *  Why Restrict is the correct choice
+                Incident categories and types are lookup tables.
+                They should never be deleted automatically.
+                If someone tries to delete a category that still has types, SQL Server will block it — which is exactly what you want.
+             */
+            modelBuilder.Entity<Complaint>()
+                 .HasOne(c => c.IncidentType)
+                 .WithMany(it => it.Complaints)
+                 .HasForeignKey(c => c.IncidentTypeId)
+                 .OnDelete(DeleteBehavior.Restrict);
 
+            // NATURAL P[ERSON CONFIGURATION -------------------------------------
+            modelBuilder.Entity<PhysicPerson>()
+               .HasOne(c => c.NaturalPerson)
+               .WithMany(it => it.PhysicPersons)
+               .HasForeignKey(c => c.NaturalPersonId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            // NATURAL PERSON CONFIGURATION -------------------------------------
             modelBuilder.Entity<AuditLog>()
        .HasIndex(a => a.TimestampUtc);
 
@@ -216,6 +235,12 @@ namespace CoAntiCor.Infrastructure.Context
                 .HasIndex(a => new { a.EntityType, a.EntityId });
 
             // Additional configuration - IncidentType
+
+            modelBuilder.Entity<IncidentType>()
+                .HasOne(it => it.IncidentCategory)
+                .WithMany(c => c.IncidentTypes)
+                .HasForeignKey(it => it.IncidentCategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<IncidentType>().HasData(
                 // Existing core incident types
@@ -422,7 +447,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new IncidentType
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000022"),
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000023"),
                     Name = "Unclassified - Other",
                     Description = "Unclassified - Other",
                     NameFrench = "Autre ou no classifié",
@@ -438,6 +463,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000001"),
+                    Code = "FIN",
                     Name = "Financial Misconduct",
                     NameFrench = "Infractions financières",
                     Description = "Crimes involving public funds, assets, or financial deception.",
@@ -446,6 +472,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000002"),
+                    Code = "ADM",
                     Name = "Administrative Misconduct",
                     NameFrench = "Manquements administratifs",
                     Description = "Misuse of administrative authority or violation of public duty.",
@@ -454,6 +481,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000003"),
+                    Code = "COR",
                     Name = "Corruption and Influence",
                     NameFrench = "Corruption et influence",
                     Description = "Acts involving undue influence, bribery, or coercion.",
@@ -462,6 +490,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000004"),
+                    Code = "PRO",
                     Name = "Land and Property Disputes",
                     NameFrench = "Litiges fonciers et immobiliers",
                     Description = "Conflicts or illegal actions involving land or property.",
@@ -470,6 +499,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000005"),
+                    Code = "DOC",
                     Name = "Document and Information Crimes",
                     NameFrench = "Crimes liés aux documents et à l’information",
                     Description = "Forgery, illegal reproduction, or unauthorized publication.",
@@ -478,6 +508,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000006"),
+                    Code = "SEX",
                     Name = "Sexual Misconduct",
                     NameFrench = "Inconduite sexuelle",
                     Description = "Sexual harassment or related misconduct.",
@@ -486,6 +517,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000007"),
+                    Code = "SEC",
                     Name = "High-risk safety warning",
                     NameFrench = "Avertissement sécuritaire à haut risque",
                     Description = "High-risk safety warning.",
@@ -494,6 +526,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new IncidentCategory
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000008"),
+                    Code = "OTH",
                     Name = "Other",
                     NameFrench = "Autre",
                     Description = "Other",
@@ -506,6 +539,7 @@ namespace CoAntiCor.Infrastructure.Context
             modelBuilder.Entity<MaritalStatus>().HasData(
                 new MaritalStatus
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                     Code = "SINGLE",
                     Name = "Single",
                     NameFrench = "Célibataire",
@@ -513,6 +547,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new MaritalStatus
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
                     Code = "MARRIED",
                     Name = "Married",
                     NameFrench = "Marié(e)",
@@ -520,6 +555,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new MaritalStatus
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                     Code = "DIVORCED",
                     Name = "Divorced",
                     NameFrench = "Divorcé(e)",
@@ -527,6 +563,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new MaritalStatus
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
                     Code = "WIDOWED",
                     Name = "Widowed",
                     NameFrench = "Veuf / Veuve",
@@ -534,6 +571,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new MaritalStatus
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000005"),
                     Code = "SEPARATED",
                     Name = "Separated",
                     NameFrench = "Séparé(e)",
@@ -545,6 +583,7 @@ namespace CoAntiCor.Infrastructure.Context
             modelBuilder.Entity<Gender>().HasData(
                 new Gender
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                     Code = "M",
                     Name = "Male",
                     NameFrench = "Homme",
@@ -552,6 +591,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new Gender
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
                     Code = "F",
                     Name = "Female",
                     NameFrench = "Femme",
@@ -559,6 +599,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new Gender
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                     Code = "O",
                     Name = "Other",
                     NameFrench = "Autre",
@@ -570,6 +611,7 @@ namespace CoAntiCor.Infrastructure.Context
             modelBuilder.Entity<SpouseType>().HasData(
                 new SpouseType
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                     Code = "HUSBAND",
                     Name = "Husband",
                     NameFrench = "Mari",
@@ -577,6 +619,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new SpouseType
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
                     Code = "WIFE",
                     Name = "Wife",
                     NameFrench = "Femme",
@@ -584,6 +627,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new SpouseType
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                     Code = "PARTNER",
                     Name = "Partner",
                     NameFrench = "Partenaire",
@@ -596,6 +640,7 @@ namespace CoAntiCor.Infrastructure.Context
             modelBuilder.Entity<GovernmentOffice>().HasData(
                 new GovernmentOffice
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                     Name = "Ministry of Justice",
                     Province = "Kinshasa",
                     City = "Kinshasa",
@@ -605,6 +650,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new GovernmentOffice
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
                     Name = "Anti-Corruption Agency (APLC)",
                     Province = "Kinshasa",
                     City = "Kinshasa",
@@ -614,6 +660,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new GovernmentOffice
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                     Name = "Provincial Governor's Office",
                     Province = "Haut-Katanga",
                     City = "Lubumbashi",
@@ -622,7 +669,7 @@ namespace CoAntiCor.Infrastructure.Context
                     Phone = "+243 820 000 003"
                 },
                 new GovernmentOffice
-                {
+                {Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
                     Name = "Ministry of Finance",
                     Province = "Kinshasa",
                     City = "Kinshasa",
@@ -636,6 +683,7 @@ namespace CoAntiCor.Infrastructure.Context
             modelBuilder.Entity<ReasonRejected>().HasData(
                 new ReasonRejected
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                     Code = "INSUFFICIENT_INFO",
                     Name = "Insufficient Information",
                     NameFrench = "Informations insuffisantes",
@@ -645,6 +693,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new ReasonRejected
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
                     Code = "OUT_OF_SCOPE",
                     Name = "Outside Jurisdiction",
                     NameFrench = "Hors compétence",
@@ -653,7 +702,7 @@ namespace CoAntiCor.Infrastructure.Context
                     DescriptionEnglish = "The complaint does not fall under the agency's jurisdiction."
                 },
                 new ReasonRejected
-                {
+                {Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                     Code = "NO_EVIDENCE",
                     Name = "No Supporting Evidence",
                     NameFrench = "Aucune preuve",
@@ -663,6 +712,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new ReasonRejected
                 {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
                     Code = "MALICIOUS",
                     Name = "Malicious or False Report",
                     NameFrench = "Rapport malveillant ou faux",
@@ -671,7 +721,7 @@ namespace CoAntiCor.Infrastructure.Context
                     DescriptionEnglish = "The complaint appears intentionally false or malicious."
                 },
                 new ReasonRejected
-                {
+                {Id = Guid.Parse("10000000-0000-0000-0000-000000000005"),
                     Code = "DUPLICATE",
                     Name = "Duplicate Complaint",
                     NameFrench = "Plainte dupliquée",
@@ -685,7 +735,7 @@ namespace CoAntiCor.Infrastructure.Context
             // PaymentMethod CONFIGURATION -------------------------------------
             modelBuilder.Entity<PaymentMethod>().HasData(
                 new PaymentMethod
-                {
+                {Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                     Code = "MOBILE_MONEY",
                     Name = "Mobile Money",
                     NameFrench = "Mobile Money",
@@ -694,7 +744,7 @@ namespace CoAntiCor.Infrastructure.Context
                     DescriptionEnglish = "Payment via mobile services such as M-Pesa, Airtel Money, Orange Money."
                 },
                 new PaymentMethod
-                {
+                {Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
                     Code = "BANK_TRANSFER",
                     Name = "Bank Transfer",
                     NameFrench = "Virement bancaire",
@@ -703,7 +753,7 @@ namespace CoAntiCor.Infrastructure.Context
                     DescriptionEnglish = "Payment made via bank transfer."
                 },
                 new PaymentMethod
-                {
+                {Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                     Code = "CASH",
                     Name = "Cash",
                     NameFrench = "Espèces",
@@ -712,7 +762,7 @@ namespace CoAntiCor.Infrastructure.Context
                     DescriptionEnglish = "Payment in cash."
                 },
                 new PaymentMethod
-                {
+                {Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
                     Code = "PAYPAL",
                     Name = "PayPal",
                     NameFrench = "PayPal",
@@ -721,6 +771,104 @@ namespace CoAntiCor.Infrastructure.Context
                     DescriptionEnglish = "Payment via PayPal."
                 }
             );
+
+
+            // Country CONFIGURATION -------------------------------------
+            modelBuilder.Entity<Country>().HasData(
+                new Country
+                {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
+                    Code = "COD",
+                    Name = "Democratic Republic of the Congo",
+                    NameFrench = "République Démocratique du Congo",
+                    NameEnglish = "Democratic Republic of the Congo"
+                }
+            );
+
+            // Province CONFIGURATION -------------------------------------
+            modelBuilder.Entity<Province>().HasData(
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000001"), Code = "KIN", CountryCode = "COD", Name = "Kinshasa", NameFrench = "Kinshasa", NameEnglish = "Kinshasa" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000002"), Code = "KSU", CountryCode = "COD", Name = "Kongo Central", NameFrench = "Kongo Central", NameEnglish = "Kongo Central" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000003"), Code = "KWG", CountryCode = "COD", Name = "Kwango", NameFrench = "Kwango", NameEnglish = "Kwango" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000004"), Code = "KWL", CountryCode = "COD", Name = "Kwilu", NameFrench = "Kwilu", NameEnglish = "Kwilu" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000005"), Code = "MAI", CountryCode = "COD", Name = "Mai-Ndombe", NameFrench = "Mai-Ndombe", NameEnglish = "Mai-Ndombe" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000006"), Code = "KAS", CountryCode = "COD", Name = "Kasai", NameFrench = "Kasaï", NameEnglish = "Kasai" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000007"), Code = "KAC", CountryCode = "COD", Name = "Kasai Central", NameFrench = "Kasaï Central", NameEnglish = "Kasai Central" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000008"), Code = "KAE", CountryCode = "COD", Name = "Kasai Oriental", NameFrench = "Kasaï Oriental", NameEnglish = "Kasai Oriental" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000009"), Code = "LUA", CountryCode = "COD", Name = "Lomami", NameFrench = "Lomami", NameEnglish = "Lomami" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000010"), Code = "SUK", CountryCode = "COD", Name = "Sankuru", NameFrench = "Sankuru", NameEnglish = "Sankuru" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000011"), Code = "MAN", CountryCode = "COD", Name = "Maniema", NameFrench = "Maniema", NameEnglish = "Maniema" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000012"), Code = "SUD", CountryCode = "COD", Name = "South Kivu", NameFrench = "Sud-Kivu", NameEnglish = "South Kivu" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000013"), Code = "NKV", CountryCode = "COD", Name = "North Kivu", NameFrench = "Nord-Kivu", NameEnglish = "North Kivu" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000014"), Code = "ITU", CountryCode = "COD", Name = "Ituri", NameFrench = "Ituri", NameEnglish = "Ituri" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000015"), Code = "HAU", CountryCode = "COD", Name = "Haut-Uele", NameFrench = "Haut-Uele", NameEnglish = "Haut-Uele" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000016"), Code = "TUE", CountryCode = "COD", Name = "Tshopo", NameFrench = "Tshopo", NameEnglish = "Tshopo" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000017"), Code = "BAS", CountryCode = "COD", Name = "Bas-Uele", NameFrench = "Bas-Uele", NameEnglish = "Bas-Uele" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000018"), Code = "MBO", CountryCode = "COD", Name = "Mongala", NameFrench = "Mongala", NameEnglish = "Mongala" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000019"), Code = "NUB", CountryCode = "COD", Name = "North Ubangi", NameFrench = "Nord-Ubangi", NameEnglish = "North Ubangi" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000020"), Code = "SBU", CountryCode = "COD", Name = "South Ubangi", NameFrench = "Sud-Ubangi", NameEnglish = "South Ubangi" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000021"), Code = "EQU", CountryCode = "COD", Name = "Equateur", NameFrench = "Équateur", NameEnglish = "Equateur" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000022"), Code = "TSH", CountryCode = "COD", Name = "Tshuapa", NameFrench = "Tshuapa", NameEnglish = "Tshuapa" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000023"), Code = "LUAH", CountryCode = "COD", Name = "Haut-Lomami", NameFrench = "Haut-Lomami", NameEnglish = "Haut-Lomami" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000024"), Code = "LUAU", CountryCode = "COD", Name = "Lualaba", NameFrench = "Lualaba", NameEnglish = "Lualaba" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000025"), Code = "HAK", CountryCode = "COD", Name = "Haut-Katanga", NameFrench = "Haut-Katanga", NameEnglish = "Haut-Katanga" },
+                new Province { Id = Guid.Parse("10000000-0000-0000-0000-000000000026"), Code = "TAN", CountryCode = "COD", Name = "Tanganyika", NameFrench = "Tanganyika", NameEnglish = "Tanganyika" }
+            );
+
+
+            // Territory CONFIGURATION -------------------------------------
+
+            modelBuilder.Entity<Territory>().HasData(
+                new Territory { Id = Guid.Parse("10000000-0000-0000-0000-000000000001"), Code = "GOM", ProvinceCode = "NKV", CountryCode = "COD", Name = "Goma" },
+                new Territory { Id = Guid.Parse("10000000-0000-0000-0000-000000000002"), Code = "BEN", ProvinceCode = "NKV", CountryCode = "COD", Name = "Beni" },
+                new Territory { Id = Guid.Parse("10000000-0000-0000-0000-000000000003"), Code = "RUT", ProvinceCode = "SUD", CountryCode = "COD", Name = "Uvira" },
+                new Territory { Id = Guid.Parse("10000000-0000-0000-0000-000000000004"), Code = "KAS", ProvinceCode = "KAS", CountryCode = "COD", Name = "Luebo" },
+                new Territory { Id = Guid.Parse("10000000-0000-0000-0000-000000000005"), Code = "KIK", ProvinceCode = "KSU", CountryCode = "COD", Name = "Mbanza-Ngungu" },
+                new Territory { Id = Guid.Parse("10000000-0000-0000-0000-000000000006"), Code = "KIP", ProvinceCode = "HAK", CountryCode = "COD", Name = "Kasumbalesa" }
+            );
+
+            // City CONFIGURATION -------------------------------------
+
+            modelBuilder.Entity<City>().HasData(
+                new City { Id = Guid.Parse("30000000-0000-0000-0000-000000000001"), CountryCode = "COD", ProvinceCode = "KIN", CityName = "Kinshasa" },
+                new City { Id = Guid.Parse("30000000-0000-0000-0000-000000000002"), CountryCode = "COD", ProvinceCode = "HAK", CityName = "Lubumbashi" },
+                new City { Id = Guid.Parse("30000000-0000-0000-0000-000000000003"), CountryCode = "COD", ProvinceCode = "NKV", CityName = "Goma" },
+                new City { Id = Guid.Parse("30000000-0000-0000-0000-000000000004"), CountryCode = "COD", ProvinceCode = "SUD", CityName = "Bukavu" },
+                new City { Id = Guid.Parse("30000000-0000-0000-0000-000000000005"), CountryCode = "COD", ProvinceCode = "ITU", CityName = "Bunia" },
+                new City { Id = Guid.Parse("30000000-0000-0000-0000-000000000006"), CountryCode = "COD", ProvinceCode = "TUE", CityName = "Kisangani" }
+            );
+
+            // Commune CONFIGURATION -------------------------------------
+
+            modelBuilder.Entity<Commune>().HasData(
+                new Commune { Id = Guid.Parse("40000000-0000-0000-0000-000000000001"), CityId = Guid.Parse("30000000-0000-0000-0000-000000000001"), CommuneName = "Gombe" },
+                new Commune { Id = Guid.Parse("40000000-0000-0000-0000-000000000002"), CityId = Guid.Parse("30000000-0000-0000-0000-000000000001"), CommuneName = "Kinshasa" },
+                new Commune { Id = Guid.Parse("40000000-0000-0000-0000-000000000003"), CityId = Guid.Parse("30000000-0000-0000-0000-000000000001"), CommuneName = "Kasa-Vubu" },
+                new Commune { Id = Guid.Parse("40000000-0000-0000-0000-000000000004"), CityId = Guid.Parse("30000000-0000-0000-0000-000000000001"), CommuneName = "Lingwala" },
+                new Commune { Id = Guid.Parse("40000000-0000-0000-0000-000000000005"), CityId = Guid.Parse("30000000-0000-0000-0000-000000000001"), CommuneName = "Ngaliema" }
+            );
+
+            // Quartier CONFIGURATION -------------------------------------
+
+            modelBuilder.Entity<Quartier>().HasData(
+                new Quartier { Id = Guid.Parse("50000000-0000-0000-0000-000000000001"), CommuneId = Guid.Parse("40000000-0000-0000-0000-000000000001"), Name = "Quartier Résidentiel" },
+                new Quartier { Id = Guid.Parse("50000000-0000-0000-0000-000000000002"), CommuneId = Guid.Parse("40000000-0000-0000-0000-000000000001"), Name = "Quartier Commercial" }
+            );
+
+            // RoadType CONFIGURATION -------------------------------------
+
+            modelBuilder.Entity<RoadType>().HasData(
+                new RoadType { Id = Guid.Parse("50000000-0000-0000-0000-000000000001"), LookupValue = "AV", Name = "Avenue" },
+                new RoadType { Id = Guid.Parse("50000000-0000-0000-0000-000000000002"), LookupValue = "BD", Name = "Boulevard" },
+                new RoadType { Id = Guid.Parse("50000000-0000-0000-0000-000000000003"), LookupValue = "RT", Name = "Route" },
+                new RoadType { Id = Guid.Parse("50000000-0000-0000-0000-000000000004"), LookupValue = "RN", Name = "Route Nationale" },
+                new RoadType { Id = Guid.Parse("50000000-0000-0000-0000-000000000005"), LookupValue = "CH", Name = "Chaussée" },
+                new RoadType { Id = Guid.Parse("50000000-0000-0000-0000-000000000006"), LookupValue = "RUE", Name = "Rue" }
+            );
+
+            // MENU CONFIGURATION -------------------------------------
+
+
 
             // MENU CONFIGURATION -------------------------------------
 

@@ -16,9 +16,11 @@ namespace CoAntiCor.Core.Domain.Person
         public bool? IsReporterPerson { get; set; } = false;
 
         [Display(Name = "Company")]
-        public Guid PhysicPersonId { get; set; } // Company / societe
-        [ForeignKey(nameof(PhysicPersonId))]
-        public PhysicPerson? PhysicPerson { get; set; } // Optional reference navigation to principal
+       // public Guid PhysicPersonId { get; set; } // Company / societe
+        //[ForeignKey(nameof(PhysicPersonId))]
+        //public PhysicPerson? PhysicPerson { get; set; } // Optional reference navigation to principal
+        public ICollection<PhysicPerson>? PhysicPersons { get; set; } // Ex: //PhysicPerson
+
         [Display(Name = "First Name")]
         [Required]
         [StringLength(50, MinimumLength = 1)]
@@ -70,8 +72,10 @@ namespace CoAntiCor.Core.Domain.Person
         [Required]
         [Display(Name = "Addresses")]
         public ICollection<Address.Address>? CurrentAddress { get; set; } //Ex: Address 1, Address 2 etc
-       
-      
+
+        public Guid ComplaintId { get; set; }
+        public Complaint Complaint { get; set; } = default!;
+
     }
 
   

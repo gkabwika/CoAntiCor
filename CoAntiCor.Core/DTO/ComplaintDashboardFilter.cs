@@ -6,8 +6,8 @@ namespace CoAntiCor.Core.DTO
     {
         public string? Province { get; set; }
         public string? City { get; set; }
-        public int? IncidentTypeId { get; set; }
-        public int? IncidentCategoryId { get; set; }
+        public Guid? IncidentTypeId { get; set; }
+        public Guid? IncidentCategoryId { get; set; }
         public ComplaintStatus? Status { get; set; }
         public Guid? AssignedToUserId { get; set; }
         public DateTime? CreatedFrom { get; set; }
