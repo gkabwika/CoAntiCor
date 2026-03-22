@@ -16,4 +16,9 @@
     <ProjectReference Include="..\CoAntiCor.Core\CoAntiCor.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Migrations\Identity\" />
+    <Folder Include="Data\Migrations\Domain\" />
+  </ItemGroup>
+
 </Project>

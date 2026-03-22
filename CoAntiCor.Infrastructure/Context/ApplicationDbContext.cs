@@ -1,5 +1,6 @@
 using CoAntiCor.Data;
 using CoAntiCor.Data.Entities;
+using CoAntiCor.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -51,18 +51,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("CanAssignCases", policy =>
-        policy.RequireRole("Manager", "Executive"));
-
-    options.AddPolicy("CanViewAllComplaints", policy =>
-        policy.RequireRole("Inspector", "Manager", "Executive", "Prosecutor"));
-
-    options.AddPolicy("CanGenerateDossier", policy =>
-        policy.RequireRole("Prosecutor", "Executive"));
-});
-
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -84,6 +72,10 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 builder.Services.AddAuthorization(options =>
 {
+    options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
+    options.AddPolicy("Citizen", p => p.RequireRole("Citizen"));
+    options.AddPolicy("SpecialInvestigator", p => p.RequireRole("SpecialInvestigator"));
+    options.AddPolicy("InternalStaff", p => p.RequireRole("InternalStaff"));
     options.AddPolicy("CanAssignCases", policy =>
         policy.RequireRole("Manager", "Executive"));
 

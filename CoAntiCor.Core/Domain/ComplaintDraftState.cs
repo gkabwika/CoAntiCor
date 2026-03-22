@@ -1,4 +1,8 @@
-﻿using System.ComponentModel;
+﻿using CoAntiCor.Core.Domain.Organization.OrganizationDetails;
+using CoAntiCor.Core.Domain.Person;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoAntiCor.Core.Domain
 {
@@ -10,7 +14,6 @@ namespace CoAntiCor.Core.Domain
         public DateTime? LastSavedUtc { get; set; }
         public bool IsSaving { get; set; }
         public Dictionary<int, DateTime> StepCompletedUtc { get; set; } = new(); // key = step number
-
 
         // Step 1
         public string? SearchQuery { get; set; }
@@ -28,6 +31,22 @@ namespace CoAntiCor.Core.Domain
         public string? Province { get; set; }
         public string? City { get; set; }
         public Guid? GovernmentOfficeId { get; set; }
+
+        public Guid NaturalPersonId { get; set; } // Company / societe
+        [ForeignKey(nameof(NaturalPersonId))]
+        [Display(Name = " Reporter Person Details")]
+        public ICollection<NaturalPerson> ReporterPersons { get; set; } = new List<NaturalPerson>();
+
+        [Display(Name = " Victim Person Details")]
+        public ICollection<NaturalPerson> VictimPersons { get; set; } = new List<NaturalPerson>();
+
+        public Guid PhysicPersonId { get; set; } // Company / societe
+        [ForeignKey(nameof(PhysicPersonId))]
+        [Display(Name = " Reporter Organization Details")]
+        public ICollection<PhysicPerson> ReporterOrganizations { get; set; } = new List<PhysicPerson>();
+
+        [Display(Name = " Victim Organization Details")]
+        public ICollection<PhysicPerson> VictimOrganizations { get; set; } = new List<PhysicPerson>();
 
         // Step 4
         public string? Title { get; set; }

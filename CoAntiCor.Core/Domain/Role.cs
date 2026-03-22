@@ -1,5 +1,16 @@
 ﻿namespace CoAntiCor.Core.Domain
 {
+    /// <summary>
+    /// Used in policies
+    /// <- Admin
+    /// <- Citizen
+    /// <- InternalStaff
+    /// <- Manager
+    /// <- Executive
+    /// <- Inspector
+    /// <- Prosecutor
+    /// <- SpecialInvestigator
+    /// </summary>
     public class Role
     {
         public Guid Id { get; set; }
