@@ -47,8 +47,7 @@ builder.Services
     .AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<CoAntiCorDbContext>()
     .AddDefaultTokenProviders();
-
-var jwtSection = builder.Configuration.GetSection("Jwt");
+/*var jwtSection = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSection["Key"]!);
 
 builder.Services
@@ -70,8 +69,7 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(key)
         };
     });
-
-
+*/
 builder.Services.AddAuthorization(options =>
 {
     
@@ -96,6 +94,8 @@ builder.Services.AddHostedService<DraftCleanupService>();
 
 builder.Services.AddScoped<IComplaintNumberGenerator, ComplaintNumberGenerator>();
 builder.Services.AddScoped<IComplaintDraftService, ComplaintDraftService>();
+builder.Services.AddScoped<IComplaintService, ComplaintService>();
+
 builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddScoped<BackgroundService, DraftCleanupService>();
 builder.Services.AddScoped<IProcessingPhaseEngine, ProcessingPhaseEngine>();

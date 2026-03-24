@@ -1,4 +1,6 @@
 ﻿@page "/report-incident"
+@page "/wizard"
+@rendermode InteractiveServer
 @using CoAntiCor.Components.Pages.Portal.Modal
 @using CoAntiCor.Components.Pages.Portal.Steps
 @using CoAntiCor.Core.DTO
@@ -105,12 +107,12 @@ else
     private void GoToStep1() => _currentStep = 1;
     private void GoToStep2() => _currentStep = 2;
     private void GoToStep3() => _currentStep = 3;
-    private void GoToStep4() => _currentStep = 4;
+    private void GoToStep4() => _currentStep = 4;  
 
     private bool _showRecoveryModal;
     private bool _showDevicePrompt;
     private Guid _recoveryDraftId;
-    private Guid _localDraftId;
+    private Guid? _localDraftId;
 
     private bool _showConflictModal;
     private ComplaintDraftState? _serverState;
@@ -125,33 +127,33 @@ else
         //- Or a draft ID stored in local storage(anonymous users)
         //If found → show a modal/Device Prompt Modal
 
-        // 1.Check local storage(anonymous users)
-        var localDraftId = await JS.InvokeAsync<string>("draftStorage.getDraftId");
+       //  // 1.Check local storage(anonymous users)
+       // // var localDraftId = await JS.InvokeAsync<string>("draftStorage.getDraftId");
 
-        if (Guid.TryParse(localDraftId, out var draftIdLocal))
-        {
-            var draft = await _draftService.LoadDraftAsync(draftIdLocal, GetCurrentUserIdOrNull());
-            if (draft is not null)
-            {
-                _recoveryDraftId = draftIdLocal; //localDraftId
-                _showRecoveryModal = true; //showDevicePrompt
-                return;
-            }
-        }
+       //  if (Guid.TryParse(_localDraftId.ToString(), out var draftIdLocal))
+       //  {
+       //      var draft = await _draftService.LoadDraftAsync(draftIdLocal, GetCurrentUserIdOrNull());
+       //      if (draft is not null)
+       //      {
+       //          _recoveryDraftId = draftIdLocal; //localDraftId
+       //          _showRecoveryModal = true; //showDevicePrompt
+       //          return;
+       //      }
+       //  }
 
-        //2. Optionally load draftId from query string
-        var uri = Nav.ToAbsoluteUri(Nav.Uri);
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("draftId", out var draftIdStr) &&
-            Guid.TryParse(draftIdStr, out var draftId))
-        {
-            var userId = GetCurrentUserIdOrNull();
-            var loaded = await _draftService.LoadDraftAsync(draftId, userId);
-            if (loaded is not null)
-                _stateSavedDraft = loaded;
+        // //2. Optionally load draftId from query string
+        // var uri = Nav.ToAbsoluteUri(Nav.Uri);
+        // if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("draftId", out var draftIdStr) &&
+        //     Guid.TryParse(draftIdStr, out var draftId))
+        // {
+        //     var userId = GetCurrentUserIdOrNull();
+        //     var loaded = await _draftService.LoadDraftAsync(draftId, userId);
+        //     if (loaded is not null)
+        //         _stateSavedDraft = loaded;
 
-            _loadedVersion = _stateSavedDraft.Version;
+        //     _loadedVersion = _stateSavedDraft.Version;
 
-        }
+        // }
 
         // 3.Load draft activities if a draft is loaded
         if (_stateSavedDraft.DraftId != Guid.Empty)
@@ -164,7 +166,18 @@ else
 
         // No draft found → start fresh
     }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // 1.Check local storage(anonymous users)
+            var localDraftId = await JS.InvokeAsync<string>("draftStorage.getDraftId");
+           // await AuthProvider.InitializeAsync(); // sets _initialized = true
+           // _localDraftId = Guid.Parse(localDraftId);  // TODO --> it's null
 
+        }
+
+    }
     // old submit method, now we do it in the last step with a review page
     private async Task SubmitComplaintAsync()
     {
@@ -315,7 +328,7 @@ else
 
     private async Task ResumeLocalDraft()
     {
-        var draft = await _draftService.LoadDraftAsync(_localDraftId, GetCurrentUserIdOrNull());
+        var draft = await _draftService.LoadDraftAsync((Guid)_localDraftId, GetCurrentUserIdOrNull());
         if (draft is not null)
             _stateSavedDraft = draft;
 

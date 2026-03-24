@@ -1,4 +1,11 @@
-﻿<div class="wizard-step">
+﻿@using CoAntiCor.Core.DTO
+@inject HttpClient Http
+@inject IStringLocalizer<SharedResource> Localizer
+@using System.Timers
+@using CoAntiCor.Resources
+@using Microsoft.Extensions.Localization
+@inject HttpClient Http
+<div class="wizard-step">
     <h4>Step 5: Confirmation</h4>
 
     <p>Your complaint has been submitted successfully.</p>

@@ -1,11 +1,18 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
 namespace CoAntiCor.Components.Account
 {
-    internal sealed class IdentityRedirectManager(NavigationManager navigationManager)
+    internal sealed class IdentityRedirectManager
     {
         public const string StatusCookieName = "Identity.StatusMessage";
+        private string? _pendingUri;
+        private readonly NavigationManager navigationManager;
+
+        public IdentityRedirectManager(NavigationManager nav)
+        {
+            navigationManager = nav;
+        }
 
         private static readonly CookieBuilder StatusCookieBuilder = new()
         {
@@ -55,5 +62,49 @@ namespace CoAntiCor.Components.Account
         [DoesNotReturn]
         public void RedirectToCurrentPageWithStatus(string message, HttpContext context)
             => RedirectToWithStatus(CurrentPath, message, context);
+
+
+        // public void RedirectTo(string uri, Dictionary<string, object?> queryParameters, bool forceLoad = true)
+        //public void RedirectTo(string uri, bool forceLoad = true)
+        //{
+        //    // If circuit not fully established (prerender or no client), defer
+        //    if (!CanNavigate())
+        //    {
+        //        _pendingUri = uri;
+        //        return;
+        //    }
+        //    var uriWithoutQuery = navigationManager.ToAbsoluteUri(uri).GetLeftPart(UriPartial.Path);
+
+        //    //var newUri = _nav.GetUriWithQueryParameters(uriWithoutQuery, queryParameters);
+
+        //    // _nav.NavigateTo(newUri, forceLoad);
+        //    navigationManager.NavigateTo(uri, forceLoad);
+        //}
+
+        public void TryProcessPendingRedirect()
+        {
+            if (!string.IsNullOrEmpty(_pendingUri) && CanNavigate())
+            {
+                var target = _pendingUri;
+                _pendingUri = null;
+                navigationManager.NavigateTo(target!, true);
+            }
+        }
+
+        private bool CanNavigate()
+        {
+            // In Server (non‑prerender) this is always true; kept for safety
+            return true;
+        }
+
+        [DoesNotReturn]
+        public void RedirectToOriginal(string uri, Dictionary<string, object?> queryParameters)
+        {
+            var uriWithoutQuery = navigationManager.ToAbsoluteUri(uri).GetLeftPart(UriPartial.Path);
+            var newUri = navigationManager.GetUriWithQueryParameters(uriWithoutQuery, queryParameters);
+            RedirectTo(newUri);
+        }
+
+
     }
 }

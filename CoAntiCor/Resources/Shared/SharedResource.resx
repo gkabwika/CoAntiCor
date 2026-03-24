@@ -151,10 +151,10 @@
     <value>fr</value>
   </data>
   <data name="RedirectURL_EN" xml:space="preserve">
-    <value>https://eguce.rdc.cd</value>
+    <value>https://coanticor.rdc.cd</value>
   </data>
   <data name="RedirectURL_FR" xml:space="preserve">
-    <value>https://eguce.rdc.cda</value>
+    <value>https://coanticor.rdc.cda</value>
   </data>
   <data name="Privacy_Head" xml:space="preserve">
     <value>Privacy notice statement</value>

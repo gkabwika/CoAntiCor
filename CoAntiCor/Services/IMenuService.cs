@@ -7,5 +7,7 @@ namespace CoAntiCor.Services.Menu;
 
 public interface IMenuService
 {
-    Task<List<MenuItem>> GetMenuAsync(string? role);
+	Task<List<MenuItem>> GetMenuChildAsync(string? role, int? parentId);
+
+	Task<List<MenuItem>> GetMenuAsync(string? role);
 }

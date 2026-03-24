@@ -48,7 +48,7 @@ namespace CoAntiCor.Core.Domain
         public ICollection<PhysicPerson> Organizations { get; set; } = new List<PhysicPerson>();
         public ComplaintStatus Status { get; set; }
 
-        public int? GovernmentOfficeId { get; set; }
+        public Guid? GovernmentOfficeId { get; set; }
         public GovernmentOffice? GovernmentOffice { get; set; }
 
         public DateTime CreatedAt { get; set; }

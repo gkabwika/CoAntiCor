@@ -28,6 +28,7 @@ namespace CoAntiCor.Core.Domain
         public string? ReporterName { get; set; }
         public string? ReporterEmail { get; set; }
         public string? ReporterPhone { get; set; }
+        public Guid? ProvinceId { get; set; }
         public string? Province { get; set; }
         public string? City { get; set; }
         public Guid? GovernmentOfficeId { get; set; }

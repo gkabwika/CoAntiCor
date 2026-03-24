@@ -34,9 +34,26 @@ public class MenuService : IMenuService
 
         if (!string.IsNullOrWhiteSpace(role))
         {
-            menu = menu.Where(m => m.Role == null || m.Role == role);
+            topLevel = topLevel.Where(m => m.Role == null || m.Role == role);
         }
 
-        return await menu.ToListAsync();
+        return await topLevel.ToListAsync();
+    }
+
+    public async Task<List<MenuItem>> GetMenuChildAsync(string? role, int? parentId)
+    {
+        var menu = _db.MenuItems
+            .Where(m => m.IsActive)
+            .OrderBy(m => m.DisplayOrder)
+            .AsQueryable();
+
+        var children = menu.Where(m => m.ParentId != null && m.ParentId != parentId);
+
+        if (!string.IsNullOrWhiteSpace(role))
+        {
+            children = children.Where(m => m.Role == null || m.Role == role);
+        }
+
+        return await children.ToListAsync();
     }
 }

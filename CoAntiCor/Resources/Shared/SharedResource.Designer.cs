@@ -39,7 +39,7 @@ namespace CoAntiCor.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("eGUCE.APP.Resources.SharedResource", typeof(SharedResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CoAntiCor.Resources.SharedResource", typeof(SharedResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -3175,7 +3175,7 @@ namespace CoAntiCor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://eguce.rdc.cd.
+        ///   Looks up a localized string similar to https://coanticor.rdc.cd.
         /// </summary>
         public static string RedirectURL_EN {
             get {
@@ -3184,7 +3184,7 @@ namespace CoAntiCor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://eguce.rdc.cda.
+        ///   Looks up a localized string similar to https://coanticor.rdc.cda.
         /// </summary>
         public static string RedirectURL_FR {
             get {

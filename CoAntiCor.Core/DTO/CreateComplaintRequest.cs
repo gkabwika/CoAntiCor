@@ -23,7 +23,7 @@ namespace CoAntiCor.Core.DTO
         public string? Province { get; set; }
         public string? City { get; set; }
 
-        public int? GovernmentOfficeId { get; set; }
+        public Guid? GovernmentOfficeId { get; set; }
 
         public List<CreateComplaintAttachmentRequest> Attachments { get; set; } = new();
     }

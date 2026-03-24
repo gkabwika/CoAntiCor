@@ -1,5 +1,10 @@
 ﻿@using CoAntiCor.Core.DTO
 @inject HttpClient Http
+@inject IStringLocalizer<SharedResource> Localizer
+@using System.Timers
+@using CoAntiCor.Resources
+@using Microsoft.Extensions.Localization
+@inject HttpClient Http
 
 @* Step 1 – AI search *@
 <div class="wizard-step">
@@ -9,11 +14,24 @@
         Describe your incident. We will search for similar cases in the CoAntiCor system.
     </p>
 
-    <textarea class="form-control" @bind="State.SearchQuery" rows="4"></textarea>
+    <input id="stp1-search-id" name="stp1-search-name" class="input-text" @bind="State.SearchQuery" placeholder="@Localizer["SearchCreateCompany"]" data-rule-required="true" aria-invalid="false" />
+@*      <textarea class="form-control" @bind="State.SearchQuery" rows="4"></textarea> *@
 
-    <button class="btn btn-primary mt-2" @onclick="SearchAsync" disabled="@_isSearching">
-        @_isSearching ? "Searching..." : "Search"
-    </button>
+    @if (_isSearching)
+    {
+        <button id="stp1-search-id02" class="btn btn-primary mt-2" @onclick="SearchAsync" disabled="@_isSearching">
+            Searching...
+        </button>
+    }
+    else
+    {
+        <button id="stp1-search-id03" class="btn btn-primary mt-2" @onclick="SearchAsync" disabled="@_isSearching">
+            Search
+        </button>
+    }
+   @*  <button class="btn btn-primary mt-2" @onclick="SearchAsync" disabled="@_isSearching">
+      "Searching..." : "Search"
+    </button> *@
 
     @if (State.SimilarIncidents.Any())
     {
@@ -54,9 +72,10 @@
 
         _isSearching = true;
 
-        var response = await Http.PostAsJsonAsync("api/ai/search-incidents", new
+        var response = await Http.PostAsJsonAsync("/api/v1/ServiceRequest/Search", new
         {
-            query = State.SearchQuery
+            Term = State.SearchQuery,
+            MaxResults = 10
         });
 
         response.EnsureSuccessStatusCode();

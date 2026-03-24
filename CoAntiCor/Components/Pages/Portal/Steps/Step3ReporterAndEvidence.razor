@@ -1,5 +1,10 @@
 ﻿@using CoAntiCor.Core.DTO
 @inject HttpClient Http
+@inject IStringLocalizer<SharedResource> Localizer
+@using System.Timers
+@using CoAntiCor.Resources
+@using Microsoft.Extensions.Localization
+@inject HttpClient Http
 
 <div class="wizard-step">
     <h4>Step 3: Reporter information and evidence</h4>
@@ -68,11 +73,26 @@
     [Parameter] public EventCallback OnNext { get; set; }
 
     private List<GovernmentOfficeDto> _offices = new();
+    private List<ProvinceDto> _provinces = new();
+
 
     protected override async Task OnInitializedAsync()
     {
-        _offices = await Http.GetFromJsonAsync<List<GovernmentOfficeDto>>("api/lookups/government-offices")
-                   ?? new();
+        try
+        {
+            _offices = await Http.GetFromJsonAsync<List<GovernmentOfficeDto>>("api/v1/lookups/governmentOffices") ?? new();
+            // Simulate delay for loading
+         
+
+        }
+        catch (Exception ex)
+        {
+            // Handle error (e.g. log, show message)
+            Console.Error.WriteLine($"Error loading types/Offices: {ex.Message}");
+            // For simplicity, we just continue with empty lists
+        }
+
+        StateHasChanged();
     }
 
     private async Task OnFilesSelected(InputFileChangeEventArgs e)
@@ -121,11 +141,4 @@
 
     private Task HandleBack() => OnBack.InvokeAsync();
 
-    public class GovernmentOfficeDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = default!;
-        public string Province { get; set; } = default!;
-        public string City { get; set; } = default!;
-    }
 }

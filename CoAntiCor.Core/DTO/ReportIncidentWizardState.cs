@@ -15,8 +15,8 @@ namespace CoAntiCor.Core.DTO
         public bool IsSaving { get; set; }
 
         // Step 2 - classification
-        public int? IncidentTypeId { get; set; }
-        public int? IncidentCategoryId { get; set; }
+        public Guid? IncidentTypeId { get; set; }
+        public Guid? IncidentCategoryId { get; set; }
 
         // Step 3 - reporter & evidence
         public bool IsAnonymous { get; set; }
@@ -26,13 +26,14 @@ namespace CoAntiCor.Core.DTO
         public string? ReporterEmail { get; set; }
         public string? ReporterPhone { get; set; }
 
-        public int? GovernmentOfficeId { get; set; }
+        public Guid? GovernmentOfficeId { get; set; }
 
         public List<UploadedFileDto> EvidenceFiles { get; set; } = new();
 
         // Core complaint info
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public Guid? ProvinceId { get; set; }
 
         public string? Province { get; set; }
         public string? City { get; set; }

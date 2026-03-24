@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CoAntiCor.API\CoAntiCor.API.csproj" />
     <ProjectReference Include="..\CoAntiCor.Core\CoAntiCor.Core.csproj" />
     <ProjectReference Include="..\CoAntiCor.Infrastructure\CoAntiCor.Infrastructure.csproj" />
   </ItemGroup>

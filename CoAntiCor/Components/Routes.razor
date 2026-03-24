@@ -1,18 +1,27 @@
 ﻿@using CoAntiCor.Components.Account.Shared
 @using CoAntiCor.Services
 @inject AuditedNavigationManager AuditedNav
+@using CoAntiCor.API.Services
+@using CoAntiCor.Components.Account
+@using CoAntiCor.Components.Layout
+@using CoAntiCor.Components.Shared
+@using Microsoft.AspNetCore.Components.Authorization
+@inject JwtAuthenticationStateProvider AuthProvider
+@inject IdentityRedirectManager RedirectManager
+@inject AuditedNavigationManager AuditedNav
 
+@* 
 <CascadingAuthenticationState>
     <Router AppAssembly="typeof(Program).Assembly">
         <Found Context="routeData">
             <RouteView RouteData="@routeData" />
 
-           @*  <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Shared.MainLayout)">
-                <NotAuthorized>
-                    <RedirectToLogin />
-                </NotAuthorized>
-            </AuthorizeRouteView>
-            <FocusOnNavigate RouteData="routeData" Selector="h1" /> *@
+               <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Shared.MainLayout)">
+                    <NotAuthorized>
+                        <RedirectToLogin />
+                    </NotAuthorized>
+                </AuthorizeRouteView>
+                <FocusOnNavigate RouteData="routeData" Selector="h1" />
         </Found>
         <NotFound>
             <p>Page not found.</p>
@@ -20,10 +29,42 @@
 
     </Router>
 </CascadingAuthenticationState>
-@* <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(App).Assembly">
+ *@
+
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData"    NotAuthorized="@(() => Nav.NavigateTo("/login"))" />
+            @* Replace RouteView with AuthorizeRouteView *@
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Shared.MainLayout)">
+                <NotAuthorized>
+                    @* This runs when a user hits an [Authorize] page while logged out *@
+                    <RedirectToLogin />
+                </NotAuthorized>
+            </AuthorizeRouteView>
+               
         </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(Layout.MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
     </Router>
-</CascadingAuthenticationState> *@
+</CascadingAuthenticationState>
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await AuthProvider.InitializeAsync(); // sets _initialized = true
+        }
+
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            RedirectManager.TryProcessPendingRedirect();
+        }
+    }
+}
