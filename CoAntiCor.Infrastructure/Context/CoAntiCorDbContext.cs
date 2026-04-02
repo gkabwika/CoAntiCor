@@ -12,17 +12,24 @@ using CoAntiCor.Core.Domain.Organization.PaymentMethods;
 using CoAntiCor.Core.Domain.PaymentMethods;
 using CoAntiCor.Core.Domain.Person;
 using CoAntiCor.Core.Domain.Processing;
+using CoAntiCor.Core.Domain;
 using CoAntiCor.Core.Model;
 using CoAntiCor.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
+using CoAntiCor.Core.Interfaces;
 
 namespace CoAntiCor.Infrastructure.Context
 {
-    public class CoAntiCorDbContext : IdentityDbContext<ApplicationUser>
-    {      
-        public CoAntiCorDbContext(DbContextOptions<CoAntiCorDbContext> options) : base(options) { }
+    public class CoAntiCorDbContext : IdentityDbContext<Core.Domain.ApplicationUser>
+    {
+        private readonly ITenantContext? _tenant;
 
+        public CoAntiCorDbContext(DbContextOptions<CoAntiCorDbContext> options, ITenantContext tenant) : base(options)
+        {
+            _tenant = tenant;
+        }
         public DbSet<User> Users => Set<User>();
         public DbSet<Role> Roles => Set<Role>();
         public DbSet<UserRole> UserRoles => Set<UserRole>();
@@ -102,6 +109,14 @@ namespace CoAntiCor.Infrastructure.Context
         public DbSet<MobileMoney> MobileMoneys => Set<MobileMoney>();
         public DbSet<PayPal> PayPals => Set<PayPal>();
         public DbSet<UserPaymentMethod> UserPaymentMethods => Set<UserPaymentMethod>();
+        public DbSet<RegulatorOfficePermission> RegulatorOfficePermissions { get; set; } = default!;
+        public DbSet<RegulatorProvincePermission> RegulatorProvincePermissions { get; set; } = default!;
+        public DbSet<IntegrityLog> IntegrityLogs => Set<IntegrityLog>();
+        public DbSet<TenantAuditEntry> TenantAuditEntrys => Set<TenantAuditEntry>();
+        public DbSet<SignatureAudit> SignatureAudits => Set<SignatureAudit>();
+        public DbSet<Core.Domain.Contract> Contracts => Set<Core.Domain.Contract>();
+        public DbSet<BrokerOffice> BrokerOffices => Set<BrokerOffice>();
+
 
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,11 +1,11 @@
-using CoAntiCor.API.Services;
+﻿using CoAntiCor.API.Services;
 using CoAntiCor.Components;
 using CoAntiCor.Components.Account;
 using CoAntiCor.Core.Domain;
 using CoAntiCor.Core.Interfaces;
 using CoAntiCor.Core.Model;
 using CoAntiCor.Core.Services;
-using CoAntiCor.Data;
+using CoAntiCor.Core.Domain;
 using CoAntiCor.Infrastructure.Context;
 using CoAntiCor.Services;
 using CoAntiCor.Services.Menu;
@@ -15,8 +15,11 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using ApplicationDbContext = CoAntiCor.Infrastructure.Context.ApplicationDbContext;
+using ApplicationUser = CoAntiCor.Core.Domain.ApplicationUser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +60,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthentication(options =>
 {
+    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+   
     options.DefaultAuthenticateScheme = "JwtBearer";
     options.DefaultChallengeScheme = "JwtBearer";
 })
@@ -64,7 +70,14 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        // issuer, audience, signing key, etc.
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
 
@@ -81,15 +94,50 @@ builder.Services.AddDbContextFactory<CoAntiCorDbContext>(options =>
 builder.Services.AddTransient<ApplicationDbContext>();
 builder.Services.AddDbContext<CoAntiCorDbContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDbContext<CoAntiCorDbContext>(ServiceLifetime.Transient);
+builder.Services.AddDbContext<CoAntiCorDbContext>(ServiceLifetime.Scoped);
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+//builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddSignInManager()
+//    .AddDefaultTokenProviders();
+
+builder.Services.AddIdentityCore<ApplicationUser>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedAccount = true;
+})
+    .AddRoles<IdentityRole>()
+     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization(options =>
 {
+    // Custom policy to ensure the user has a tenant claim (e.g., "brokerOfficeId") and that it's not empty.
+    //Ensures the user has a tenant (BrokerOfficeId) before accessing an endpoint
+    options.AddPolicy("TenantRequired", policy =>
+       policy.RequireAssertion(context =>
+       {
+           var tenant = context.User.FindFirst("brokerOfficeId")?.Value;
+           return !string.IsNullOrEmpty(tenant);
+       }));
+
+    //Ensures the user belongs to a specific office or any office, depending on your requirements.
+    options.AddPolicy("RequireBrokerOffice", policy =>
+        policy.RequireAssertion(context =>
+        {
+            var officeId = context.User.FindFirst("brokerOfficeId")?.Value;
+            return !string.IsNullOrEmpty(officeId);
+        }));
+
+    //Enforces province‑based access (useful for regulators, inspectors, regional staff)
+    options.AddPolicy("RequireProvince", policy =>
+    policy.RequireAssertion(context =>
+    {
+        var province = context.User.FindFirst("province")?.Value;
+        return !string.IsNullOrEmpty(province);
+    }));
+
     options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
     options.AddPolicy("Citizen", p => p.RequireRole("Citizen"));
     options.AddPolicy("SpecialInvestigator", p => p.RequireRole("SpecialInvestigator"));
@@ -108,10 +156,13 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Resources")
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
+    // 2. Localisation - Define supported cultures
+    //var supportedCultures = new[] { "en-US", "fr-FR" };
     var supportedCultures = new[] { "en", "fr" };
-    options.SetDefaultCulture("en");
-    options.AddSupportedCultures(supportedCultures);
-    options.AddSupportedUICultures(supportedCultures);
+    var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
 });
 
 builder.Services.AddTransient<JwtDelegatingHandler>();
@@ -159,6 +210,29 @@ builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IAttachmentService, AttachmentService>();
 builder.Services.Configure<AttachmentSettings>(
 builder.Configuration.GetSection("AttachmentSettings"));
+
+
+
+/////////////////////////
+
+builder.Services.AddSingleton<IContractPdfService, ContractPdfService>();
+builder.Services.AddScoped<ICaseFilePdfService, CaseFilePdfService>();
+builder.Configuration.GetSection("DraftRetention");
+builder.Services.AddHostedService<DraftCleanupService>();
+
+builder.Services.AddScoped<IComplaintNumberGenerator, ComplaintNumberGenerator>();
+
+builder.Services.AddScoped<IListingService, ListingService>();
+
+builder.Services.AddScoped<ITenantContext, TenantContext>();
+builder.Services.AddScoped<ITenantAuditService, TenantAuditService>();
+
+
+/////////////////////////////
+///
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -173,6 +247,8 @@ else
     app.UseHsts();
 }
 
+// 3. Localisation - Use the middleware (must be before MapRazorComponents)
+//app.UseRequestLocalization(localizationOptions);
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

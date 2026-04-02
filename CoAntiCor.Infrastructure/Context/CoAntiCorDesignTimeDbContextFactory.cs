@@ -1,5 +1,4 @@
-﻿
-using CoAntiCor.Infrastructure.Context;
+﻿using CoAntiCor.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -15,22 +14,21 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<CoAntiCorD
     public CoAntiCorDbContext CreateDbContext(string[] args)
     {
         var basePath = Directory.GetCurrentDirectory();
-        // if running tools from solution root, adjust path to API project where appsettings lives:
         var config = new ConfigurationBuilder()
             .SetBasePath(basePath)
             .AddJsonFile("appsettings.json", optional: true)
             .AddJsonFile(Path.Combine("..", "CoAntiCor.API", "appsettings.json"), optional: true)
-            //.AddEnvironmentVariables()
             .Build();
 
-         var conn = config.GetConnectionString("DefaultConnection")
+        var conn = config.GetConnectionString("DefaultConnection")
                            ?? Environment.GetEnvironmentVariable("APP__DefaultConnection")
                            ?? "Server=DESKTOP-M3G136G;Database=COANTICOR_DEV;Trusted_Connection=True;";
 
         var builder = new DbContextOptionsBuilder<CoAntiCorDbContext>()
             .UseSqlServer(conn, o => o.MigrationsHistoryTable("__EFMigrationsHistory_App"));
 
-        return new CoAntiCorDbContext(builder.Options);
+        // Pass null for ITenantContext as design-time context creation does not require a tenant
+        return new CoAntiCorDbContext(builder.Options, tenant: null);
     }
 }
 

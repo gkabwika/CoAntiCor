@@ -1,4 +1,5 @@
-using CoAntiCor.Data;
+using CoAntiCor.Core.Domain;
+using CoAntiCor.Core.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 

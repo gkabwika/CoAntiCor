@@ -8,9 +8,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Web;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,6 +101,14 @@ builder.Services.AddScoped<IUxAnalyzer, UxAnalyzer>();
 builder.Services.Configure<AttachmentSettings>(
     builder.Configuration.GetSection("AttachmentSettings"));
 builder.Services.AddSingleton<IQrCodeService, QrCodeService>();
+
+builder.Services.AddScoped<ITenantContext, TenantContext>();
+builder.Services.AddScoped<ITenantAuditService, TenantAuditService>();
+
+builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+builder.Services.AddScoped<IListingService, ListingService>();
+
+
 
 var app = builder.Build();
 

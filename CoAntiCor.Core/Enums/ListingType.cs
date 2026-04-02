@@ -1,0 +1,10 @@
+﻿
+namespace CoAntiCor.Core.Enums
+{
+    public enum ListingType
+    {
+        Sale = 1,
+        Rent = 2
+    }
+
+}

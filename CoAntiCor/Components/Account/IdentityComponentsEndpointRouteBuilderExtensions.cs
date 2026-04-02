@@ -2,7 +2,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using CoAntiCor.Components.Account.Pages;
 using CoAntiCor.Components.Account.Pages.Manage;
-using CoAntiCor.Data;
+using CoAntiCor.Core.Domain;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
