@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoAntiCor.Core.Domain.ServiceRequest;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,8 @@ namespace CoAntiCor.Core.Domain
         public string? Description { get; set; }
         public string NameFrench { get; set; } = default!; // Government Fraud, Local Bribery, etc.
         public string? DescriptionFrench { get; set; }
-      
+        public ICollection<IncidentRequest> IncidentRequests { get; set; } = new List<IncidentRequest>();
+
         public ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
         public ICollection<IncidentType> IncidentTypes { get; set; } = new List<IncidentType>();
 

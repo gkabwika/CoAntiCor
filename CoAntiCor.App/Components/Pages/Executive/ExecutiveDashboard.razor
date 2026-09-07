@@ -1,6 +1,15 @@
 ﻿@page "/executive-dashboard"
+@using CoAntiCor.App.Resources
+@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.Core.Model
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer L
+@inject HttpClient Http
+
+@using Microsoft.Extensions.Localization
+@inject NavigationManager Nav
+@inject IStringLocalizer<SharedResource> Localizer
+
 
 <div class="container-fluid py-4">
 
@@ -8,17 +17,17 @@
     <div class="row mb-3">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <div>
-                <h2 class="fw-bold">@L["Exec_Title"]</h2>
-                <p class="text-muted mb-0">@L["Exec_Subtitle"]</p>
+                <h2 class="fw-bold">@Localizer["Exec_Title"]</h2>
+                <p class="text-muted mb-0">@Localizer["Exec_Subtitle"]</p>
             </div>
             <div class="d-flex gap-2">
                 <select class="form-select form-select-sm" style="width: 180px" @bind="SelectedPeriod">
-                    <option value="Last30Days">@L["Exec_Period_Last30Days"]</option>
-                    <option value="LastQuarter">@L["Exec_Period_LastQuarter"]</option>
-                    <option value="YearToDate">@L["Exec_Period_YTD"]</option>
+                    <option value="Last30Days">@Localizer["Exec_Period_Last30Days"]</option>
+                    <option value="LastQuarter">@Localizer["Exec_Period_LastQuarter"]</option>
+                    <option value="YearToDate">@Localizer["Exec_Period_YTD"]</option>
                 </select>
                 <select class="form-select form-select-sm" style="width: 180px" @bind="SelectedProvince">
-                    <option value="">@L["Exec_AllProvinces"]</option>
+                    <option value="">@Localizer["Exec_AllProvinces"]</option>
                     @foreach (var p in Provinces)
                     {
                         <option value="@p">@p</option>
@@ -34,12 +43,12 @@
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="text-muted">@L["Exec_KPI_TotalIncidents"]</span>
-                        <span class="badge bg-primary">@L["Exec_KPI_Today"]</span>
+                        <span class="text-muted">@Localizer["Exec_KPI_TotalIncidents"]</span>
+                        <span class="badge bg-primary">@Localizer["Exec_KPI_Today"]</span>
                     </div>
                     <h3 class="fw-bold">@TotalIncidents.ToString("N0")</h3>
                     <small class="@GetTrendClass(IncidentTrend)">
-                        @L["Exec_KPI_Trend"]: @IncidentTrend.ToString("+#,##0;-#,##0;0") %
+                        @Localizer["Exec_KPI_Trend"]: @IncidentTrend.ToString("+#,##0;-#,##0;0") %
                     </small>
                 </div>
             </div>
@@ -48,9 +57,9 @@
         <div class="col-md-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body">
-                    <span class="text-muted">@L["Exec_KPI_AmountSaved"]</span>
+                    <span class="text-muted">@Localizer["Exec_KPI_AmountSaved"]</span>
                     <h3 class="fw-bold">@AmountSaved.ToString("N0") $</h3>
-                    <small class="text-success">@L["Exec_KPI_AmountSaved_Label"]</small>
+                    <small class="text-success">@Localizer["Exec_KPI_AmountSaved_Label"]</small>
                 </div>
             </div>
         </div>
@@ -58,9 +67,9 @@
         <div class="col-md-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body">
-                    <span class="text-muted">@L["Exec_KPI_AvgProcessingTime"]</span>
-                    <h3 class="fw-bold">@AverageProcessingDays.ToString("N1") @L["Exec_Days"]</h3>
-                    <small class="text-muted">@L["Exec_KPI_AvgProcessingTime_Label"]</small>
+                    <span class="text-muted">@Localizer["Exec_KPI_AvgProcessingTime"]</span>
+                    <h3 class="fw-bold">@AverageProcessingDays.ToString("N1") @Localizer["Exec_Days"]</h3>
+                    <small class="text-muted">@Localizer["Exec_KPI_AvgProcessingTime_Label"]</small>
                 </div>
             </div>
         </div>
@@ -68,9 +77,9 @@
         <div class="col-md-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body">
-                    <span class="text-muted">@L["Exec_KPI_Profitability"]</span>
+                    <span class="text-muted">@Localizer["Exec_KPI_Profitability"]</span>
                     <h3 class="fw-bold">@ProfitabilityRatio.ToString("P1")</h3>
-                    <small class="text-muted">@L["Exec_KPI_Profitability_Label"]</small>
+                    <small class="text-muted">@Localizer["Exec_KPI_Profitability_Label"]</small>
                 </div>
             </div>
         </div>
@@ -82,22 +91,22 @@
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">@L["Exec_Forecasting_Title"]</h5>
-                    <span class="badge bg-info">@L["Exec_Forecasting_IA"]</span>
+                    <h5 class="mb-0">@Localizer["Exec_Forecasting_Title"]</h5>
+                    <span class="badge bg-info">@Localizer["Exec_Forecasting_IA"]</span>
                 </div>
                 <div class="card-body">
                     <!-- Placeholder for chart -->
                     <div class="bg-light rounded-3 p-3" style="height: 260px;">
-                        <p class="text-muted">@L["Exec_Forecasting_ChartPlaceholder"]</p>
+                        <p class="text-muted">@Localizer["Exec_Forecasting_ChartPlaceholder"]</p>
                         <!-- Integrate chart library later (e.g., Chart.js, ApexCharts) -->
                     </div>
                     <div class="mt-3 d-flex flex-wrap gap-3">
                         <div>
-                            <span class="text-muted">@L["Exec_Forecasting_Next30Days"]</span>
+                            <span class="text-muted">@Localizer["Exec_Forecasting_Next30Days"]</span>
                             <h6 class="fw-bold">@ForecastNext30Days.ToString("N0")</h6>
                         </div>
                         <div>
-                            <span class="text-muted">@L["Exec_Forecasting_RiskScore"]</span>
+                            <span class="text-muted">@Localizer["Exec_Forecasting_RiskScore"]</span>
                             <h6 class="fw-bold">@RiskScore.ToString("N1") / 10</h6>
                         </div>
                     </div>
@@ -109,8 +118,8 @@
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">@L["Exec_ProvinceRanking_Title"]</h5>
-                    <span class="badge bg-secondary">@L["Exec_ProvinceRanking_Label"]</span>
+                    <h5 class="mb-0">@Localizer["Exec_ProvinceRanking_Title"]</h5>
+                    <span class="badge bg-secondary">@Localizer["Exec_ProvinceRanking_Label"]</span>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
@@ -133,24 +142,24 @@
         <div class="col-lg-6">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">@L["Exec_Profitability_Title"]</h5>
-                    <span class="badge bg-success">@L["Exec_Profitability_Label"]</span>
+                    <h5 class="mb-0">@Localizer["Exec_Profitability_Title"]</h5>
+                    <span class="badge bg-success">@Localizer["Exec_Profitability_Label"]</span>
                 </div>
                 <div class="card-body">
                     <div class="bg-light rounded-3 p-3 mb-3" style="height: 220px;">
-                        <p class="text-muted">@L["Exec_Profitability_ChartPlaceholder"]</p>
+                        <p class="text-muted">@Localizer["Exec_Profitability_ChartPlaceholder"]</p>
                     </div>
                     <div class="row text-center">
                         <div class="col-4">
-                            <small class="text-muted">@L["Exec_Profitability_Costs"]</small>
+                            <small class="text-muted">@Localizer["Exec_Profitability_Costs"]</small>
                             <div class="fw-bold">@TotalCosts.ToString("N0") $</div>
                         </div>
                         <div class="col-4">
-                            <small class="text-muted">@L["Exec_Profitability_Revenues"]</small>
+                            <small class="text-muted">@Localizer["Exec_Profitability_Revenues"]</small>
                             <div class="fw-bold">@TotalRevenues.ToString("N0") $</div>
                         </div>
                         <div class="col-4">
-                            <small class="text-muted">@L["Exec_Profitability_Net"]</small>
+                            <small class="text-muted">@Localizer["Exec_Profitability_Net"]</small>
                             <div class="fw-bold">@NetProfit.ToString("N0") $</div>
                         </div>
                     </div>
@@ -162,12 +171,12 @@
         <div class="col-lg-6">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">@L["Exec_CategoryBreakdown_Title"]</h5>
-                    <span class="badge bg-warning text-dark">@L["Exec_CategoryBreakdown_Label"]</span>
+                    <h5 class="mb-0">@Localizer["Exec_CategoryBreakdown_Title"]</h5>
+                    <span class="badge bg-warning text-dark">@Localizer["Exec_CategoryBreakdown_Label"]</span>
                 </div>
                 <div class="card-body">
                     <div class="bg-light rounded-3 p-3 mb-3" style="height: 220px;">
-                        <p class="text-muted">@L["Exec_CategoryBreakdown_ChartPlaceholder"]</p>
+                        <p class="text-muted">@Localizer["Exec_CategoryBreakdown_ChartPlaceholder"]</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         @foreach (var cat in CategoryBreakdown)
@@ -183,6 +192,88 @@
         </div>
     </div>
 </div>
+
+
+
+<div>
+
+    <p>Forecasting Chart (Prévisions IA)</p>
+
+    <ApexChart TItem="ForecastPoint" Title="@Localizer["Exec_Forecasting_Title"]">
+    <ApexSeries TItem="ForecastPoint"
+                Items="ForecastData"
+                Name="@Localizer["Exec_Forecasting_Series"]"
+                XValue="GetForecastDate"
+                YValue="GetForecastValue" />
+</ApexChart>
+
+@code {
+    public class ForecastPoint
+    {
+        public DateTime Date { get; set; }
+        public int Value { get; set; }
+    }
+
+    private List<ForecastPoint> ForecastData = new()
+    {
+        new() { Date = DateTime.Today.AddDays(-5), Value = 120 },
+        new() { Date = DateTime.Today.AddDays(-4), Value = 140 },
+        new() { Date = DateTime.Today.AddDays(-3), Value = 160 },
+        new() { Date = DateTime.Today.AddDays(-2), Value = 180 },
+        new() { Date = DateTime.Today.AddDays(-1), Value = 210 },
+    };
+
+    private object GetForecastDate(ForecastPoint point) => point.Date;
+    private object GetForecastValue(ForecastPoint point) => point.Value;
+}
+
+</div>
+
+
+<div>
+
+    <p>Profitability Chart (Coûts vs Revenus)</p>
+
+<ApexChart TItem="ProfitPoint" Title="@Localizer["Exec_Profitability_Title"]">
+    <ApexSeries TItem="ProfitPoint"
+                Items="ProfitData"
+                Name="@Localizer["Exec_Profitability_Costs"]"
+                XValue="GetLabel"
+                YValue="GetCost" />
+
+    <ApexSeries TItem="ProfitPoint"
+                Items="ProfitData"
+                Name="@Localizer["Exec_Profitability_Revenues"]"
+                XValue="GetLabel"
+                YValue="GetRevenue" />
+</ApexChart>
+
+@code {
+
+
+
+    private object GetLabel(ProfitPoint point) => point.Label;
+        private decimal GetCost(ProfitPoint point) => (decimal)point.Cost;
+        private decimal GetRevenue(ProfitPoint point) => (decimal)point.Revenue;
+
+    public class ProfitPoint
+    {
+        public string Label { get; set; } = default!;
+        public double Cost { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    private List<ProfitPoint> ProfitData = new()
+    {
+        new() { Label = "Jan", Cost = 120000, Revenue = 350000 },
+        new() { Label = "Feb", Cost = 140000, Revenue = 420000 },
+        new() { Label = "Mar", Cost = 160000, Revenue = 480000 },
+    };
+}
+
+</div>
+
+
 
 @code {
     private string SelectedPeriod { get; set; } = "Last30Days";
@@ -208,8 +299,8 @@
     private double TotalRevenues { get; set; } = 4_350_000;
     private double NetProfit => TotalRevenues - TotalCosts;
 
-    private List<(string Province, int IncidentCount)> ProvinceRanking { get; } =
-        new()
+    private List<(string Province, int IncidentCount)> ProvinceRanking { get; set; }
+        = new()
         {
             ("Kinshasa", 420),
             ("Nord-Kivu", 210),
@@ -218,8 +309,8 @@
             ("Sud-Kivu", 120)
         };
 
-    private List<(string CategoryName, int IncidentCount)> CategoryBreakdown { get; } =
-        new()
+    private List<(string CategoryName, int IncidentCount)> CategoryBreakdown { get; set; }
+        = new()
         {
             ("Corruption", 380),
             ("Fraude financière", 260),
@@ -230,4 +321,33 @@
 
     private string GetTrendClass(double trend)
         => trend >= 0 ? "text-success" : "text-danger";
+
+    
+        protected override async Task OnInitializedAsync()
+    {
+        await LoadDashboardData();
+    }
+
+    private async Task LoadDashboardData()
+    {
+        var url = $"api/servicerequests/search?province={SelectedProvince}&period={SelectedPeriod}&page=1&pageSize=50";
+
+        var result = await Http.GetFromJsonAsync<PagedResult<ServiceRequestDto>>(url);
+
+        if (result != null)
+        {
+            TotalIncidents = result.TotalCount;
+            ProvinceRanking = result.Items
+                .GroupBy(x => x.Province)
+                .Select(g => (Province: g.Key, IncidentCount: g.Count()))
+                .OrderByDescending(x => x.IncidentCount)
+                .ToList();
+
+            CategoryBreakdown = result.Items
+                .GroupBy(x => x.Category)
+                .Select(g => (CategoryName: g.Key, IncidentCount: g.Count()))
+                .OrderByDescending(x => x.IncidentCount)
+                .ToList();
+        }
+    }
 }

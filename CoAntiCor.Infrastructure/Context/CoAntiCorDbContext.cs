@@ -1,5 +1,4 @@
 ﻿using CoAntiCor.Core.Domain;
-using CoAntiCor.Core.Domain;
 using CoAntiCor.Core.Domain.Address;
 using CoAntiCor.Core.Domain.CodeTables;
 using CoAntiCor.Core.Domain.Email;
@@ -14,14 +13,18 @@ using CoAntiCor.Core.Domain.PaymentMethods;
 using CoAntiCor.Core.Domain.Person;
 using CoAntiCor.Core.Domain.Processing;
 using CoAntiCor.Core.Domain.ServiceRequest;
+using CoAntiCor.Core.Enums;
 using CoAntiCor.Core.Interfaces;
 using CoAntiCor.Core.Model;
 using CoAntiCor.Infrastructure.Configurations;
 using CoAntiCor.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.Contracts;
+using System.Text.Json;
+using ApplicationUser = CoAntiCor.Core.Domain.ApplicationUser;
 
 namespace CoAntiCor.Infrastructure.Context
 {
@@ -124,7 +127,12 @@ namespace CoAntiCor.Infrastructure.Context
         public DbSet<IncidentEvidence> IncidentEvidence => Set<IncidentEvidence>();
         public DbSet<ProcessingPhaseHistory> ProcessingPhaseHistory => Set<ProcessingPhaseHistory>();
 
+        public DbSet<ServiceRequest> ServiceRequests => Set<ServiceRequest>();
+        public DbSet<ServiceRequestHistory> ServiceRequestHistorys => Set<ServiceRequestHistory>(); 
+        public DbSet<ServiceRequestWorkflowState> ServiceRequestWorkflowStates => Set<ServiceRequestWorkflowState>();
+        public DbSet<IncidentRequestNaturalPerson> IncidentRequestNaturalPersons => Set<IncidentRequestNaturalPerson>();
 
+        
 
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
 
@@ -151,7 +159,7 @@ namespace CoAntiCor.Infrastructure.Context
                 .IsRequired()
                 .HasMaxLength(4000);
 
-            modelBuilder.Property(x => x.IncidentType)
+            modelBuilder.Property(x => x.IncidentTypeOther)
                 .IsRequired()
                 .HasMaxLength(100);
 
@@ -164,8 +172,17 @@ namespace CoAntiCor.Infrastructure.Context
                 .HasMaxLength(100);
 
             modelBuilder.Property(x => x.City)
-                .IsRequired()
-                .HasMaxLength(100);
+             .IsRequired()
+             .HasMaxLength(100);
+            modelBuilder.Property(x => x.Commune)
+               .IsRequired()
+               .HasMaxLength(100);
+            modelBuilder.Property(x => x.Quartier)
+               .IsRequired()
+               .HasMaxLength(100);
+            modelBuilder.Property(x => x.Address)
+               .IsRequired()
+               .HasMaxLength(100);
 
             modelBuilder.Property(x => x.CitizenName)
                 .HasMaxLength(200);
@@ -266,10 +283,326 @@ namespace CoAntiCor.Infrastructure.Context
                 }
             );
 
+            // SEED DATA - ASPNET USERS
+            //var hasher = new PasswordHasher<ApplicationUser>();
+            //var passwordHash = hasher.HashPassword(null, "Password@123");
+            //Je te fournis un hash déjà généré, compatible Identity v8: 
+            //AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p ==
+
+            modelBuilder.Entity<ApplicationUser>().HasData(
+            new ApplicationUser
+            {
+                Id = Guid.Parse("90000000-0000-0000-0000-000000000001").ToString(),
+                UserName = "inspector@coanticor.gov",
+                NormalizedUserName = "INSPECTOR@COANTICOR.GOV",
+                Email = "inspector@coanticor.gov",
+                NormalizedEmail = "INSPECTOR@COANTICOR.GOV",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                PhoneNumber = "+243811111111",
+                PhoneNumberConfirmed = true,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                FirstName = "Jean",
+                LastName = "Inspector",
+                MiddleName = "",
+                PreferredLanguage = "fr",
+                PreferredTheme = "light",
+                ProvinceCode = "KIN",
+                BrokerOfficeId = null
+            },
+
+            new ApplicationUser
+            {
+                Id = Guid.Parse("90000000-0000-0000-0000-000000000002").ToString(),
+                UserName = "manager@coanticor.gov",
+                NormalizedUserName = "MANAGER@COANTICOR.GOV",
+                Email = "manager@coanticor.gov",
+                NormalizedEmail = "MANAGER@COANTICOR.GOV",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                PhoneNumber = "+243822222222",
+                PhoneNumberConfirmed = true,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                FirstName = "Patrick",
+                LastName = "Manager",
+                MiddleName = "",
+                PreferredLanguage = "fr",
+                PreferredTheme = "dark",
+                ProvinceCode = "HKT",
+                BrokerOfficeId = null
+            },
+
+            new ApplicationUser
+            {
+                Id = Guid.Parse("90000000-0000-0000-0000-000000000003").ToString(),
+                UserName = "admin@coanticor.gov",
+                NormalizedUserName = "ADMIN@COANTICOR.GOV",
+                Email = "admin@coanticor.gov",
+                NormalizedEmail = "ADMIN@COANTICOR.GOV",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                PhoneNumber = "+243833333333",
+                PhoneNumberConfirmed = true,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                FirstName = "Admin",
+                LastName = "System",
+                MiddleName = "",
+                PreferredLanguage = "fr",
+                PreferredTheme = "dark",
+                ProvinceCode = "KIN",
+                BrokerOfficeId = null
+            },
+
+            new ApplicationUser
+            {
+                Id = Guid.Parse("90000000-0000-0000-0000-000000000004").ToString(),
+                UserName = "executive@coanticor.gov",
+                NormalizedUserName = "EXECUTIVE@COANTICOR.GOV",
+                Email = "executive@coanticor.gov",
+                NormalizedEmail = "EXECUTIVE@COANTICOR.GOV",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                PhoneNumber = "+243844444444",
+                PhoneNumberConfirmed = true,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                FirstName = "Marie",
+                LastName = "Executive",
+                MiddleName = "",
+                PreferredLanguage = "fr",
+                PreferredTheme = "light",
+                ProvinceCode = "NK",
+                BrokerOfficeId = null
+            },
+
+            new ApplicationUser
+            {
+                Id = Guid.Parse("90000000-0000-0000-0000-000000000005").ToString(),
+                UserName = "staff@coanticor.gov",
+                NormalizedUserName = "STAFF@COANTICOR.GOV",
+                Email = "staff@coanticor.gov",
+                NormalizedEmail = "STAFF@COANTICOR.GOV",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                PhoneNumber = "+243855555555",
+                PhoneNumberConfirmed = true,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                FirstName = "Joseph",
+                LastName = "Staff",
+                MiddleName = "",
+                PreferredLanguage = "fr",
+                PreferredTheme = "light",
+                ProvinceCode = "SK",
+                BrokerOfficeId = null
+            },
+
+            new ApplicationUser
+            {
+                Id = Guid.Parse("90000000-0000-0000-0000-000000000006").ToString(),
+                UserName = "citizen1@example.com",
+                NormalizedUserName = "CITIZEN1@EXAMPLE.COM",
+                Email = "citizen1@example.com",
+                NormalizedEmail = "CITIZEN1@EXAMPLE.COM",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                PhoneNumber = "+243866666666",
+                PhoneNumberConfirmed = true,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                FirstName = "Citizen",
+                LastName = "One",
+                MiddleName = "",
+                PreferredLanguage = "fr",
+                PreferredTheme = "light",
+                ProvinceCode = "KIN",
+                BrokerOfficeId = null
+            },
+
+            new ApplicationUser
+            {
+                Id = Guid.Parse("90000000-0000-0000-0000-000000000007").ToString(),
+                UserName = "citizen2@example.com",
+                NormalizedUserName = "CITIZEN2@EXAMPLE.COM",
+                Email = "citizen2@example.com",
+                NormalizedEmail = "CITIZEN2@EXAMPLE.COM",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                PhoneNumber = "+243877777777",
+                PhoneNumberConfirmed = true,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                FirstName = "Citizen",
+                LastName = "Two",
+                MiddleName = "",
+                PreferredLanguage = "en",
+                PreferredTheme = "light",
+                ProvinceCode = "HK",
+                BrokerOfficeId = null
+            }
+        );
+
+
+            // SEED DATA FOR USERS FROM USER TABLE
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000001"),
+                    UserName = "inspector@coanticor.gov",
+                    Email = "inspector@coanticor.gov",
+                    PhoneNumber = "+243811111111",
+                    IsInternal = true,
+                    IsAnonymous = false
+                },
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000002"),
+                    UserName = "manager@coanticor.gov",
+                    Email = "manager@coanticor.gov",
+                    PhoneNumber = "+243822222222",
+                    IsInternal = true,
+                    IsAnonymous = false
+                },
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000003"),
+                    UserName = "admin@coanticor.gov",
+                    Email = "admin@coanticor.gov",
+                    PhoneNumber = "+243833333333",
+                    IsInternal = true,
+                    IsAnonymous = false
+                },
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000004"),
+                    UserName = "executive@coanticor.gov",
+                    Email = "executive@coanticor.gov",
+                    PhoneNumber = "+243844444444",
+                    IsInternal = true,
+                    IsAnonymous = false
+                },
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000005"),
+                    UserName = "staff@coanticor.gov",
+                    Email = "staff@coanticor.gov",
+                    PhoneNumber = "+243855555555",
+                    IsInternal = true,
+                    IsAnonymous = false
+                },
+
+                // Citizen 1
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000006"),
+                    UserName = "citizen1@example.com",
+                    Email = "citizen1@example.com",
+                    PhoneNumber = "+243866666666",
+                    IsInternal = false,
+                    IsAnonymous = false
+                },
+
+                // Citizen 2
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000007"),
+                    UserName = "citizen2@example.com",
+                    Email = "citizen2@example.com",
+                    PhoneNumber = "+243877777777",
+                    IsInternal = false,
+                    IsAnonymous = false
+                },
+
+                // Anonymous Reporter (for anonymous IncidentRequests)
+                new User
+                {
+                    Id = Guid.Parse("90000000-0000-0000-0000-000000000008"),
+                    UserName = "anonymous",
+                    Email = "anonymous@coanticor.gov",
+                    PhoneNumber = null,
+                    IsInternal = false,
+                    IsAnonymous = true
+                }
+            );
+
+
+
+
             // INCIDENT CONFIGURATION -------------------------------------
             modelBuilder.ApplyConfiguration(new IncidentRequestConfiguration());
             modelBuilder.ApplyConfiguration(new IncidentEvidenceConfiguration());
             modelBuilder.ApplyConfiguration(new ProcessingPhaseHistoryConfiguration());
+
+            modelBuilder.Entity<IncidentRequest>()
+            .HasOne(i => i.AssignedToUser)
+            .WithMany() // Or .WithMany(u => u.AssignedIncidents) if User has a collection property
+            .HasForeignKey(i => i.AssignedToUserId) // Replace with your actual FK property name
+            .IsRequired(false) // Set to true if an assignment is mandatory
+            .OnDelete(DeleteBehavior.Restrict); // Use Restrict/NoAction to prevent cascade path conflicts
+
+                                            // ServiceRequestWorkflowState CONFIGURATION -------------------------------------
+
+            modelBuilder.Entity<ServiceRequestWorkflowState>()
+                .Property(e => e.StepCompletedUtc)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<Dictionary<int, DateTime>>(v, (JsonSerializerOptions)null)
+                );
+
+            // Disable cascade delete on Complaints relationship if needed
+            modelBuilder.Entity<NaturalPerson>()
+                .HasOne<Complaint>()
+                .WithMany()
+                .HasForeignKey(x => x.ComplaintId) // Ensure distinct FK properties are used
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            // IncidentRequestNaturalPersons - JOIN (NaturalPerson,IncidentRequest)CONFIGURATION -------------------------------------
+            modelBuilder.Entity<IncidentRequest>()
+               .HasMany(i => i.Persons)
+               .WithMany(n => n.IncidentRequests)
+               .UsingEntity<IncidentRequestNaturalPerson>(
+                   j => j
+                       .HasOne(irnp => irnp.NaturalPerson)
+                       .WithMany()
+                       .HasForeignKey(irnp => irnp.NaturalPersonId)
+                       .OnDelete(DeleteBehavior.NoAction),
+                   j => j
+                       .HasOne(irnp => irnp.IncidentRequest)
+                       .WithMany()
+                       .HasForeignKey(irnp => irnp.IncidentRequestId)
+                       .OnDelete(DeleteBehavior.Cascade),
+                   j =>
+                   {
+                       j.ToTable("IncidentRequestNaturalPersons");
+                       j.HasKey(irnp => new { irnp.IncidentRequestId, irnp.NaturalPersonId });
+                   }
+               );
 
             // COMPLAINT CONFIGURATION -------------------------------------
 
@@ -334,6 +667,364 @@ namespace CoAntiCor.Infrastructure.Context
                 .HasForeignKey(it => it.IncidentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+
+
+            // SEED DATA - ServiceRequestWorkflowState 
+
+            modelBuilder.Entity<ServiceRequestWorkflowState>().HasData(
+                new ServiceRequestWorkflowState
+                {
+                    Id = Guid.Parse("30000000-0000-0000-0000-000000000001"),
+                    DraftId = Guid.Parse("31000000-0000-0000-0000-000000000001"),
+                    CurrentStep = 1,
+                    Code = "WIZ_STEP_1",
+                    LabelFr = "Recherche et vérification IA",
+                    LabelEn = "AI Search & Verification",
+                    Order = 1,
+                    LastSavedUtc = null,
+                    IsSaving = false,
+                    StepCompletedUtc = new Dictionary<int, DateTime>(),
+                    Version = 1
+                },
+                new ServiceRequestWorkflowState
+                {
+                    Id = Guid.Parse("30000000-0000-0000-0000-000000000002"),
+                    DraftId = Guid.Parse("31000000-0000-0000-0000-000000000002"),
+                    CurrentStep = 2,
+                    Code = "WIZ_STEP_2",
+                    LabelFr = "Sélection du type d’incident",
+                    LabelEn = "Incident Type Selection",
+                    Order = 2,
+                    LastSavedUtc = null,
+                    IsSaving = false,
+                    StepCompletedUtc = new Dictionary<int, DateTime>(),
+                    Version = 1
+                },
+                new ServiceRequestWorkflowState
+                {
+                    Id = Guid.Parse("30000000-0000-0000-0000-000000000003"),
+                    DraftId = Guid.Parse("31000000-0000-0000-0000-000000000003"),
+                    CurrentStep = 3,
+                    Code = "WIZ_STEP_3",
+                    LabelFr = "Informations du rapporteur",
+                    LabelEn = "Reporter Information",
+                    Order = 3,
+                    LastSavedUtc = null,
+                    IsSaving = false,
+                    StepCompletedUtc = new Dictionary<int, DateTime>(),
+                    Version = 1
+                },
+                new ServiceRequestWorkflowState
+                {
+                    Id = Guid.Parse("30000000-0000-0000-0000-000000000004"),
+                    DraftId = Guid.Parse("31000000-0000-0000-0000-000000000004"),
+                    CurrentStep = 4,
+                    Code = "WIZ_STEP_4",
+                    LabelFr = "Description et pièces jointes",
+                    LabelEn = "Description & Attachments",
+                    Order = 4,
+                    LastSavedUtc = null,
+                    IsSaving = false,
+                    StepCompletedUtc = new Dictionary<int, DateTime>(),
+                    Version = 1
+                },
+                new ServiceRequestWorkflowState
+                {
+                    Id = Guid.Parse("30000000-0000-0000-0000-000000000005"),
+                    DraftId = Guid.Parse("31000000-0000-0000-0000-000000000005"),
+                    CurrentStep = 5,
+                    Code = "WIZ_STEP_5",
+                    LabelFr = "Révision et confirmation",
+                    LabelEn = "Review & Confirmation",
+                    Order = 5,
+                    LastSavedUtc = null,
+                    IsSaving = false,
+                    StepCompletedUtc = new Dictionary<int, DateTime>(),
+                    Version = 1
+                }
+            );
+
+
+            // SEED DATA - IncidentRequest
+
+            modelBuilder.Entity<IncidentRequest>().HasData(
+                new IncidentRequest
+                {
+                    Id = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                    IncidentNumber = "INC-2026-000001",
+                    Title = "Détournement de fonds publics",
+                    Description = "Un agent aurait transféré des fonds publics vers un compte personnel.",
+
+                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000002"), // Embezzlement
+                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000001"), // Financial Misconduct
+                    IncidentTypeOther = "",
+                    Category = "Détournement de fonds",
+
+                    Province = "Kinshasa",
+                    City = "Gombe",
+                    Commune = "Gombe",
+                    Quartier = "Commercial",
+                    Address = "Avenue des Huileries 12",
+
+                    IsAnonymous = false,
+                    CitizenName = "Jean Mbala",
+                    CitizenEmail = "jean.mbala@example.com",
+                    CitizenPhone = "+243812345678",
+                    Service = "Direction Financière",
+                    JobRole = "Comptable",
+                    Sex = "M",
+                    AgeGroups = "36-60",
+                    AgeGroup = 3,
+                    ReporterFullName = "Jean Mbala",
+
+                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000001"), // Financial Tribunal Kinshasa
+
+                    Status = IncidentStatus.Submitted,
+                    ReporterUserId = null,
+                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"), // Inspector
+
+                    OfficialNotes = "En attente de vérification initiale.",
+                    CreatedAt = DateTime.UtcNow.AddDays(-12),
+                    SubmittedAt = DateTime.UtcNow.AddDays(-12),
+                    LastUpdatedAt = DateTime.UtcNow.AddDays(-10),
+                    CreatedByUserId = null
+                },
+
+                new IncidentRequest
+                {
+                    Id = Guid.Parse("51000000-0000-0000-0000-000000000002"),
+                    IncidentNumber = "INC-2026-000002",
+                    Title = "Pot-de-vin pour attribution de marché public",
+                    Description = "Un fonctionnaire aurait exigé un paiement pour attribuer un contrat.",
+
+                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000001"), // Bribery
+                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000003"), // Corruption and Influence
+                    IncidentTypeOther = "",
+                    Category = "Corruption",
+
+                    Province = "Haut-Katanga",
+                    City = "Lubumbashi",
+                    Commune = "Lubumbashi",
+                    Quartier = "Golf",
+                    Address = "Boulevard Kamanyola 45",
+
+                    IsAnonymous = true,
+                    CitizenName = null,
+                    CitizenEmail = null,
+                    CitizenPhone = null,
+                    Service = null,
+                    JobRole = null,
+                    Sex = null,
+                    AgeGroups = null,
+                    AgeGroup = null,
+                    ReporterFullName = null,
+
+                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000002"), // Anti-Corruption Office Lubumbashi
+
+                    Status = IncidentStatus.InReview,
+                    ReporterUserId = null,
+                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000002"), // Manager
+
+                    OfficialNotes = "Inspection en cours.",
+                    CreatedAt = DateTime.UtcNow.AddDays(-20),
+                    SubmittedAt = DateTime.UtcNow.AddDays(-20),
+                    LastUpdatedAt = DateTime.UtcNow.AddDays(-15),
+                    CreatedByUserId = null
+                },
+
+                new IncidentRequest
+                {
+                    Id = Guid.Parse("51000000-0000-0000-0000-000000000003"),
+                    IncidentNumber = "INC-2026-000003",
+                    Title = "Fraude dans les marchés publics",
+                    Description = "Manipulation des appels d’offres pour favoriser une entreprise.",
+
+                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000008"), // Public Procurement Fraud
+                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000003"), // Corruption and Influence
+                    IncidentTypeOther = "",
+                    Category = "Fraude",
+
+                    Province = "Nord-Kivu",
+                    City = "Goma",
+                    Commune = "Goma",
+                    Quartier = "Katindo",
+                    Address = "Avenue du Lac 8",
+
+                    IsAnonymous = false,
+                    CitizenName = "Marie Kaseba",
+                    CitizenEmail = "marie.kaseba@example.com",
+                    CitizenPhone = "+243990001122",
+                    Service = "Service des marchés publics",
+                    JobRole = "Analyste",
+                    Sex = "F",
+                    AgeGroups = "19-35",
+                    AgeGroup = 2,
+                    ReporterFullName = "Marie Kaseba",
+
+                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000003"), // Goma Tribunal
+
+                    Status = IncidentStatus.InReview,
+                    ReporterUserId = null,
+                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"),
+
+                    OfficialNotes = "Documents supplémentaires requis.",
+                    CreatedAt = DateTime.UtcNow.AddDays(-7),
+                    SubmittedAt = DateTime.UtcNow.AddDays(-7),
+                    LastUpdatedAt = DateTime.UtcNow.AddDays(-5),
+                    CreatedByUserId = null
+                },
+
+                new IncidentRequest
+                {
+                    Id = Guid.Parse("51000000-0000-0000-0000-000000000004"),
+                    IncidentNumber = "INC-2026-000004",
+                    Title = "Conflit d’intérêts dans une nomination",
+                    Description = "Un directeur aurait nommé un membre de sa famille sans procédure.",
+
+                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000004"), // Conflict of Interest
+                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000002"), // Administrative Misconduct
+                    IncidentTypeOther = "",
+                    Category = "Conflit d’intérêts",
+
+                    Province = "Kongo Central",
+                    City = "Matadi",
+                    Commune = "Matadi",
+                    Quartier = "Belvédère",
+                    Address = "Rue de la Mission 21",
+
+                    IsAnonymous = true,
+                    CitizenName = null,
+                    CitizenEmail = null,
+                    CitizenPhone = null,
+                    Service = null,
+                    JobRole = null,
+                    Sex = null,
+                    AgeGroups = null,
+                    AgeGroup = null,
+                    ReporterFullName = null,
+
+                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000004"),
+
+                    Status = IncidentStatus.Submitted,
+                    ReporterUserId = null,
+                    AssignedToUserId = null,
+
+                    OfficialNotes = "En attente d’analyse.",
+                    CreatedAt = DateTime.UtcNow.AddDays(-3),
+                    SubmittedAt = DateTime.UtcNow.AddDays(-3),
+                    LastUpdatedAt = DateTime.UtcNow.AddDays(-2),
+                    CreatedByUserId = null
+                },
+
+                new IncidentRequest
+                {
+                    Id = Guid.Parse("51000000-0000-0000-0000-000000000005"),
+                    IncidentNumber = "INC-2026-000005",
+                    Title = "Évasion fiscale d’une entreprise locale",
+                    Description = "Une société aurait dissimulé des revenus pour éviter l’impôt.",
+
+                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000007"), // Tax Evasion
+                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000001"), // Financial Misconduct
+                    IncidentTypeOther = "",
+                    Category = "Évasion fiscale",
+
+                    Province = "Sud-Kivu",
+                    City = "Bukavu",
+                    Commune = "Kadutu",
+                    Quartier = "Nyawera",
+                    Address = "Avenue Patrice Lumumba 5",
+
+                    IsAnonymous = false,
+                    CitizenName = "Patrick Lushombo",
+                    CitizenEmail = "patrick.l@example.com",
+                    CitizenPhone = "+243812222333",
+                    Service = "Inspection fiscale",
+                    JobRole = "Auditeur",
+                    Sex = "M",
+                    AgeGroups = "36-60",
+                    AgeGroup = 3,
+                    ReporterFullName = "Patrick Lushombo",
+
+                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000004"),
+
+                    Status = IncidentStatus.InReview,
+                    ReporterUserId = null,
+                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000002"),
+
+                    OfficialNotes = "Analyse financière en cours.",
+                    CreatedAt = DateTime.UtcNow.AddDays(-14),
+                    SubmittedAt = DateTime.UtcNow.AddDays(-14),
+                    LastUpdatedAt = DateTime.UtcNow.AddDays(-12),
+                    CreatedByUserId = null
+                }
+            );
+
+
+
+            // SEED DATA -             new IncidentRequestReward - REWARD
+
+            modelBuilder.Entity<IncidentRequestReward>().HasData(
+                new IncidentRequestReward
+                {
+                    Id = Guid.Parse("60000000-0000-0000-0000-000000000001"),
+                    IncidentRequestId = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                    EligibilityStatus = RewardEligibilityStatus.UnderReview,
+                    Amount = null,
+                    DecisionDate = null,
+                    PaidDate = null,
+                    PaymentReference = null
+                }
+            );
+
+
+            //SEED DATA - ProcessingPhaseHistory
+
+            modelBuilder.Entity<ProcessingPhaseHistory>().HasData(
+                new ProcessingPhaseHistory
+                {
+                    Id = Guid.Parse("40000000-0000-0000-0000-000000000001"),
+                    IncidentRequestId = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                    Phase = "SUBMITTED",
+                    Status = IncidentStatus.Submitted,
+                    Notes = "Incident submitted by citizen with initial evidence.",
+                    ChangedByUserId = null,
+                    ChangedAt = DateTime.UtcNow.AddDays(-3)
+                },
+                new ProcessingPhaseHistory
+                {
+                    Id = Guid.Parse("40000000-0000-0000-0000-000000000002"),
+                    IncidentRequestId = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                    Phase = "SCREENING",
+                    Status = IncidentStatus.InReview,
+                    Notes = "Initial screening completed. Additional evidence requested.",
+                    ChangedByUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"), // Inspector
+                    ChangedAt = DateTime.UtcNow.AddDays(-2)
+                },
+                new ProcessingPhaseHistory
+                {
+                    Id = Guid.Parse("40000000-0000-0000-0000-000000000003"),
+                    IncidentRequestId = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                    Phase = "INVESTIGATION",
+                    Status = IncidentStatus.InReview,
+                    Notes = "Investigation started by inspector.",
+                    ChangedByUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"),
+                    ChangedAt = DateTime.UtcNow.AddDays(-1)
+                },
+                new ProcessingPhaseHistory
+                {
+                    Id = Guid.Parse("40000000-0000-0000-0000-000000000004"),
+                    IncidentRequestId = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                    Phase = "TRIBUNAL_SUBMISSION",
+                    Status = IncidentStatus.Escalated,
+                    Notes = "Case submitted to the financial tribunal.",
+                    ChangedByUserId = Guid.Parse("90000000-0000-0000-0000-000000000002"), // Manager
+                    ChangedAt = DateTime.UtcNow
+                }
+            );
+
+
+            // CONFIGURATION OF INCIDENT TYPE
             modelBuilder.Entity<IncidentType>().HasData(
                 // Existing core incident types
                 new IncidentType
@@ -626,6 +1317,43 @@ namespace CoAntiCor.Infrastructure.Context
                 }
             );
 
+            // SAMPLE DATA FOR SERVICE REQUEST HISTORY -------------------------------------
+            var sampleIncidentId = Guid.Parse("30000000-0000-0000-0000-000000000001");
+            var inspectorId = Guid.Parse("10000000-0000-0000-0000-000000000001");
+            modelBuilder.Entity<ServiceRequestHistory>().HasData(
+            new ServiceRequestHistory
+            {
+                Id = Guid.NewGuid(),
+                IncidentId = sampleIncidentId,
+                Phase = "SUBMITTED",
+                Status = "Submitted",
+                Notes = "Citizen submitted the incident with initial evidence.",
+                ChangedByUserId = null,
+                ChangedAt = DateTime.UtcNow.AddDays(-3)
+            },
+            new ServiceRequestHistory
+            {
+                Id = Guid.NewGuid(),
+                IncidentId = sampleIncidentId,
+                Phase = "SCREENING",
+                Status = "InReview",
+                Notes = "Initial screening completed. More evidence required.",
+                ChangedByUserId = inspectorId,
+                ChangedAt = DateTime.UtcNow.AddDays(-2)
+            },
+            new ServiceRequestHistory
+            {
+                Id = Guid.NewGuid(),
+                IncidentId = sampleIncidentId,
+                Phase = "INVESTIGATION",
+                Status = "InProgress",
+                Notes = "Investigation started by inspector.",
+                ChangedByUserId = inspectorId,
+                ChangedAt = DateTime.UtcNow.AddDays(-1)
+            }
+        );
+
+
             // MaritalStatus CONFIGURATION
 
             modelBuilder.Entity<MaritalStatus>().HasData(
@@ -732,7 +1460,7 @@ namespace CoAntiCor.Infrastructure.Context
             modelBuilder.Entity<GovernmentOffice>().HasData(
                 new GovernmentOffice
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
+                    Id = Guid.Parse("70000000-0000-0000-0000-000000000001"),
                     Name = "Ministry of Justice",
                     Province = "Kinshasa",
                     City = "Kinshasa",
@@ -742,7 +1470,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new GovernmentOffice
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
+                    Id = Guid.Parse("70000000-0000-0000-0000-000000000002"),
                     Name = "Anti-Corruption Agency (APLC)",
                     Province = "Kinshasa",
                     City = "Kinshasa",
@@ -752,7 +1480,7 @@ namespace CoAntiCor.Infrastructure.Context
                 },
                 new GovernmentOffice
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
+                    Id = Guid.Parse("70000000-0000-0000-0000-000000000003"),
                     Name = "Provincial Governor's Office",
                     Province = "Haut-Katanga",
                     City = "Lubumbashi",
@@ -761,7 +1489,7 @@ namespace CoAntiCor.Infrastructure.Context
                     Phone = "+243 820 000 003"
                 },
                 new GovernmentOffice
-                {Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
+                {Id = Guid.Parse("70000000-0000-0000-0000-000000000004"),
                     Name = "Ministry of Finance",
                     Province = "Kinshasa",
                     City = "Kinshasa",

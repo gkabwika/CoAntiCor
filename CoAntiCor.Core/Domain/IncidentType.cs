@@ -1,4 +1,5 @@
 ﻿using CoAntiCor.Core.Domain.Person;
+using CoAntiCor.Core.Domain.ServiceRequest;
 using CoAntiCor.Core.Enums;
 using Microsoft.VisualBasic;
 using System;
@@ -50,6 +51,7 @@ namespace CoAntiCor.Core.Domain
 
         public Guid IncidentCategoryId { get; set; }
         public IncidentCategory IncidentCategory { get; set; } = default!;
+        public ICollection<IncidentRequest> IncidentRequests { get; set; } = new List<IncidentRequest>();
         public ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
 
     }

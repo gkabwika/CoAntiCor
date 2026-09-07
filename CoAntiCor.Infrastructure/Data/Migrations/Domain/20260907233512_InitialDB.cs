@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 {
     /// <inheritdoc />
-    public partial class InitialDomain2 : Migration
+    public partial class InitialDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,31 +25,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,6 +182,29 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BitCoins", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BrokerOffices",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProvinceCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsUrban = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BrokerOffices", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -710,6 +708,31 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.CreateTable(
+                name: "IntegrityLogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ObjectType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ObjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HashAlgorithm = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HashHex = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IntegrityLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MaritalStatuses",
                 columns: table => new
                 {
@@ -796,6 +819,36 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MobileMoneys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Offer",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ListingType = table.Column<int>(type: "int", nullable: false),
+                    BuyerPartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OfferedPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    BuyerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MoveInDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Offer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1043,6 +1096,110 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.CreateTable(
+                name: "ServiceRequestHistorys",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Phase = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChangedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ChangedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceRequestHistorys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServiceRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServiceRequestNumber = table.Column<long>(type: "bigint", nullable: false),
+                    ServiceName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceAttribute = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceStandardDays = table.Column<int>(type: "int", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    SubmittedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceRequests", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServiceRequestWorkflowStates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DraftId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CurrentStep = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LabelFr = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LabelEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    LastSavedUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsSaving = table.Column<bool>(type: "bit", nullable: false),
+                    StepCompletedUtc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SearchQuery = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccessCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IncidentTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IncidentCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IncidentTypeOther = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryOther = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsAnonymous = table.Column<bool>(type: "bit", nullable: false),
+                    ReporterName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReporterEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReporterPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProvinceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Commune = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quartier = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GovernmentOfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    NaturalPersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PhysicPersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Version = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceRequestWorkflowStates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ServiceTypeCodeTableItems",
                 columns: table => new
                 {
@@ -1113,6 +1270,35 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.CreateTable(
+                name: "TenantAuditEntrys",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TimestampUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BrokerOfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProvinceCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ControllerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DetailsJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenantAuditEntrys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Territories",
                 columns: table => new
                 {
@@ -1165,7 +1351,15 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsInternal = table.Column<bool>(type: "bit", nullable: false),
-                    IsAnonymous = table.Column<bool>(type: "bit", nullable: false)
+                    IsAnonymous = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1194,88 +1388,40 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
+                name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    BrokerOfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PreferredLanguage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PreferredTheme = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProvinceCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_AspNetUsers_BrokerOffices_BrokerOfficeId",
+                        column: x => x.BrokerOfficeId,
+                        principalTable: "BrokerOffices",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1466,6 +1612,115 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contracts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OfferId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HtmlBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    BuyerSignature = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BuyerSignedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SellerSignature = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SellerSignedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contracts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contracts_Offer_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CompanyRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServiceRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransactionReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentStatus = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Method = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransactionID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProviderPaymentId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProviderReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RetryCount = table.Column<int>(type: "int", nullable: false),
+                    Provider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CompletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    PaidAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OfferId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payment_Offer_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offer",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AttachmentDraftItem",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TempId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<long>(type: "bigint", nullable: false),
+                    OriginalFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StoredFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false),
+                    StoragePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UploadedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ServiceRequestWorkflowStateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AttachmentDraftItem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AttachmentDraftItem_ServiceRequestWorkflowStates_ServiceRequestWorkflowStateId",
+                        column: x => x.ServiceRequestWorkflowStateId,
+                        principalTable: "ServiceRequestWorkflowStates",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserRoles",
                 columns: table => new
                 {
@@ -1487,6 +1742,162 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegulatorOfficePermissions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    OfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProvinceCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GrantedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GrantedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegulatorOfficePermissions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RegulatorOfficePermissions_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_RegulatorOfficePermissions_BrokerOffices_OfficeId",
+                        column: x => x.OfficeId,
+                        principalTable: "BrokerOffices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegulatorProvincePermissions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ProvinceCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProvinceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GrantedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GrantedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegulatorProvincePermissions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RegulatorProvincePermissions_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_RegulatorProvincePermissions_Provinces_ProvinceId",
+                        column: x => x.ProvinceId,
+                        principalTable: "Provinces",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1596,8 +2007,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     ReporterContactPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NaturalPersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    GovernmentOfficeId = table.Column<int>(type: "int", nullable: true),
-                    GovernmentOfficeId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GovernmentOfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AssignedToUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -1615,10 +2025,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 {
                     table.PrimaryKey("PK_Complaints", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Complaints_GovernmentOffices_GovernmentOfficeId1",
-                        column: x => x.GovernmentOfficeId1,
+                        name: "FK_Complaints_GovernmentOffices_GovernmentOfficeId",
+                        column: x => x.GovernmentOfficeId,
                         principalTable: "GovernmentOffices",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Complaints_IncidentCategories_IncidentCategoryId",
                         column: x => x.IncidentCategoryId,
@@ -1645,22 +2056,41 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.CreateTable(
-                name: "ComplaintAttachments",
+                name: "IncidentRequests",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ComplaintId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsOfficialEvidence = table.Column<bool>(type: "bit", nullable: false),
-                    EvidenceByOfficialUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OriginalFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StoredFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileSize = table.Column<long>(type: "bigint", nullable: false),
-                    StoragePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Viewed = table.Column<bool>(type: "bit", nullable: false),
-                    UploadedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IncidentNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
+                    IncidentTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentTypeOther = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Province = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Commune = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Quartier = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsAnonymous = table.Column<bool>(type: "bit", nullable: false),
+                    CitizenName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    CitizenEmail = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    CitizenPhone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Service = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobRole = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AgeGroups = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AgeGroup = table.Column<int>(type: "int", nullable: true),
+                    ReporterFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GovernmentOfficeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ReporterUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AssignedToUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OfficialNotes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SubmittedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -1672,11 +2102,66 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ComplaintAttachments", x => x.Id);
+                    table.PrimaryKey("PK_IncidentRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ComplaintAttachments_Complaints_ComplaintId",
-                        column: x => x.ComplaintId,
-                        principalTable: "Complaints",
+                        name: "FK_IncidentRequests_GovernmentOffices_GovernmentOfficeId",
+                        column: x => x.GovernmentOfficeId,
+                        principalTable: "GovernmentOffices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequests_IncidentCategories_IncidentCategoryId",
+                        column: x => x.IncidentCategoryId,
+                        principalTable: "IncidentCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequests_IncidentTypes_IncidentTypeId",
+                        column: x => x.IncidentTypeId,
+                        principalTable: "IncidentTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequests_Users_AssignedToUserId",
+                        column: x => x.AssignedToUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequests_Users_ReporterUserId",
+                        column: x => x.ReporterUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SignatureAudits",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ActorUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActorRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OccurredAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SignatureAudits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SignatureAudits_Contracts_ContractId",
+                        column: x => x.ContractId,
+                        principalTable: "Contracts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1769,6 +2254,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ComplaintId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NaturalPersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServiceRequestWorkflowStateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     SpouseTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -1789,6 +2275,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_NaturalPeople_Complaints_ComplaintId",
+                        column: x => x.ComplaintId,
+                        principalTable: "Complaints",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_NaturalPeople_Complaints_NaturalPersonId",
                         column: x => x.NaturalPersonId,
                         principalTable: "Complaints",
@@ -1807,36 +2298,20 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_NaturalPeople_ServiceRequestWorkflowStates_NaturalPersonId",
+                        column: x => x.NaturalPersonId,
+                        principalTable: "ServiceRequestWorkflowStates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NaturalPeople_ServiceRequestWorkflowStates_ServiceRequestWorkflowStateId",
+                        column: x => x.ServiceRequestWorkflowStateId,
+                        principalTable: "ServiceRequestWorkflowStates",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_NaturalPeople_SpouseType_SpouseTypeId",
                         column: x => x.SpouseTypeId,
                         principalTable: "SpouseType",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OfficialDiscussion",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discussion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ComplaintId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OfficialDiscussion", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OfficialDiscussion_Complaints_ComplaintId",
-                        column: x => x.ComplaintId,
-                        principalTable: "Complaints",
                         principalColumn: "Id");
                 });
 
@@ -1876,6 +2351,212 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ComplaintAttachments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ComplaintId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOfficialEvidence = table.Column<bool>(type: "bit", nullable: false),
+                    EvidenceByOfficialUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OriginalFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StoredFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false),
+                    StoragePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Viewed = table.Column<bool>(type: "bit", nullable: false),
+                    UploadedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComplaintAttachments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ComplaintAttachments_Complaints_ComplaintId",
+                        column: x => x.ComplaintId,
+                        principalTable: "Complaints",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ComplaintAttachments_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncidentEvidence",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SizeBytes = table.Column<long>(type: "bigint", nullable: false),
+                    StoragePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    UploadedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncidentEvidence", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncidentEvidence_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncidentRequestHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OldStatus = table.Column<int>(type: "int", nullable: false),
+                    NewStatus = table.Column<int>(type: "int", nullable: false),
+                    ChangedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncidentRequestHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequestHistory_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequestHistory_Users_ChangedByUserId",
+                        column: x => x.ChangedByUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncidentRequestReward",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EligibilityStatus = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DecisionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaidDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncidentRequestReward", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequestReward_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OfficialDiscussion",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Discussion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ComplaintId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OfficialDiscussion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OfficialDiscussion_Complaints_ComplaintId",
+                        column: x => x.ComplaintId,
+                        principalTable: "Complaints",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_OfficialDiscussion_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProcessingPhaseHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Phase = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ChangedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ChangedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MarkForDelete = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProcessingPhaseHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProcessingPhaseHistory_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1989,6 +2670,29 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.CreateTable(
+                name: "IncidentRequestNaturalPersons",
+                columns: table => new
+                {
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NaturalPersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncidentRequestNaturalPersons", x => new { x.IncidentRequestId, x.NaturalPersonId });
+                    table.ForeignKey(
+                        name: "FK_IncidentRequestNaturalPersons_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncidentRequestNaturalPersons_NaturalPeople_NaturalPersonId",
+                        column: x => x.NaturalPersonId,
+                        principalTable: "NaturalPeople",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "NaturalPersonSpouses",
                 columns: table => new
                 {
@@ -2034,6 +2738,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     EnterpriseTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdNumP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ComplaintId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IncidentRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PhysicPersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ServiceRequestWorkflowStateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDT = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -2059,6 +2766,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_PhysicPeople_IncidentRequests_IncidentRequestId",
+                        column: x => x.IncidentRequestId,
+                        principalTable: "IncidentRequests",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_PhysicPeople_NaturalPeople_NaturalPersonId",
                         column: x => x.NaturalPersonId,
                         principalTable: "NaturalPeople",
@@ -2070,6 +2782,16 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         principalTable: "OrganizationCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PhysicPeople_ServiceRequestWorkflowStates_PhysicPersonId",
+                        column: x => x.PhysicPersonId,
+                        principalTable: "ServiceRequestWorkflowStates",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PhysicPeople_ServiceRequestWorkflowStates_ServiceRequestWorkflowStateId",
+                        column: x => x.ServiceRequestWorkflowStateId,
+                        principalTable: "ServiceRequestWorkflowStates",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2136,6 +2858,20 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "BrokerOfficeId", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PreferredLanguage", "PreferredTheme", "ProvinceCode", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "90000000-0000-0000-0000-000000000001", 0, null, "e7cc923a-bfc3-41a5-a806-13287363f2a3", "inspector@coanticor.gov", true, "Jean", "Inspector", false, null, "", "INSPECTOR@COANTICOR.GOV", "INSPECTOR@COANTICOR.GOV", "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==", "+243811111111", true, "fr", "light", "KIN", "99c46ce9-8b02-41ea-adcd-d446616ec203", false, "inspector@coanticor.gov" },
+                    { "90000000-0000-0000-0000-000000000002", 0, null, "158a2a7f-52dd-438b-b0a2-a6beaa52be8f", "manager@coanticor.gov", true, "Patrick", "Manager", false, null, "", "MANAGER@COANTICOR.GOV", "MANAGER@COANTICOR.GOV", "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==", "+243822222222", true, "fr", "dark", "HKT", "4d426e3f-ff2f-40fd-b964-5699ae513ae0", false, "manager@coanticor.gov" },
+                    { "90000000-0000-0000-0000-000000000003", 0, null, "345adbca-e4cd-4ebc-999c-f10a66c23661", "admin@coanticor.gov", true, "Admin", "System", false, null, "", "ADMIN@COANTICOR.GOV", "ADMIN@COANTICOR.GOV", "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==", "+243833333333", true, "fr", "dark", "KIN", "90ebeba8-b6d5-4c74-b5f2-dc2a688ad16e", false, "admin@coanticor.gov" },
+                    { "90000000-0000-0000-0000-000000000004", 0, null, "c2b72530-a4ff-4655-8ddf-d505f324ae3e", "executive@coanticor.gov", true, "Marie", "Executive", false, null, "", "EXECUTIVE@COANTICOR.GOV", "EXECUTIVE@COANTICOR.GOV", "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==", "+243844444444", true, "fr", "light", "NK", "4a42f750-39ee-4aba-8be3-81e833a08903", false, "executive@coanticor.gov" },
+                    { "90000000-0000-0000-0000-000000000005", 0, null, "41736ea3-4e90-405c-9e33-aa17982e3318", "staff@coanticor.gov", true, "Joseph", "Staff", false, null, "", "STAFF@COANTICOR.GOV", "STAFF@COANTICOR.GOV", "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==", "+243855555555", true, "fr", "light", "SK", "47d39655-3989-46c7-ad4c-3aa50cdc5bb2", false, "staff@coanticor.gov" },
+                    { "90000000-0000-0000-0000-000000000006", 0, null, "3142dc1f-3f0c-4a8d-9b37-ebf2226f843a", "citizen1@example.com", true, "Citizen", "One", false, null, "", "CITIZEN1@EXAMPLE.COM", "CITIZEN1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==", "+243866666666", true, "fr", "light", "KIN", "2c30bf1f-ebcd-4cec-86f5-efc289f19369", false, "citizen1@example.com" },
+                    { "90000000-0000-0000-0000-000000000007", 0, null, "008e450b-f173-4ac8-a7f9-d5d7605dfb6c", "citizen2@example.com", true, "Citizen", "Two", false, null, "", "CITIZEN2@EXAMPLE.COM", "CITIZEN2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==", "+243877777777", true, "en", "light", "HK", "b487b3e7-9e76-47b4-8a9f-56ba865c83d9", false, "citizen2@example.com" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Cities",
                 columns: new[] { "Id", "CityName", "CountryCode", "CreatedBy", "CreatedDT", "DeletedBy", "DeletedDT", "IsActive", "MarkForDelete", "ProvinceCode", "UpdatedBy", "UpdatedDT" },
                 values: new object[,]
@@ -2173,10 +2909,10 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 columns: new[] { "Id", "AddressLine", "City", "CreatedBy", "CreatedDT", "DeletedBy", "DeletedDT", "Email", "IsActive", "MarkForDelete", "Name", "Phone", "Province", "UpdatedBy", "UpdatedDT" },
                 values: new object[,]
                 {
-                    { new Guid("10000000-0000-0000-0000-000000000001"), "Boulevard du 30 Juin, Gombe", "Kinshasa", null, null, null, null, "contact@justice.cd", true, false, "Ministry of Justice", "+243 820 000 001", "Kinshasa", null, null },
-                    { new Guid("10000000-0000-0000-0000-000000000002"), "Avenue des Huileries, Gombe", "Kinshasa", null, null, null, null, "info@aplc.cd", true, false, "Anti-Corruption Agency (APLC)", "+243 820 000 002", "Kinshasa", null, null },
-                    { new Guid("10000000-0000-0000-0000-000000000003"), "Avenue Kasa-Vubu", "Lubumbashi", null, null, null, null, "governor@hautkatanga.cd", true, false, "Provincial Governor's Office", "+243 820 000 003", "Haut-Katanga", null, null },
-                    { new Guid("10000000-0000-0000-0000-000000000004"), "Boulevard du 30 Juin", "Kinshasa", null, null, null, null, "finance@min.cd", true, false, "Ministry of Finance", "+243 820 000 004", "Kinshasa", null, null }
+                    { new Guid("70000000-0000-0000-0000-000000000001"), "Boulevard du 30 Juin, Gombe", "Kinshasa", null, null, null, null, "contact@justice.cd", true, false, "Ministry of Justice", "+243 820 000 001", "Kinshasa", null, null },
+                    { new Guid("70000000-0000-0000-0000-000000000002"), "Avenue des Huileries, Gombe", "Kinshasa", null, null, null, null, "info@aplc.cd", true, false, "Anti-Corruption Agency (APLC)", "+243 820 000 002", "Kinshasa", null, null },
+                    { new Guid("70000000-0000-0000-0000-000000000003"), "Avenue Kasa-Vubu", "Lubumbashi", null, null, null, null, "governor@hautkatanga.cd", true, false, "Provincial Governor's Office", "+243 820 000 003", "Haut-Katanga", null, null },
+                    { new Guid("70000000-0000-0000-0000-000000000004"), "Boulevard du 30 Juin", "Kinshasa", null, null, null, null, "finance@min.cd", true, false, "Ministry of Finance", "+243 820 000 004", "Kinshasa", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -2316,6 +3052,28 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.InsertData(
+                table: "ServiceRequestHistorys",
+                columns: new[] { "Id", "ChangedAt", "ChangedByUserId", "CreatedBy", "CreatedDT", "DeletedBy", "DeletedDT", "IncidentId", "IsActive", "MarkForDelete", "Notes", "Phase", "Status", "UpdatedBy", "UpdatedDT" },
+                values: new object[,]
+                {
+                    { new Guid("2063c074-2729-4afc-af76-d48ccdc4611d"), new DateTime(2026, 9, 6, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(1268), new Guid("10000000-0000-0000-0000-000000000001"), null, null, null, null, new Guid("30000000-0000-0000-0000-000000000001"), true, false, "Investigation started by inspector.", "INVESTIGATION", "InProgress", null, null },
+                    { new Guid("2dedc7f3-f2d7-45a5-a3d2-1da615a24c4e"), new DateTime(2026, 9, 5, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(1258), new Guid("10000000-0000-0000-0000-000000000001"), null, null, null, null, new Guid("30000000-0000-0000-0000-000000000001"), true, false, "Initial screening completed. More evidence required.", "SCREENING", "InReview", null, null },
+                    { new Guid("4d92bc83-763c-413a-b538-e775806abeb5"), new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(1245), null, null, null, null, null, new Guid("30000000-0000-0000-0000-000000000001"), true, false, "Citizen submitted the incident with initial evidence.", "SUBMITTED", "Submitted", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ServiceRequestWorkflowStates",
+                columns: new[] { "Id", "AccessCode", "Address", "CategoryOther", "City", "Code", "Commune", "CreatedBy", "CreatedDT", "CurrentStep", "DeletedBy", "DeletedDT", "Description", "DraftId", "GovernmentOfficeId", "IncidentCategoryId", "IncidentTypeId", "IncidentTypeOther", "IsActive", "IsAnonymous", "IsSaving", "LabelEn", "LabelFr", "LastSavedUtc", "MarkForDelete", "NaturalPersonId", "Order", "PhysicPersonId", "Province", "ProvinceId", "Quartier", "ReporterEmail", "ReporterName", "ReporterPhone", "SearchQuery", "StepCompletedUtc", "Title", "UpdatedBy", "UpdatedDT", "Version" },
+                values: new object[,]
+                {
+                    { new Guid("30000000-0000-0000-0000-000000000001"), null, null, null, null, "WIZ_STEP_1", null, null, null, 1, null, null, null, new Guid("31000000-0000-0000-0000-000000000001"), null, null, null, null, true, true, false, "AI Search & Verification", "Recherche et vérification IA", null, false, new Guid("00000000-0000-0000-0000-000000000000"), 1, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, null, null, null, null, "{}", null, null, null, 1 },
+                    { new Guid("30000000-0000-0000-0000-000000000002"), null, null, null, null, "WIZ_STEP_2", null, null, null, 2, null, null, null, new Guid("31000000-0000-0000-0000-000000000002"), null, null, null, null, true, true, false, "Incident Type Selection", "Sélection du type d’incident", null, false, new Guid("00000000-0000-0000-0000-000000000000"), 2, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, null, null, null, null, "{}", null, null, null, 1 },
+                    { new Guid("30000000-0000-0000-0000-000000000003"), null, null, null, null, "WIZ_STEP_3", null, null, null, 3, null, null, null, new Guid("31000000-0000-0000-0000-000000000003"), null, null, null, null, true, true, false, "Reporter Information", "Informations du rapporteur", null, false, new Guid("00000000-0000-0000-0000-000000000000"), 3, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, null, null, null, null, "{}", null, null, null, 1 },
+                    { new Guid("30000000-0000-0000-0000-000000000004"), null, null, null, null, "WIZ_STEP_4", null, null, null, 4, null, null, null, new Guid("31000000-0000-0000-0000-000000000004"), null, null, null, null, true, true, false, "Description & Attachments", "Description et pièces jointes", null, false, new Guid("00000000-0000-0000-0000-000000000000"), 4, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, null, null, null, null, "{}", null, null, null, 1 },
+                    { new Guid("30000000-0000-0000-0000-000000000005"), null, null, null, null, "WIZ_STEP_5", null, null, null, 5, null, null, null, new Guid("31000000-0000-0000-0000-000000000005"), null, null, null, null, true, true, false, "Review & Confirmation", "Révision et confirmation", null, false, new Guid("00000000-0000-0000-0000-000000000000"), 5, new Guid("00000000-0000-0000-0000-000000000000"), null, null, null, null, null, null, null, "{}", null, null, null, 1 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "SpouseType",
                 columns: new[] { "Id", "Code", "CreatedBy", "CreatedDT", "DeletedBy", "DeletedDT", "IsActive", "MarkForDelete", "Name", "NameEnglish", "NameFrench", "UpdatedBy", "UpdatedDT" },
                 values: new object[,]
@@ -2336,6 +3094,21 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     { new Guid("10000000-0000-0000-0000-000000000004"), "KAS", "COD", null, null, null, null, true, false, "Luebo", "KAS", null, null },
                     { new Guid("10000000-0000-0000-0000-000000000005"), "KIK", "COD", null, null, null, null, true, false, "Mbanza-Ngungu", "KSU", null, null },
                     { new Guid("10000000-0000-0000-0000-000000000006"), "KIP", "COD", null, null, null, null, true, false, "Kasumbalesa", "HAK", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedBy", "CreatedDT", "DeletedBy", "DeletedDT", "Email", "IsActive", "IsAnonymous", "IsInternal", "MarkForDelete", "PhoneNumber", "UpdatedBy", "UpdatedDT", "UserName" },
+                values: new object[,]
+                {
+                    { new Guid("90000000-0000-0000-0000-000000000001"), null, null, null, null, "inspector@coanticor.gov", true, false, true, false, "+243811111111", null, null, "inspector@coanticor.gov" },
+                    { new Guid("90000000-0000-0000-0000-000000000002"), null, null, null, null, "manager@coanticor.gov", true, false, true, false, "+243822222222", null, null, "manager@coanticor.gov" },
+                    { new Guid("90000000-0000-0000-0000-000000000003"), null, null, null, null, "admin@coanticor.gov", true, false, true, false, "+243833333333", null, null, "admin@coanticor.gov" },
+                    { new Guid("90000000-0000-0000-0000-000000000004"), null, null, null, null, "executive@coanticor.gov", true, false, true, false, "+243844444444", null, null, "executive@coanticor.gov" },
+                    { new Guid("90000000-0000-0000-0000-000000000005"), null, null, null, null, "staff@coanticor.gov", true, false, true, false, "+243855555555", null, null, "staff@coanticor.gov" },
+                    { new Guid("90000000-0000-0000-0000-000000000006"), null, null, null, null, "citizen1@example.com", true, false, false, false, "+243866666666", null, null, "citizen1@example.com" },
+                    { new Guid("90000000-0000-0000-0000-000000000007"), null, null, null, null, "citizen2@example.com", true, false, false, false, "+243877777777", null, null, "citizen2@example.com" },
+                    { new Guid("90000000-0000-0000-0000-000000000008"), null, null, null, null, "anonymous@coanticor.gov", true, true, false, false, null, null, null, "anonymous" }
                 });
 
             migrationBuilder.InsertData(
@@ -2381,12 +3154,40 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 });
 
             migrationBuilder.InsertData(
+                table: "IncidentRequests",
+                columns: new[] { "Id", "Address", "AgeGroup", "AgeGroups", "AssignedToUserId", "Category", "CitizenEmail", "CitizenName", "CitizenPhone", "City", "Commune", "CreatedAt", "CreatedBy", "CreatedByUserId", "CreatedDT", "DeletedBy", "DeletedDT", "Description", "GovernmentOfficeId", "IncidentCategoryId", "IncidentNumber", "IncidentTypeId", "IncidentTypeOther", "IsActive", "IsAnonymous", "JobRole", "LastUpdatedAt", "MarkForDelete", "OfficialNotes", "Province", "Quartier", "ReporterFullName", "ReporterUserId", "Service", "Sex", "Status", "SubmittedAt", "Title", "UpdatedBy", "UpdatedDT" },
+                values: new object[,]
+                {
+                    { new Guid("50000000-0000-0000-0000-000000000001"), "Avenue des Huileries 12", 3, "36-60", new Guid("90000000-0000-0000-0000-000000000001"), "Détournement de fonds", "jean.mbala@example.com", "Jean Mbala", "+243812345678", "Gombe", "Gombe", new DateTime(2026, 8, 26, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(203), null, null, null, null, null, "Un agent aurait transféré des fonds publics vers un compte personnel.", new Guid("70000000-0000-0000-0000-000000000001"), new Guid("20000000-0000-0000-0000-000000000001"), "INC-2026-000001", new Guid("10000000-0000-0000-0000-000000000002"), "", true, false, "Comptable", new DateTime(2026, 8, 28, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(333), false, "En attente de vérification initiale.", "Kinshasa", "Commercial", "Jean Mbala", null, "Direction Financière", "M", 1, new DateTime(2026, 8, 26, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(328), "Détournement de fonds publics", null, null },
+                    { new Guid("51000000-0000-0000-0000-000000000002"), "Boulevard Kamanyola 45", null, null, new Guid("90000000-0000-0000-0000-000000000002"), "Corruption", null, null, null, "Lubumbashi", "Lubumbashi", new DateTime(2026, 8, 18, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(361), null, null, null, null, null, "Un fonctionnaire aurait exigé un paiement pour attribuer un contrat.", new Guid("70000000-0000-0000-0000-000000000002"), new Guid("20000000-0000-0000-0000-000000000003"), "INC-2026-000002", new Guid("10000000-0000-0000-0000-000000000001"), "", true, true, null, new DateTime(2026, 8, 23, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(363), false, "Inspection en cours.", "Haut-Katanga", "Golf", null, null, null, null, 2, new DateTime(2026, 8, 18, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(362), "Pot-de-vin pour attribution de marché public", null, null },
+                    { new Guid("51000000-0000-0000-0000-000000000003"), "Avenue du Lac 8", 2, "19-35", new Guid("90000000-0000-0000-0000-000000000001"), "Fraude", "marie.kaseba@example.com", "Marie Kaseba", "+243990001122", "Goma", "Goma", new DateTime(2026, 8, 31, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(377), null, null, null, null, null, "Manipulation des appels d’offres pour favoriser une entreprise.", new Guid("70000000-0000-0000-0000-000000000003"), new Guid("20000000-0000-0000-0000-000000000003"), "INC-2026-000003", new Guid("10000000-0000-0000-0000-000000000008"), "", true, false, "Analyste", new DateTime(2026, 9, 2, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(379), false, "Documents supplémentaires requis.", "Nord-Kivu", "Katindo", "Marie Kaseba", null, "Service des marchés publics", "F", 2, new DateTime(2026, 8, 31, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(378), "Fraude dans les marchés publics", null, null },
+                    { new Guid("51000000-0000-0000-0000-000000000004"), "Rue de la Mission 21", null, null, null, "Conflit d’intérêts", null, null, null, "Matadi", "Matadi", new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(391), null, null, null, null, null, "Un directeur aurait nommé un membre de sa famille sans procédure.", new Guid("70000000-0000-0000-0000-000000000004"), new Guid("20000000-0000-0000-0000-000000000002"), "INC-2026-000004", new Guid("10000000-0000-0000-0000-000000000004"), "", true, true, null, new DateTime(2026, 9, 5, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(393), false, "En attente d’analyse.", "Kongo Central", "Belvédère", null, null, null, null, 1, new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(392), "Conflit d’intérêts dans une nomination", null, null },
+                    { new Guid("51000000-0000-0000-0000-000000000005"), "Avenue Patrice Lumumba 5", 3, "36-60", new Guid("90000000-0000-0000-0000-000000000002"), "Évasion fiscale", "patrick.l@example.com", "Patrick Lushombo", "+243812222333", "Bukavu", "Kadutu", new DateTime(2026, 8, 24, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(405), null, null, null, null, null, "Une société aurait dissimulé des revenus pour éviter l’impôt.", new Guid("70000000-0000-0000-0000-000000000004"), new Guid("20000000-0000-0000-0000-000000000001"), "INC-2026-000005", new Guid("10000000-0000-0000-0000-000000000007"), "", true, false, "Auditeur", new DateTime(2026, 8, 26, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(407), false, "Analyse financière en cours.", "Sud-Kivu", "Nyawera", "Patrick Lushombo", null, "Inspection fiscale", "M", 2, new DateTime(2026, 8, 24, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(405), "Évasion fiscale d’une entreprise locale", null, null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Quartiers",
                 columns: new[] { "Id", "CommuneId", "CreatedBy", "CreatedDT", "DeletedBy", "DeletedDT", "IsActive", "MarkForDelete", "Name", "UpdatedBy", "UpdatedDT" },
                 values: new object[,]
                 {
                     { new Guid("50000000-0000-0000-0000-000000000001"), new Guid("40000000-0000-0000-0000-000000000001"), null, null, null, null, true, false, "Quartier Résidentiel", null, null },
                     { new Guid("50000000-0000-0000-0000-000000000002"), new Guid("40000000-0000-0000-0000-000000000001"), null, null, null, null, true, false, "Quartier Commercial", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "IncidentRequestReward",
+                columns: new[] { "Id", "Amount", "CreatedBy", "CreatedDT", "DecisionDate", "DeletedBy", "DeletedDT", "EligibilityStatus", "IncidentRequestId", "IsActive", "MarkForDelete", "PaidDate", "PaymentReference", "UpdatedBy", "UpdatedDT" },
+                values: new object[] { new Guid("60000000-0000-0000-0000-000000000001"), null, null, null, null, null, null, 1, new Guid("50000000-0000-0000-0000-000000000001"), true, false, null, null, null, null });
+
+            migrationBuilder.InsertData(
+                table: "ProcessingPhaseHistory",
+                columns: new[] { "Id", "ChangedAt", "ChangedByUserId", "CreatedBy", "CreatedDT", "DeletedBy", "DeletedDT", "IncidentRequestId", "IsActive", "MarkForDelete", "Notes", "Phase", "Status", "UpdatedBy", "UpdatedDT" },
+                values: new object[,]
+                {
+                    { new Guid("40000000-0000-0000-0000-000000000001"), new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(555), null, null, null, null, null, new Guid("50000000-0000-0000-0000-000000000001"), true, false, "Incident submitted by citizen with initial evidence.", "SUBMITTED", 1, null, null },
+                    { new Guid("40000000-0000-0000-0000-000000000002"), new DateTime(2026, 9, 5, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(561), new Guid("90000000-0000-0000-0000-000000000001"), null, null, null, null, new Guid("50000000-0000-0000-0000-000000000001"), true, false, "Initial screening completed. Additional evidence requested.", "SCREENING", 2, null, null },
+                    { new Guid("40000000-0000-0000-0000-000000000003"), new DateTime(2026, 9, 6, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(566), new Guid("90000000-0000-0000-0000-000000000001"), null, null, null, null, new Guid("50000000-0000-0000-0000-000000000001"), true, false, "Investigation started by inspector.", "INVESTIGATION", 2, null, null },
+                    { new Guid("40000000-0000-0000-0000-000000000004"), new DateTime(2026, 9, 7, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(571), new Guid("90000000-0000-0000-0000-000000000002"), null, null, null, null, new Guid("50000000-0000-0000-0000-000000000001"), true, false, "Case submitted to the financial tribunal.", "TRIBUNAL_SUBMISSION", 5, null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -2432,11 +3233,21 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_BrokerOfficeId",
+                table: "AspNetUsers",
+                column: "BrokerOfficeId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AttachmentDraftItem_ServiceRequestWorkflowStateId",
+                table: "AttachmentDraftItem",
+                column: "ServiceRequestWorkflowStateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditLogs_EntityType_EntityId",
@@ -2457,6 +3268,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "IX_ComplaintAttachments_ComplaintId",
                 table: "ComplaintAttachments",
                 column: "ComplaintId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComplaintAttachments_IncidentRequestId",
+                table: "ComplaintAttachments",
+                column: "IncidentRequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ComplaintDraftActivities_DraftId",
@@ -2491,9 +3307,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Complaints_GovernmentOfficeId1",
+                name: "IX_Complaints_GovernmentOfficeId",
                 table: "Complaints",
-                column: "GovernmentOfficeId1");
+                column: "GovernmentOfficeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Complaints_IncidentCategoryId",
@@ -2509,6 +3325,12 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "IX_Complaints_ReporterUserId",
                 table: "Complaints",
                 column: "ReporterUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contracts_OfferId",
+                table: "Contracts",
+                column: "OfferId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Countries_NaturalPersonId",
@@ -2551,6 +3373,62 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 column: "FredRequestID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_IncidentEvidence_IncidentRequestId",
+                table: "IncidentEvidence",
+                column: "IncidentRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequestHistory_ChangedByUserId",
+                table: "IncidentRequestHistory",
+                column: "ChangedByUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequestHistory_IncidentRequestId",
+                table: "IncidentRequestHistory",
+                column: "IncidentRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequestNaturalPersons_NaturalPersonId",
+                table: "IncidentRequestNaturalPersons",
+                column: "NaturalPersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequestReward_IncidentRequestId",
+                table: "IncidentRequestReward",
+                column: "IncidentRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequests_AssignedToUserId",
+                table: "IncidentRequests",
+                column: "AssignedToUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequests_GovernmentOfficeId",
+                table: "IncidentRequests",
+                column: "GovernmentOfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequests_IncidentCategoryId",
+                table: "IncidentRequests",
+                column: "IncidentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequests_IncidentNumber",
+                table: "IncidentRequests",
+                column: "IncidentNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequests_IncidentTypeId",
+                table: "IncidentRequests",
+                column: "IncidentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncidentRequests_ReporterUserId",
+                table: "IncidentRequests",
+                column: "ReporterUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_IncidentTypes_IncidentCategoryId",
                 table: "IncidentTypes",
                 column: "IncidentCategoryId");
@@ -2559,6 +3437,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "IX_NaturalPeople_CivilityId",
                 table: "NaturalPeople",
                 column: "CivilityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NaturalPeople_ComplaintId",
+                table: "NaturalPeople",
+                column: "ComplaintId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPeople_GenderId",
@@ -2574,6 +3457,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "IX_NaturalPeople_NaturalPersonId",
                 table: "NaturalPeople",
                 column: "NaturalPersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NaturalPeople_ServiceRequestWorkflowStateId",
+                table: "NaturalPeople",
+                column: "ServiceRequestWorkflowStateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPeople_SpouseTypeId",
@@ -2601,9 +3489,19 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 column: "ComplaintId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OfficialDiscussion_IncidentRequestId",
+                table: "OfficialDiscussion",
+                column: "IncidentRequestId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrganizationAddresses_PhysicPersonId",
                 table: "OrganizationAddresses",
                 column: "PhysicPersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payment_OfferId",
+                table: "Payment",
+                column: "OfferId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhysicPeople_ComplaintId",
@@ -2616,6 +3514,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 column: "EnterpriseTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PhysicPeople_IncidentRequestId",
+                table: "PhysicPeople",
+                column: "IncidentRequestId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PhysicPeople_NaturalPersonId",
                 table: "PhysicPeople",
                 column: "NaturalPersonId");
@@ -2624,6 +3527,21 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "IX_PhysicPeople_OrganizationCategoryId",
                 table: "PhysicPeople",
                 column: "OrganizationCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PhysicPeople_PhysicPersonId",
+                table: "PhysicPeople",
+                column: "PhysicPersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PhysicPeople_ServiceRequestWorkflowStateId",
+                table: "PhysicPeople",
+                column: "ServiceRequestWorkflowStateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcessingPhaseHistory_IncidentRequestId",
+                table: "ProcessingPhaseHistory",
+                column: "IncidentRequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProcessingPhases_AssignedToUserId",
@@ -2639,6 +3557,31 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "IX_Quartiers_CommuneId",
                 table: "Quartiers",
                 column: "CommuneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegulatorOfficePermissions_OfficeId",
+                table: "RegulatorOfficePermissions",
+                column: "OfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegulatorOfficePermissions_UserId1",
+                table: "RegulatorOfficePermissions",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegulatorProvincePermissions_ProvinceId",
+                table: "RegulatorProvincePermissions",
+                column: "ProvinceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegulatorProvincePermissions_UserId1",
+                table: "RegulatorProvincePermissions",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SignatureAudits_ContractId",
+                table: "SignatureAudits",
+                column: "ContractId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
@@ -2666,6 +3609,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "AttachmentDraftItem");
 
             migrationBuilder.DropTable(
                 name: "AuditLogs");
@@ -2746,6 +3692,21 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "GiftCardPayInAdvances");
 
             migrationBuilder.DropTable(
+                name: "IncidentEvidence");
+
+            migrationBuilder.DropTable(
+                name: "IncidentRequestHistory");
+
+            migrationBuilder.DropTable(
+                name: "IncidentRequestNaturalPersons");
+
+            migrationBuilder.DropTable(
+                name: "IncidentRequestReward");
+
+            migrationBuilder.DropTable(
+                name: "IntegrityLogs");
+
+            migrationBuilder.DropTable(
                 name: "MediaTypeCodeTableItems");
 
             migrationBuilder.DropTable(
@@ -2770,6 +3731,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "OrganizationAddresses");
 
             migrationBuilder.DropTable(
+                name: "Payment");
+
+            migrationBuilder.DropTable(
                 name: "PaymentLogs");
 
             migrationBuilder.DropTable(
@@ -2779,16 +3743,22 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "PayPals");
 
             migrationBuilder.DropTable(
+                name: "ProcessingPhaseHistory");
+
+            migrationBuilder.DropTable(
                 name: "ProcessingPhases");
 
             migrationBuilder.DropTable(
                 name: "ProvinceCodeTableItems");
 
             migrationBuilder.DropTable(
-                name: "Provinces");
+                name: "Quartiers");
 
             migrationBuilder.DropTable(
-                name: "Quartiers");
+                name: "RegulatorOfficePermissions");
+
+            migrationBuilder.DropTable(
+                name: "RegulatorProvincePermissions");
 
             migrationBuilder.DropTable(
                 name: "Releases");
@@ -2797,7 +3767,19 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "RoadTypes");
 
             migrationBuilder.DropTable(
+                name: "ServiceRequestHistorys");
+
+            migrationBuilder.DropTable(
+                name: "ServiceRequests");
+
+            migrationBuilder.DropTable(
                 name: "ServiceTypeCodeTableItems");
+
+            migrationBuilder.DropTable(
+                name: "SignatureAudits");
+
+            migrationBuilder.DropTable(
+                name: "TenantAuditEntrys");
 
             migrationBuilder.DropTable(
                 name: "Territories");
@@ -2810,9 +3792,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "ComplaintDrafts");
@@ -2839,6 +3818,15 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "Communes");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Provinces");
+
+            migrationBuilder.DropTable(
+                name: "Contracts");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
@@ -2848,6 +3836,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 name: "EnterpriseTypes");
 
             migrationBuilder.DropTable(
+                name: "IncidentRequests");
+
+            migrationBuilder.DropTable(
                 name: "NaturalPeople");
 
             migrationBuilder.DropTable(
@@ -2855,6 +3846,12 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             migrationBuilder.DropTable(
                 name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "BrokerOffices");
+
+            migrationBuilder.DropTable(
+                name: "Offer");
 
             migrationBuilder.DropTable(
                 name: "Civilities");
@@ -2867,6 +3864,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             migrationBuilder.DropTable(
                 name: "MaritalStatuses");
+
+            migrationBuilder.DropTable(
+                name: "ServiceRequestWorkflowStates");
 
             migrationBuilder.DropTable(
                 name: "SpouseType");

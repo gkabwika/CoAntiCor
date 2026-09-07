@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 {
     [DbContext(typeof(CoAntiCorDbContext))]
-    [Migration("20260907035220_InitialDB")]
+    [Migration("20260907233512_InitialDB")]
     partial class InitialDB
     {
         /// <inheritdoc />
@@ -1091,6 +1091,246 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "90000000-0000-0000-0000-000000000001",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e7cc923a-bfc3-41a5-a806-13287363f2a3",
+                            Email = "inspector@coanticor.gov",
+                            EmailConfirmed = true,
+                            FirstName = "Jean",
+                            LastName = "Inspector",
+                            LockoutEnabled = false,
+                            MiddleName = "",
+                            NormalizedEmail = "INSPECTOR@COANTICOR.GOV",
+                            NormalizedUserName = "INSPECTOR@COANTICOR.GOV",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                            PhoneNumber = "+243811111111",
+                            PhoneNumberConfirmed = true,
+                            PreferredLanguage = "fr",
+                            PreferredTheme = "light",
+                            ProvinceCode = "KIN",
+                            SecurityStamp = "99c46ce9-8b02-41ea-adcd-d446616ec203",
+                            TwoFactorEnabled = false,
+                            UserName = "inspector@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = "90000000-0000-0000-0000-000000000002",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "158a2a7f-52dd-438b-b0a2-a6beaa52be8f",
+                            Email = "manager@coanticor.gov",
+                            EmailConfirmed = true,
+                            FirstName = "Patrick",
+                            LastName = "Manager",
+                            LockoutEnabled = false,
+                            MiddleName = "",
+                            NormalizedEmail = "MANAGER@COANTICOR.GOV",
+                            NormalizedUserName = "MANAGER@COANTICOR.GOV",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                            PhoneNumber = "+243822222222",
+                            PhoneNumberConfirmed = true,
+                            PreferredLanguage = "fr",
+                            PreferredTheme = "dark",
+                            ProvinceCode = "HKT",
+                            SecurityStamp = "4d426e3f-ff2f-40fd-b964-5699ae513ae0",
+                            TwoFactorEnabled = false,
+                            UserName = "manager@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = "90000000-0000-0000-0000-000000000003",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "345adbca-e4cd-4ebc-999c-f10a66c23661",
+                            Email = "admin@coanticor.gov",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "System",
+                            LockoutEnabled = false,
+                            MiddleName = "",
+                            NormalizedEmail = "ADMIN@COANTICOR.GOV",
+                            NormalizedUserName = "ADMIN@COANTICOR.GOV",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                            PhoneNumber = "+243833333333",
+                            PhoneNumberConfirmed = true,
+                            PreferredLanguage = "fr",
+                            PreferredTheme = "dark",
+                            ProvinceCode = "KIN",
+                            SecurityStamp = "90ebeba8-b6d5-4c74-b5f2-dc2a688ad16e",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = "90000000-0000-0000-0000-000000000004",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c2b72530-a4ff-4655-8ddf-d505f324ae3e",
+                            Email = "executive@coanticor.gov",
+                            EmailConfirmed = true,
+                            FirstName = "Marie",
+                            LastName = "Executive",
+                            LockoutEnabled = false,
+                            MiddleName = "",
+                            NormalizedEmail = "EXECUTIVE@COANTICOR.GOV",
+                            NormalizedUserName = "EXECUTIVE@COANTICOR.GOV",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                            PhoneNumber = "+243844444444",
+                            PhoneNumberConfirmed = true,
+                            PreferredLanguage = "fr",
+                            PreferredTheme = "light",
+                            ProvinceCode = "NK",
+                            SecurityStamp = "4a42f750-39ee-4aba-8be3-81e833a08903",
+                            TwoFactorEnabled = false,
+                            UserName = "executive@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = "90000000-0000-0000-0000-000000000005",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "41736ea3-4e90-405c-9e33-aa17982e3318",
+                            Email = "staff@coanticor.gov",
+                            EmailConfirmed = true,
+                            FirstName = "Joseph",
+                            LastName = "Staff",
+                            LockoutEnabled = false,
+                            MiddleName = "",
+                            NormalizedEmail = "STAFF@COANTICOR.GOV",
+                            NormalizedUserName = "STAFF@COANTICOR.GOV",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                            PhoneNumber = "+243855555555",
+                            PhoneNumberConfirmed = true,
+                            PreferredLanguage = "fr",
+                            PreferredTheme = "light",
+                            ProvinceCode = "SK",
+                            SecurityStamp = "47d39655-3989-46c7-ad4c-3aa50cdc5bb2",
+                            TwoFactorEnabled = false,
+                            UserName = "staff@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = "90000000-0000-0000-0000-000000000006",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3142dc1f-3f0c-4a8d-9b37-ebf2226f843a",
+                            Email = "citizen1@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "Citizen",
+                            LastName = "One",
+                            LockoutEnabled = false,
+                            MiddleName = "",
+                            NormalizedEmail = "CITIZEN1@EXAMPLE.COM",
+                            NormalizedUserName = "CITIZEN1@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                            PhoneNumber = "+243866666666",
+                            PhoneNumberConfirmed = true,
+                            PreferredLanguage = "fr",
+                            PreferredTheme = "light",
+                            ProvinceCode = "KIN",
+                            SecurityStamp = "2c30bf1f-ebcd-4cec-86f5-efc289f19369",
+                            TwoFactorEnabled = false,
+                            UserName = "citizen1@example.com"
+                        },
+                        new
+                        {
+                            Id = "90000000-0000-0000-0000-000000000007",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "008e450b-f173-4ac8-a7f9-d5d7605dfb6c",
+                            Email = "citizen2@example.com",
+                            EmailConfirmed = true,
+                            FirstName = "Citizen",
+                            LastName = "Two",
+                            LockoutEnabled = false,
+                            MiddleName = "",
+                            NormalizedEmail = "CITIZEN2@EXAMPLE.COM",
+                            NormalizedUserName = "CITIZEN2@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJt7m0r1lYz0uYtYf1uZ8uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p0uZ0p9p==",
+                            PhoneNumber = "+243877777777",
+                            PhoneNumberConfirmed = true,
+                            PreferredLanguage = "en",
+                            PreferredTheme = "light",
+                            ProvinceCode = "HK",
+                            SecurityStamp = "b487b3e7-9e76-47b4-8a9f-56ba865c83d9",
+                            TwoFactorEnabled = false,
+                            UserName = "citizen2@example.com"
+                        });
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.AttachmentDraftItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ServiceRequestWorkflowStateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TempId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceRequestWorkflowStateId");
+
+                    b.ToTable("AttachmentDraftItem");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.AuthorizedOfficial", b =>
@@ -1844,6 +2084,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -1880,6 +2123,8 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasKey("Id");
 
                     b.HasIndex("ComplaintId");
+
+                    b.HasIndex("IncidentRequestId");
 
                     b.ToTable("ComplaintAttachments");
                 });
@@ -2957,7 +3202,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasData(
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000001"),
+                            Id = new Guid("70000000-0000-0000-0000-000000000001"),
                             AddressLine = "Boulevard du 30 Juin, Gombe",
                             City = "Kinshasa",
                             Email = "contact@justice.cd",
@@ -2969,7 +3214,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         },
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000002"),
+                            Id = new Guid("70000000-0000-0000-0000-000000000002"),
                             AddressLine = "Avenue des Huileries, Gombe",
                             City = "Kinshasa",
                             Email = "info@aplc.cd",
@@ -2981,7 +3226,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         },
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000003"),
+                            Id = new Guid("70000000-0000-0000-0000-000000000003"),
                             AddressLine = "Avenue Kasa-Vubu",
                             City = "Lubumbashi",
                             Email = "governor@hautkatanga.cd",
@@ -2993,7 +3238,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         },
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000004"),
+                            Id = new Guid("70000000-0000-0000-0000-000000000004"),
                             AddressLine = "Boulevard du 30 Juin",
                             City = "Kinshasa",
                             Email = "finance@min.cd",
@@ -4061,6 +4306,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IndustryTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -4088,6 +4336,12 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<Guid?>("PhysicPersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ServiceRequestWorkflowStateId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Sigle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -4112,9 +4366,15 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("EnterpriseTypeId");
 
+                    b.HasIndex("IncidentRequestId");
+
                     b.HasIndex("NaturalPersonId");
 
                     b.HasIndex("OrganizationCategoryId");
+
+                    b.HasIndex("PhysicPersonId");
+
+                    b.HasIndex("ServiceRequestWorkflowStateId");
 
                     b.ToTable("PhysicPeople");
                 });
@@ -5152,6 +5412,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<Guid?>("ServiceRequestWorkflowStateId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SpouseTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -5165,11 +5428,15 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("CivilityId");
 
+                    b.HasIndex("ComplaintId");
+
                     b.HasIndex("GenderId");
 
                     b.HasIndex("MaritalStatusId");
 
                     b.HasIndex("NaturalPersonId");
+
+                    b.HasIndex("ServiceRequestWorkflowStateId");
 
                     b.HasIndex("SpouseTypeId");
 
@@ -5295,6 +5562,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Property<string>("Discussion")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -5310,6 +5580,8 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasKey("Id");
 
                     b.HasIndex("ComplaintId");
+
+                    b.HasIndex("IncidentRequestId");
 
                     b.ToTable("OfficialDiscussion");
                 });
@@ -5988,6 +6260,20 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("AgeGroup")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AgeGroups")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("AssignedToUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -6006,6 +6292,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Commune")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -6033,12 +6324,21 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)");
 
+                    b.Property<Guid>("GovernmentOfficeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IncidentCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("IncidentNumber")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("IncidentType")
+                    b.Property<Guid>("IncidentTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IncidentTypeOther")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -6049,16 +6349,40 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Property<bool>("IsAnonymous")
                         .HasColumnType("bit");
 
+                    b.Property<string>("JobRole")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("MarkForDelete")
                         .HasColumnType("bit");
 
+                    b.Property<string>("OfficialNotes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Province")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Quartier")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ReporterFullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ReporterUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Service")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -6079,10 +6403,315 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AssignedToUserId");
+
+                    b.HasIndex("GovernmentOfficeId");
+
+                    b.HasIndex("IncidentCategoryId");
+
                     b.HasIndex("IncidentNumber")
                         .IsUnique();
 
+                    b.HasIndex("IncidentTypeId");
+
+                    b.HasIndex("ReporterUserId");
+
                     b.ToTable("IncidentRequests", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000001"),
+                            Address = "Avenue des Huileries 12",
+                            AgeGroup = 3,
+                            AgeGroups = "36-60",
+                            AssignedToUserId = new Guid("90000000-0000-0000-0000-000000000001"),
+                            Category = "Détournement de fonds",
+                            CitizenEmail = "jean.mbala@example.com",
+                            CitizenName = "Jean Mbala",
+                            CitizenPhone = "+243812345678",
+                            City = "Gombe",
+                            Commune = "Gombe",
+                            CreatedAt = new DateTime(2026, 8, 26, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(203),
+                            Description = "Un agent aurait transféré des fonds publics vers un compte personnel.",
+                            GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000001"),
+                            IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            IncidentNumber = "INC-2026-000001",
+                            IncidentTypeId = new Guid("10000000-0000-0000-0000-000000000002"),
+                            IncidentTypeOther = "",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            JobRole = "Comptable",
+                            LastUpdatedAt = new DateTime(2026, 8, 28, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(333),
+                            MarkForDelete = false,
+                            OfficialNotes = "En attente de vérification initiale.",
+                            Province = "Kinshasa",
+                            Quartier = "Commercial",
+                            ReporterFullName = "Jean Mbala",
+                            Service = "Direction Financière",
+                            Sex = "M",
+                            Status = 1,
+                            SubmittedAt = new DateTime(2026, 8, 26, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(328),
+                            Title = "Détournement de fonds publics"
+                        },
+                        new
+                        {
+                            Id = new Guid("51000000-0000-0000-0000-000000000002"),
+                            Address = "Boulevard Kamanyola 45",
+                            AssignedToUserId = new Guid("90000000-0000-0000-0000-000000000002"),
+                            Category = "Corruption",
+                            City = "Lubumbashi",
+                            Commune = "Lubumbashi",
+                            CreatedAt = new DateTime(2026, 8, 18, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(361),
+                            Description = "Un fonctionnaire aurait exigé un paiement pour attribuer un contrat.",
+                            GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000002"),
+                            IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000003"),
+                            IncidentNumber = "INC-2026-000002",
+                            IncidentTypeId = new Guid("10000000-0000-0000-0000-000000000001"),
+                            IncidentTypeOther = "",
+                            IsActive = true,
+                            IsAnonymous = true,
+                            LastUpdatedAt = new DateTime(2026, 8, 23, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(363),
+                            MarkForDelete = false,
+                            OfficialNotes = "Inspection en cours.",
+                            Province = "Haut-Katanga",
+                            Quartier = "Golf",
+                            Status = 2,
+                            SubmittedAt = new DateTime(2026, 8, 18, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(362),
+                            Title = "Pot-de-vin pour attribution de marché public"
+                        },
+                        new
+                        {
+                            Id = new Guid("51000000-0000-0000-0000-000000000003"),
+                            Address = "Avenue du Lac 8",
+                            AgeGroup = 2,
+                            AgeGroups = "19-35",
+                            AssignedToUserId = new Guid("90000000-0000-0000-0000-000000000001"),
+                            Category = "Fraude",
+                            CitizenEmail = "marie.kaseba@example.com",
+                            CitizenName = "Marie Kaseba",
+                            CitizenPhone = "+243990001122",
+                            City = "Goma",
+                            Commune = "Goma",
+                            CreatedAt = new DateTime(2026, 8, 31, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(377),
+                            Description = "Manipulation des appels d’offres pour favoriser une entreprise.",
+                            GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000003"),
+                            IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000003"),
+                            IncidentNumber = "INC-2026-000003",
+                            IncidentTypeId = new Guid("10000000-0000-0000-0000-000000000008"),
+                            IncidentTypeOther = "",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            JobRole = "Analyste",
+                            LastUpdatedAt = new DateTime(2026, 9, 2, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(379),
+                            MarkForDelete = false,
+                            OfficialNotes = "Documents supplémentaires requis.",
+                            Province = "Nord-Kivu",
+                            Quartier = "Katindo",
+                            ReporterFullName = "Marie Kaseba",
+                            Service = "Service des marchés publics",
+                            Sex = "F",
+                            Status = 2,
+                            SubmittedAt = new DateTime(2026, 8, 31, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(378),
+                            Title = "Fraude dans les marchés publics"
+                        },
+                        new
+                        {
+                            Id = new Guid("51000000-0000-0000-0000-000000000004"),
+                            Address = "Rue de la Mission 21",
+                            Category = "Conflit d’intérêts",
+                            City = "Matadi",
+                            Commune = "Matadi",
+                            CreatedAt = new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(391),
+                            Description = "Un directeur aurait nommé un membre de sa famille sans procédure.",
+                            GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000004"),
+                            IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000002"),
+                            IncidentNumber = "INC-2026-000004",
+                            IncidentTypeId = new Guid("10000000-0000-0000-0000-000000000004"),
+                            IncidentTypeOther = "",
+                            IsActive = true,
+                            IsAnonymous = true,
+                            LastUpdatedAt = new DateTime(2026, 9, 5, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(393),
+                            MarkForDelete = false,
+                            OfficialNotes = "En attente d’analyse.",
+                            Province = "Kongo Central",
+                            Quartier = "Belvédère",
+                            Status = 1,
+                            SubmittedAt = new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(392),
+                            Title = "Conflit d’intérêts dans une nomination"
+                        },
+                        new
+                        {
+                            Id = new Guid("51000000-0000-0000-0000-000000000005"),
+                            Address = "Avenue Patrice Lumumba 5",
+                            AgeGroup = 3,
+                            AgeGroups = "36-60",
+                            AssignedToUserId = new Guid("90000000-0000-0000-0000-000000000002"),
+                            Category = "Évasion fiscale",
+                            CitizenEmail = "patrick.l@example.com",
+                            CitizenName = "Patrick Lushombo",
+                            CitizenPhone = "+243812222333",
+                            City = "Bukavu",
+                            Commune = "Kadutu",
+                            CreatedAt = new DateTime(2026, 8, 24, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(405),
+                            Description = "Une société aurait dissimulé des revenus pour éviter l’impôt.",
+                            GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000004"),
+                            IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            IncidentNumber = "INC-2026-000005",
+                            IncidentTypeId = new Guid("10000000-0000-0000-0000-000000000007"),
+                            IncidentTypeOther = "",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            JobRole = "Auditeur",
+                            LastUpdatedAt = new DateTime(2026, 8, 26, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(407),
+                            MarkForDelete = false,
+                            OfficialNotes = "Analyse financière en cours.",
+                            Province = "Sud-Kivu",
+                            Quartier = "Nyawera",
+                            ReporterFullName = "Patrick Lushombo",
+                            Service = "Inspection fiscale",
+                            Sex = "M",
+                            Status = 2,
+                            SubmittedAt = new DateTime(2026, 8, 24, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(405),
+                            Title = "Évasion fiscale d’une entreprise locale"
+                        });
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequestHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ChangedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NewStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OldStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChangedByUserId");
+
+                    b.HasIndex("IncidentRequestId");
+
+                    b.ToTable("IncidentRequestHistory");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequestNaturalPerson", b =>
+                {
+                    b.Property<Guid>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("NaturalPersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("IncidentRequestId", "NaturalPersonId");
+
+                    b.HasIndex("NaturalPersonId");
+
+                    b.ToTable("IncidentRequestNaturalPersons", (string)null);
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequestReward", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DecisionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EligibilityStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("PaidDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentReference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncidentRequestId");
+
+                    b.ToTable("IncidentRequestReward");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("60000000-0000-0000-0000-000000000001"),
+                            EligibilityStatus = 1,
+                            IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false
+                        });
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ProcessingPhaseHistory", b =>
@@ -6141,6 +6770,441 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasIndex("IncidentRequestId");
 
                     b.ToTable("ProcessingPhaseHistory", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000001"),
+                            ChangedAt = new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(555),
+                            IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false,
+                            Notes = "Incident submitted by citizen with initial evidence.",
+                            Phase = "SUBMITTED",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000002"),
+                            ChangedAt = new DateTime(2026, 9, 5, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(561),
+                            ChangedByUserId = new Guid("90000000-0000-0000-0000-000000000001"),
+                            IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false,
+                            Notes = "Initial screening completed. Additional evidence requested.",
+                            Phase = "SCREENING",
+                            Status = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000003"),
+                            ChangedAt = new DateTime(2026, 9, 6, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(566),
+                            ChangedByUserId = new Guid("90000000-0000-0000-0000-000000000001"),
+                            IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false,
+                            Notes = "Investigation started by inspector.",
+                            Phase = "INVESTIGATION",
+                            Status = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000004"),
+                            ChangedAt = new DateTime(2026, 9, 7, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(571),
+                            ChangedByUserId = new Guid("90000000-0000-0000-0000-000000000002"),
+                            IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false,
+                            Notes = "Case submitted to the financial tribunal.",
+                            Phase = "TRIBUNAL_SUBMISSION",
+                            Status = 5
+                        });
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceAttribute")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ServiceRequestNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ServiceStandardDays")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServiceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceRequests");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ChangedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("IncidentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phase")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceRequestHistorys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4d92bc83-763c-413a-b538-e775806abeb5"),
+                            ChangedAt = new DateTime(2026, 9, 4, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(1245),
+                            IncidentId = new Guid("30000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false,
+                            Notes = "Citizen submitted the incident with initial evidence.",
+                            Phase = "SUBMITTED",
+                            Status = "Submitted"
+                        },
+                        new
+                        {
+                            Id = new Guid("2dedc7f3-f2d7-45a5-a3d2-1da615a24c4e"),
+                            ChangedAt = new DateTime(2026, 9, 5, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(1258),
+                            ChangedByUserId = new Guid("10000000-0000-0000-0000-000000000001"),
+                            IncidentId = new Guid("30000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false,
+                            Notes = "Initial screening completed. More evidence required.",
+                            Phase = "SCREENING",
+                            Status = "InReview"
+                        },
+                        new
+                        {
+                            Id = new Guid("2063c074-2729-4afc-af76-d48ccdc4611d"),
+                            ChangedAt = new DateTime(2026, 9, 6, 23, 35, 9, 55, DateTimeKind.Utc).AddTicks(1268),
+                            ChangedByUserId = new Guid("10000000-0000-0000-0000-000000000001"),
+                            IncidentId = new Guid("30000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            MarkForDelete = false,
+                            Notes = "Investigation started by inspector.",
+                            Phase = "INVESTIGATION",
+                            Status = "InProgress"
+                        });
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestWorkflowState", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccessCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CategoryOther")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Commune")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentStep")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DraftId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GovernmentOfficeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IncidentCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IncidentTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IncidentTypeOther")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAnonymous")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSaving")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LabelEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LabelFr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastSavedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("NaturalPersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PhysicPersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Province")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ProvinceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Quartier")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReporterEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReporterName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReporterPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SearchQuery")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StepCompletedUtc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceRequestWorkflowStates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("30000000-0000-0000-0000-000000000001"),
+                            Code = "WIZ_STEP_1",
+                            CurrentStep = 1,
+                            DraftId = new Guid("31000000-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            IsAnonymous = true,
+                            IsSaving = false,
+                            LabelEn = "AI Search & Verification",
+                            LabelFr = "Recherche et vérification IA",
+                            MarkForDelete = false,
+                            NaturalPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 1,
+                            PhysicPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            StepCompletedUtc = "{}",
+                            Version = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("30000000-0000-0000-0000-000000000002"),
+                            Code = "WIZ_STEP_2",
+                            CurrentStep = 2,
+                            DraftId = new Guid("31000000-0000-0000-0000-000000000002"),
+                            IsActive = true,
+                            IsAnonymous = true,
+                            IsSaving = false,
+                            LabelEn = "Incident Type Selection",
+                            LabelFr = "Sélection du type d’incident",
+                            MarkForDelete = false,
+                            NaturalPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 2,
+                            PhysicPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            StepCompletedUtc = "{}",
+                            Version = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("30000000-0000-0000-0000-000000000003"),
+                            Code = "WIZ_STEP_3",
+                            CurrentStep = 3,
+                            DraftId = new Guid("31000000-0000-0000-0000-000000000003"),
+                            IsActive = true,
+                            IsAnonymous = true,
+                            IsSaving = false,
+                            LabelEn = "Reporter Information",
+                            LabelFr = "Informations du rapporteur",
+                            MarkForDelete = false,
+                            NaturalPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 3,
+                            PhysicPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            StepCompletedUtc = "{}",
+                            Version = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("30000000-0000-0000-0000-000000000004"),
+                            Code = "WIZ_STEP_4",
+                            CurrentStep = 4,
+                            DraftId = new Guid("31000000-0000-0000-0000-000000000004"),
+                            IsActive = true,
+                            IsAnonymous = true,
+                            IsSaving = false,
+                            LabelEn = "Description & Attachments",
+                            LabelFr = "Description et pièces jointes",
+                            MarkForDelete = false,
+                            NaturalPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 4,
+                            PhysicPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            StepCompletedUtc = "{}",
+                            Version = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("30000000-0000-0000-0000-000000000005"),
+                            Code = "WIZ_STEP_5",
+                            CurrentStep = 5,
+                            DraftId = new Guid("31000000-0000-0000-0000-000000000005"),
+                            IsActive = true,
+                            IsAnonymous = true,
+                            IsSaving = false,
+                            LabelEn = "Review & Confirmation",
+                            LabelFr = "Révision et confirmation",
+                            MarkForDelete = false,
+                            NaturalPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 5,
+                            PhysicPersonId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            StepCompletedUtc = "{}",
+                            Version = 1
+                        });
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.SignatureAudit", b =>
@@ -6275,9 +7339,24 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsAnonymous")
                         .HasColumnType("bit");
@@ -6285,8 +7364,17 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Property<bool>("IsInternal")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -6295,6 +7383,95 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000001"),
+                            Email = "inspector@coanticor.gov",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            IsInternal = true,
+                            MarkForDelete = false,
+                            PhoneNumber = "+243811111111",
+                            UserName = "inspector@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000002"),
+                            Email = "manager@coanticor.gov",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            IsInternal = true,
+                            MarkForDelete = false,
+                            PhoneNumber = "+243822222222",
+                            UserName = "manager@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000003"),
+                            Email = "admin@coanticor.gov",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            IsInternal = true,
+                            MarkForDelete = false,
+                            PhoneNumber = "+243833333333",
+                            UserName = "admin@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000004"),
+                            Email = "executive@coanticor.gov",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            IsInternal = true,
+                            MarkForDelete = false,
+                            PhoneNumber = "+243844444444",
+                            UserName = "executive@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000005"),
+                            Email = "staff@coanticor.gov",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            IsInternal = true,
+                            MarkForDelete = false,
+                            PhoneNumber = "+243855555555",
+                            UserName = "staff@coanticor.gov"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000006"),
+                            Email = "citizen1@example.com",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            IsInternal = false,
+                            MarkForDelete = false,
+                            PhoneNumber = "+243866666666",
+                            UserName = "citizen1@example.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000007"),
+                            Email = "citizen2@example.com",
+                            IsActive = true,
+                            IsAnonymous = false,
+                            IsInternal = false,
+                            MarkForDelete = false,
+                            PhoneNumber = "+243877777777",
+                            UserName = "citizen2@example.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000008"),
+                            Email = "anonymous@coanticor.gov",
+                            IsActive = true,
+                            IsAnonymous = true,
+                            IsInternal = false,
+                            MarkForDelete = false,
+                            UserName = "anonymous"
+                        });
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.UserRole", b =>
@@ -6586,6 +7763,13 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("BrokerOffice");
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.AttachmentDraftItem", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestWorkflowState", null)
+                        .WithMany("Attachments")
+                        .HasForeignKey("ServiceRequestWorkflowStateId");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.Complaint", b =>
                 {
                     b.HasOne("CoAntiCor.Core.Domain.User", "AssignedToUser")
@@ -6631,6 +7815,10 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasForeignKey("ComplaintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", null)
+                        .WithMany("Attachments")
+                        .HasForeignKey("IncidentRequestId");
 
                     b.Navigation("Complaint");
                 });
@@ -6772,6 +7960,10 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", null)
+                        .WithMany("Organizations")
+                        .HasForeignKey("IncidentRequestId");
+
                     b.HasOne("CoAntiCor.Core.Domain.Person.NaturalPerson", "NaturalPerson")
                         .WithMany("PhysicPersons")
                         .HasForeignKey("NaturalPersonId")
@@ -6783,6 +7975,14 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasForeignKey("OrganizationCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestWorkflowState", null)
+                        .WithMany("ReporterOrganizations")
+                        .HasForeignKey("PhysicPersonId");
+
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestWorkflowState", null)
+                        .WithMany("VictimOrganizations")
+                        .HasForeignKey("ServiceRequestWorkflowStateId");
 
                     b.Navigation("Complaint");
 
@@ -6808,6 +8008,12 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CoAntiCor.Core.Domain.Complaint", null)
+                        .WithMany()
+                        .HasForeignKey("ComplaintId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("CoAntiCor.Core.Domain.Person.Gender", "Gender")
                         .WithMany("NaturalPersons")
                         .HasForeignKey("GenderId")
@@ -6825,6 +8031,16 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasForeignKey("NaturalPersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestWorkflowState", null)
+                        .WithMany("ReporterPersons")
+                        .HasForeignKey("NaturalPersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestWorkflowState", null)
+                        .WithMany("VictimPersons")
+                        .HasForeignKey("ServiceRequestWorkflowStateId");
 
                     b.HasOne("CoAntiCor.Core.Domain.Person.SpouseType", null)
                         .WithMany("NaturalPersons")
@@ -6874,6 +8090,10 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasOne("CoAntiCor.Core.Domain.Complaint", "Complaint")
                         .WithMany("OfficialDiscussions")
                         .HasForeignKey("ComplaintId");
+
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", null)
+                        .WithMany("OfficialDiscussions")
+                        .HasForeignKey("IncidentRequestId");
 
                     b.Navigation("Complaint");
                 });
@@ -6962,6 +8182,95 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasForeignKey("IncidentRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.User", "AssignedToUser")
+                        .WithMany()
+                        .HasForeignKey("AssignedToUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CoAntiCor.Core.Domain.GovernmentOffice", "GovernmentOffice")
+                        .WithMany()
+                        .HasForeignKey("GovernmentOfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.IncidentCategory", "IncidentCategory")
+                        .WithMany("IncidentRequests")
+                        .HasForeignKey("IncidentCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.IncidentType", "IncidentType")
+                        .WithMany("IncidentRequests")
+                        .HasForeignKey("IncidentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.User", "ReporterUser")
+                        .WithMany("IncidentRequestInitiated")
+                        .HasForeignKey("ReporterUserId");
+
+                    b.Navigation("AssignedToUser");
+
+                    b.Navigation("GovernmentOffice");
+
+                    b.Navigation("IncidentCategory");
+
+                    b.Navigation("IncidentType");
+
+                    b.Navigation("ReporterUser");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequestHistory", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.User", "ChangedByUser")
+                        .WithMany()
+                        .HasForeignKey("ChangedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", "IncidentRequest")
+                        .WithMany("History")
+                        .HasForeignKey("IncidentRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChangedByUser");
+
+                    b.Navigation("IncidentRequest");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequestNaturalPerson", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", "IncidentRequest")
+                        .WithMany()
+                        .HasForeignKey("IncidentRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.Person.NaturalPerson", "NaturalPerson")
+                        .WithMany()
+                        .HasForeignKey("NaturalPersonId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("IncidentRequest");
+
+                    b.Navigation("NaturalPerson");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequestReward", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", "IncidentRequest")
+                        .WithMany("IncidentRequestRewards")
+                        .HasForeignKey("IncidentRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IncidentRequest");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ProcessingPhaseHistory", b =>
@@ -7107,12 +8416,16 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                 {
                     b.Navigation("Complaints");
 
+                    b.Navigation("IncidentRequests");
+
                     b.Navigation("IncidentTypes");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.IncidentType", b =>
                 {
                     b.Navigation("Complaints");
+
+                    b.Navigation("IncidentRequests");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Offer", b =>
@@ -7165,9 +8478,32 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", b =>
                 {
+                    b.Navigation("Attachments");
+
                     b.Navigation("EvidenceFiles");
 
+                    b.Navigation("History");
+
+                    b.Navigation("IncidentRequestRewards");
+
+                    b.Navigation("OfficialDiscussions");
+
+                    b.Navigation("Organizations");
+
                     b.Navigation("PhaseHistory");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ServiceRequestWorkflowState", b =>
+                {
+                    b.Navigation("Attachments");
+
+                    b.Navigation("ReporterOrganizations");
+
+                    b.Navigation("ReporterPersons");
+
+                    b.Navigation("VictimOrganizations");
+
+                    b.Navigation("VictimPersons");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.User", b =>
@@ -7175,6 +8511,8 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("AssignedPhases");
 
                     b.Navigation("ComplaintsInitiated");
+
+                    b.Navigation("IncidentRequestInitiated");
 
                     b.Navigation("UserRoles");
                 });

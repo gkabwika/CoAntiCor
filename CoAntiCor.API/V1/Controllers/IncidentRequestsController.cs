@@ -32,7 +32,7 @@ public class IncidentRequestsController : ControllerBase
             IncidentNumber = GenerateIncidentNumber(),
             Title = dto.Title,
             Description = dto.Description,
-            IncidentType = dto.IncidentType,
+            IncidentTypeOther = dto.IncidentType,
             Category = dto.Category,
             Province = dto.Province,
             City = dto.City,
@@ -81,7 +81,7 @@ public class IncidentRequestsController : ControllerBase
         }
 
         if (!string.IsNullOrWhiteSpace(dto.IncidentType))
-            query = query.Where(i => i.IncidentType == dto.IncidentType);
+            query = query.Where(i => i.IncidentType!.ToString() == dto.IncidentType);
 
         if (!string.IsNullOrWhiteSpace(dto.Province))
             query = query.Where(i => i.Province == dto.Province);

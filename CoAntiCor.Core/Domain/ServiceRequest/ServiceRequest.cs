@@ -1,8 +1,8 @@
 ﻿namespace CoAntiCor.Core.Domain.ServiceRequest
 {
-    public class ServiceRequest
+    public class ServiceRequest : EntityBaseObject
     {
-        public Guid Id { get; set; }
+        public new Guid Id { get; set; }
         public long ServiceRequestNumber { get; set; }
         public string ServiceName { get; set; } = default!;
         public string ServiceAttribute { get; set; } = default!;
@@ -12,6 +12,6 @@
         public decimal TotalAmount { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         public DateTime? SubmittedAt { get; set; }
-
+        public string Province { get; set; }
     }
 }

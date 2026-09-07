@@ -33,7 +33,7 @@ public class IncidentRequestConfiguration : IEntityTypeConfiguration<IncidentReq
             .IsRequired()
             .HasMaxLength(4000);
 
-        builder.Property(x => x.IncidentType)
+        builder.Property(x => x.IncidentTypeOther)
             .IsRequired()
             .HasMaxLength(100);
 
@@ -48,6 +48,15 @@ public class IncidentRequestConfiguration : IEntityTypeConfiguration<IncidentReq
         builder.Property(x => x.City)
             .IsRequired()
             .HasMaxLength(100);
+        builder.Property(x => x.Commune)
+           .IsRequired()
+           .HasMaxLength(100);
+        builder.Property(x => x.Quartier)
+           .IsRequired()
+           .HasMaxLength(100);
+        builder.Property(x => x.Address)
+           .IsRequired()
+           .HasMaxLength(100);
 
         builder.Property(x => x.CitizenName)
             .HasMaxLength(200);

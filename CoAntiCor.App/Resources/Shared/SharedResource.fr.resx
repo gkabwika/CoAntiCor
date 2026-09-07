@@ -1536,4 +1536,31 @@
   <data name="ShowingNumberItem" xml:space="preserve">
     <value>Affichage de ## élément</value>
   </data>
+  <data name="WIZ_STEP_1" xml:space="preserve">
+    <value>Recherche et vérification IA</value>
+  </data>
+  <data name="WIZ_STEP_2" xml:space="preserve">
+    <value>Sélection du type d’incident</value>
+  </data>
+  <data name="WIZ_STEP_3" xml:space="preserve">
+    <value>Informations du rapporteur</value>
+  </data>
+  <data name="WIZ_STEP_4" xml:space="preserve">
+    <value>Description et pièces jointes</value>
+  </data>
+  <data name="WIZ_STEP_5" xml:space="preserve">
+    <value>Révision et confirmation</value>
+  </data>
+  <data name="PHASE_SUBMITTED" xml:space="preserve">
+    <value>Soumis</value>
+  </data>
+  <data name="PHASE_SCREENING" xml:space="preserve">
+    <value>Pré-analyse</value>
+  </data>
+  <data name="PHASE_INVESTIGATION" xml:space="preserve">
+    <value>Investigation</value>
+  </data>
+  <data name="PHASE_TRIBUNAL" xml:space="preserve">
+    <value>Soumis au tribunal</value>
+  </data>
 </root>

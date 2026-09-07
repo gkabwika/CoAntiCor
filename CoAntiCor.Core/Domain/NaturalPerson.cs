@@ -1,5 +1,6 @@
 ﻿using CoAntiCor.Core.Domain.Address;
 using CoAntiCor.Core.Domain.Organization.OrganizationDetails;
+using CoAntiCor.Core.Domain.ServiceRequest;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -75,6 +76,9 @@ namespace CoAntiCor.Core.Domain.Person
 
         public Guid ComplaintId { get; set; }
         public Complaint Complaint { get; set; } = default!;
+
+        // Navigation property
+        public ICollection<IncidentRequest> IncidentRequests { get; set; } = new List<IncidentRequest>();
 
     }
 
