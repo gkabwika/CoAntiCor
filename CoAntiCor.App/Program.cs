@@ -29,12 +29,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions { TrackStatistics = true, SizeLimit = 25000 }));
 
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    // 2. Localisation - Define supported cultures
+    //var supportedCultures = new[] { "en-US", "fr-FR" };
+    var supportedCultures = new[] { "en", "fr" };
+    //var supportedCultures = new[] { "fr-CD", "en-US" };
+    var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+});
 
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddRazorPages()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
 builder.Services.AddServerSideBlazor()
+
     .AddCircuitOptions(options =>
     {
         options.DetailedErrors = true;
@@ -141,10 +158,15 @@ builder.Services.AddAuthorization(options =>
         return !string.IsNullOrEmpty(province);
     }));
 
-    options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
-    options.AddPolicy("Citizen", p => p.RequireRole("Citizen"));
+    options.AddPolicy("CitizenOnly", p => p.RequireRole("Citizen"));
+    options.AddPolicy("InternalStaff", p => p.RequireRole("Inspector", "Staff", "Manager", "Executive", "Admin"));
+    options.AddPolicy("Executives", p => p.RequireRole("Executive"));
+    options.AddPolicy("Admins", p => p.RequireRole("Admin"));
+
+    options.AddPolicy("AdminOnly", p => p.RequireRole("SuperUser")); // Developer or technical support
+    options.AddPolicy("Citizen", p => p.RequireRole("CitizenBuyer")); // citizen who want to request info or buy report
     options.AddPolicy("SpecialInvestigator", p => p.RequireRole("SpecialInvestigator"));
-    options.AddPolicy("InternalStaff", p => p.RequireRole("InternalStaff"));
+    //options.AddPolicy("InternalStaff", p => p.RequireRole("InternalStaff"));
     options.AddPolicy("CanAssignCases", policy =>
         policy.RequireRole("Manager", "Executive"));
 
@@ -153,19 +175,6 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("CanGenerateDossier", policy =>
         policy.RequireRole("Prosecutor", "Executive"));
-});
-
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    // 2. Localisation - Define supported cultures
-    //var supportedCultures = new[] { "en-US", "fr-FR" };
-    var supportedCultures = new[] { "en", "fr" };
-    var localizationOptions = new RequestLocalizationOptions()
-    .SetDefaultCulture(supportedCultures[0])
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures);
 });
 
 builder.Services.AddTransient<JwtDelegatingHandler>();
@@ -237,6 +246,13 @@ builder.Services.AddScoped<ITenantAuditService, TenantAuditService>();
 
 
 var app = builder.Build();
+var supportedCultures = new[] { "fr-CD", "en-US" };
+app.UseRequestLocalization(options =>
+{
+    options.SetDefaultCulture("fr-CD")
+           .AddSupportedCultures(supportedCultures)
+           .AddSupportedUICultures(supportedCultures);
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

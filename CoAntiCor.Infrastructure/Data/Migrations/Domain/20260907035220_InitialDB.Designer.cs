@@ -4,6 +4,7 @@ using CoAntiCor.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 {
     [DbContext(typeof(CoAntiCorDbContext))]
-    partial class CoAntiCorDbContextModelSnapshot_Drop : ModelSnapshot
+    [Migration("20260907035220_InitialDB")]
+    partial class InitialDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,7 +120,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("NaturalPersonId");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Address.City", b =>
@@ -165,7 +168,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
@@ -266,7 +269,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Communes", (string)null);
+                    b.ToTable("Communes");
 
                     b.HasData(
                         new
@@ -367,7 +370,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("NaturalPersonId");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
 
                     b.HasData(
                         new
@@ -437,7 +440,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Provinces", (string)null);
+                    b.ToTable("Provinces");
 
                     b.HasData(
                         new
@@ -770,7 +773,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("CommuneId");
 
-                    b.ToTable("Quartiers", (string)null);
+                    b.ToTable("Quartiers");
 
                     b.HasData(
                         new
@@ -831,7 +834,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoadTypes", (string)null);
+                    b.ToTable("RoadTypes");
 
                     b.HasData(
                         new
@@ -932,7 +935,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Territories", (string)null);
+                    b.ToTable("Territories");
 
                     b.HasData(
                         new
@@ -995,6 +998,99 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             Name = "Kasumbalesa",
                             ProvinceCode = "HAK"
                         });
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("BrokerOfficeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PreferredLanguage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreferredTheme")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProvinceCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrokerOfficeId");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.AuthorizedOfficial", b =>
@@ -1081,7 +1177,57 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthorizedOfficials", (string)null);
+                    b.ToTable("AuthorizedOfficials");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.BrokerOffice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUrban")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProvinceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BrokerOffices");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.ContactTypeCodeTableItem", b =>
@@ -1131,7 +1277,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactTypeCodeTableItems", (string)null);
+                    b.ToTable("ContactTypeCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.CountryCodeTableItem", b =>
@@ -1181,7 +1327,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("CountryCodeTableItems", (string)null);
+                    b.ToTable("CountryCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.EmailCodeTableItem", b =>
@@ -1231,7 +1377,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailCodeTableItems", (string)null);
+                    b.ToTable("EmailCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.FileTypeCodeTableItem", b =>
@@ -1281,7 +1427,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("FileTypeCodeTableItems", (string)null);
+                    b.ToTable("FileTypeCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.FootPrintTypeCodeTableItem", b =>
@@ -1331,7 +1477,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("FootPrintTypeCodeTableItems", (string)null);
+                    b.ToTable("FootPrintTypeCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.MediaTypeCodeTableItem", b =>
@@ -1381,7 +1527,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaTypeCodeTableItems", (string)null);
+                    b.ToTable("MediaTypeCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.OrderTypeCodeTableItem", b =>
@@ -1431,7 +1577,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderTypeCodeTableItems", (string)null);
+                    b.ToTable("OrderTypeCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.ProvinceCodeTableItem", b =>
@@ -1481,7 +1627,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProvinceCodeTableItems", (string)null);
+                    b.ToTable("ProvinceCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.CodeTables.ServiceTypeCodeTableItem", b =>
@@ -1531,7 +1677,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceTypeCodeTableItems", (string)null);
+                    b.ToTable("ServiceTypeCodeTableItems");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Complaint", b =>
@@ -1575,7 +1721,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("GovernmentOfficeId")
+                    b.Property<Guid>("GovernmentOfficeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IncidentCategoryId")
@@ -1647,7 +1793,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasIndex("ComplaintNumber")
                         .IsUnique();
 
-                    b.HasIndex("GovernmentOfficeId1");
+                    b.HasIndex("GovernmentOfficeId");
 
                     b.HasIndex("IncidentCategoryId");
 
@@ -1655,7 +1801,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("ReporterUserId");
 
-                    b.ToTable("Complaints", (string)null);
+                    b.ToTable("Complaints");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ComplaintAttachment", b =>
@@ -1735,7 +1881,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("ComplaintId");
 
-                    b.ToTable("ComplaintAttachments", (string)null);
+                    b.ToTable("ComplaintAttachments");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ComplaintDraft", b =>
@@ -1801,7 +1947,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("ComplaintDrafts", (string)null);
+                    b.ToTable("ComplaintDrafts");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ComplaintDraftActivity", b =>
@@ -1867,7 +2013,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("DraftId");
 
-                    b.ToTable("ComplaintDraftActivities", (string)null);
+                    b.ToTable("ComplaintDraftActivities");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ComplaintHistory", b =>
@@ -1924,7 +2070,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("ComplaintId");
 
-                    b.ToTable("ComplaintHistories", (string)null);
+                    b.ToTable("ComplaintHistories");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ComplaintReward", b =>
@@ -1980,7 +2126,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasIndex("ComplaintId")
                         .IsUnique();
 
-                    b.ToTable("ComplaintRewards", (string)null);
+                    b.ToTable("ComplaintRewards");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ContactUsEmail", b =>
@@ -2044,7 +2190,74 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactUsEmails", (string)null);
+                    b.ToTable("ContactUsEmails");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.Contract", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BuyerSignature")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("BuyerSignedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ContractNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HtmlBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("OfferId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SellerSignature")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("SellerSignedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OfferId")
+                        .IsUnique();
+
+                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Email.Email", b =>
@@ -2125,7 +2338,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("EmailTemplateId");
 
-                    b.ToTable("Emails", (string)null);
+                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Email.EmailAttachment", b =>
@@ -2168,7 +2381,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("EmailId");
 
-                    b.ToTable("EmailAttachments", (string)null);
+                    b.ToTable("EmailAttachments");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Email.EmailExecution", b =>
@@ -2226,7 +2439,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("EmailId");
 
-                    b.ToTable("EmailExecutions", (string)null);
+                    b.ToTable("EmailExecutions");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Email.EmailQueueItem", b =>
@@ -2279,7 +2492,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailQueue", (string)null);
+                    b.ToTable("EmailQueue");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Email.EmailTemplate", b =>
@@ -2352,7 +2565,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailTemplates", (string)null);
+                    b.ToTable("EmailTemplates");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Finance.Bank", b =>
@@ -2416,7 +2629,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Banks", (string)null);
+                    b.ToTable("Banks");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Finance.Currency", b =>
@@ -2464,7 +2677,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies", (string)null);
+                    b.ToTable("Currencies");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.FredTicketCreation.ActionLog", b =>
@@ -2516,7 +2729,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("FredRequestID");
 
-                    b.ToTable("ActionLogs", (string)null);
+                    b.ToTable("ActionLogs");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.FredTicketCreation.FredRequest", b =>
@@ -2620,7 +2833,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("ID");
 
-                    b.ToTable("FredRequest", (string)null);
+                    b.ToTable("FredRequest");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.FredTicketCreation.FredRequestFile", b =>
@@ -2682,7 +2895,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("FredRequestID");
 
-                    b.ToTable("FredRequestFiles", (string)null);
+                    b.ToTable("FredRequestFiles");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.GovernmentOffice", b =>
@@ -2739,7 +2952,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("GovernmentOffices", (string)null);
+                    b.ToTable("GovernmentOffices");
 
                     b.HasData(
                         new
@@ -2842,7 +3055,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("IncidentCategories", (string)null);
+                    b.ToTable("IncidentCategories");
 
                     b.HasData(
                         new
@@ -2986,7 +3199,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("IncidentCategoryId");
 
-                    b.ToTable("IncidentTypes", (string)null);
+                    b.ToTable("IncidentTypes");
 
                     b.HasData(
                         new
@@ -3244,6 +3457,63 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         });
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.IntegrityLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HashAlgorithm")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HashHex")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ObjectType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IntegrityLogs");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.MenuItem", b =>
                 {
                     b.Property<int>("Id")
@@ -3493,6 +3763,77 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         });
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.Offer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BuyerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("BuyerPartyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ListingType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly?>("MoveInDate")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("OfferedPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SellerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Offer");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.Document.Certificate", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3514,7 +3855,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Certificates", (string)null);
+                    b.ToTable("Certificates");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.EnterpriseType", b =>
@@ -3572,7 +3913,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("EnterpriseTypes", (string)null);
+                    b.ToTable("EnterpriseTypes");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.OrganizationCategory", b =>
@@ -3630,7 +3971,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrganizationCategories", (string)null);
+                    b.ToTable("OrganizationCategories");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.OrganizationDetails.OrganizationAddress", b =>
@@ -3685,7 +4026,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("PhysicPersonId");
 
-                    b.ToTable("OrganizationAddresses", (string)null);
+                    b.ToTable("OrganizationAddresses");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.OrganizationDetails.PhysicPerson", b =>
@@ -3775,7 +4116,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("OrganizationCategoryId");
 
-                    b.ToTable("PhysicPeople", (string)null);
+                    b.ToTable("PhysicPeople");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentInfo.PaymentLog", b =>
@@ -3820,7 +4161,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentLogs", (string)null);
+                    b.ToTable("PaymentLogs");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentMethods.BankAccount", b =>
@@ -3915,7 +4256,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankAccounts", (string)null);
+                    b.ToTable("BankAccounts");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentMethods.BitCoin", b =>
@@ -4017,7 +4358,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("BitCoins", (string)null);
+                    b.ToTable("BitCoins");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentMethods.CashOnDelivery", b =>
@@ -4089,7 +4430,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("CashOnDeliveries", (string)null);
+                    b.ToTable("CashOnDeliveries");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentMethods.GiftCardPayInAdvance", b =>
@@ -4140,7 +4481,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiftCardPayInAdvances", (string)null);
+                    b.ToTable("GiftCardPayInAdvances");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentMethods.MobileMoney", b =>
@@ -4196,7 +4537,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("MobileMoneys", (string)null);
+                    b.ToTable("MobileMoneys");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentMethods.PayPal", b =>
@@ -4246,7 +4587,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("PayPals", (string)null);
+                    b.ToTable("PayPals");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.PaymentMethods.PaymentMethod", b =>
@@ -4304,7 +4645,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentMethods", (string)null);
+                    b.ToTable("PaymentMethods");
 
                     b.HasData(
                         new
@@ -4357,6 +4698,96 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         });
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.Payment.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("CompanyRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CompletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("OfferId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PaymentAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PaymentStatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderPaymentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderReference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ServiceRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TransactionID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionReference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("Payment");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.PaymentMethods.UserPaymentMethod", b =>
                 {
                     b.Property<Guid>("Id")
@@ -4395,7 +4826,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserPaymentMethods", (string)null);
+                    b.ToTable("UserPaymentMethods");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Person.Civility", b =>
@@ -4447,7 +4878,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Civilities", (string)null);
+                    b.ToTable("Civilities");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Person.Gender", b =>
@@ -4499,7 +4930,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genders", (string)null);
+                    b.ToTable("Genders");
 
                     b.HasData(
                         new
@@ -4583,7 +5014,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("MaritalStatuses", (string)null);
+                    b.ToTable("MaritalStatuses");
 
                     b.HasData(
                         new
@@ -4742,7 +5173,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("SpouseTypeId");
 
-                    b.ToTable("NaturalPeople", (string)null);
+                    b.ToTable("NaturalPeople");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Person.NaturalPersonAddress", b =>
@@ -4787,7 +5218,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("NaturalPersonId");
 
-                    b.ToTable("NaturalPersonAddresses", (string)null);
+                    b.ToTable("NaturalPersonAddresses");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Person.NaturalPersonSpouse", b =>
@@ -4833,7 +5264,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("NaturalPersonId");
 
-                    b.ToTable("NaturalPersonSpouses", (string)null);
+                    b.ToTable("NaturalPersonSpouses");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Person.OfficialDiscussion", b =>
@@ -4880,7 +5311,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("ComplaintId");
 
-                    b.ToTable("OfficialDiscussion", (string)null);
+                    b.ToTable("OfficialDiscussion");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Person.SpouseType", b =>
@@ -4932,7 +5363,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("SpouseType", (string)null);
+                    b.ToTable("SpouseType");
 
                     b.HasData(
                         new
@@ -5028,7 +5459,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("SiteId");
 
-                    b.ToTable("DecisionControls", (string)null);
+                    b.ToTable("DecisionControls");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Processing.ReasonRejected", b =>
@@ -5087,7 +5518,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReasonRejecteds", (string)null);
+                    b.ToTable("ReasonRejecteds");
 
                     b.HasData(
                         new
@@ -5208,7 +5639,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Site", (string)null);
+                    b.ToTable("Site");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.ProcessingPhase", b =>
@@ -5268,7 +5699,122 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("ComplaintId");
 
-                    b.ToTable("ProcessingPhases", (string)null);
+                    b.ToTable("ProcessingPhases");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.RegulatorOfficePermission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("GrantedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("GrantedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("OfficeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProvinceCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OfficeId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("RegulatorOfficePermissions");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.RegulatorProvincePermission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("GrantedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("GrantedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProvinceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ProvinceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("RegulatorProvincePermissions");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Release", b =>
@@ -5315,7 +5861,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Releases", (string)null);
+                    b.ToTable("Releases");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Role", b =>
@@ -5330,7 +5876,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -5375,6 +5921,354 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         });
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentEvidence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<Guid>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("SizeBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncidentRequestId");
+
+                    b.ToTable("IncidentEvidence", (string)null);
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("CitizenEmail")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("CitizenName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("CitizenPhone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("IncidentNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("IncidentType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAnonymous")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncidentNumber")
+                        .IsUnique();
+
+                    b.ToTable("IncidentRequests", (string)null);
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ProcessingPhaseHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ChangedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("IncidentRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Phase")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncidentRequestId");
+
+                    b.ToTable("ProcessingPhaseHistory", (string)null);
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.SignatureAudit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ActorRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ActorUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ContractId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("OccurredAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserAgent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
+
+                    b.ToTable("SignatureAudits");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.TenantAuditEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("BrokerOfficeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ControllerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DetailsJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MarkForDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProvinceCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimestampUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TenantAuditEntrys");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -5400,7 +6294,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.UserRole", b =>
@@ -5415,7 +6309,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Model.AuditLog", b =>
@@ -5484,7 +6378,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasIndex("EntityType", "EntityId");
 
-                    b.ToTable("AuditLogs", (string)null);
+                    b.ToTable("AuditLogs");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Model.ComplaintNumberSequence", b =>
@@ -5503,7 +6397,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasKey("Id");
 
-                    b.ToTable("ComplaintNumberSequences", (string)null);
+                    b.ToTable("ComplaintNumberSequences");
 
                     b.HasData(
                         new
@@ -5512,71 +6406,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             LastNumber = 0L,
                             Year = 2026
                         });
-                });
-
-            modelBuilder.Entity("CoAntiCor.Infrastructure.Data.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -5748,6 +6577,15 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("Communes");
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ApplicationUser", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.BrokerOffice", "BrokerOffice")
+                        .WithMany("Users")
+                        .HasForeignKey("BrokerOfficeId");
+
+                    b.Navigation("BrokerOffice");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.Complaint", b =>
                 {
                     b.HasOne("CoAntiCor.Core.Domain.User", "AssignedToUser")
@@ -5757,7 +6595,9 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
                     b.HasOne("CoAntiCor.Core.Domain.GovernmentOffice", "GovernmentOffice")
                         .WithMany("Complaints")
-                        .HasForeignKey("GovernmentOfficeId1");
+                        .HasForeignKey("GovernmentOfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CoAntiCor.Core.Domain.IncidentCategory", "IncidentCategory")
                         .WithMany("Complaints")
@@ -5834,6 +6674,17 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .IsRequired();
 
                     b.Navigation("Complaint");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.Contract", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.Offer", "Offer")
+                        .WithOne("Contract")
+                        .HasForeignKey("CoAntiCor.Core.Domain.Contract", "OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Email.Email", b =>
@@ -5940,6 +6791,13 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("NaturalPerson");
 
                     b.Navigation("OrganizationCategory");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.Payment.Payment", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.Offer", null)
+                        .WithMany("Payments")
+                        .HasForeignKey("OfferId");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Person.NaturalPerson", b =>
@@ -6065,6 +6923,67 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("Complaint");
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.RegulatorOfficePermission", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.BrokerOffice", "Office")
+                        .WithMany()
+                        .HasForeignKey("OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoAntiCor.Core.Domain.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Office");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.RegulatorProvincePermission", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.Address.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceId");
+
+                    b.HasOne("CoAntiCor.Core.Domain.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Province");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentEvidence", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", null)
+                        .WithMany("EvidenceFiles")
+                        .HasForeignKey("IncidentRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ProcessingPhaseHistory", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", null)
+                        .WithMany("PhaseHistory")
+                        .HasForeignKey("IncidentRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.SignatureAudit", b =>
+                {
+                    b.HasOne("CoAntiCor.Core.Domain.Contract", "Contract")
+                        .WithMany()
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.UserRole", b =>
                 {
                     b.HasOne("CoAntiCor.Core.Domain.Role", "Role")
@@ -6095,7 +7014,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("CoAntiCor.Infrastructure.Data.ApplicationUser", null)
+                    b.HasOne("CoAntiCor.Core.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6104,7 +7023,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("CoAntiCor.Infrastructure.Data.ApplicationUser", null)
+                    b.HasOne("CoAntiCor.Core.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6119,7 +7038,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CoAntiCor.Infrastructure.Data.ApplicationUser", null)
+                    b.HasOne("CoAntiCor.Core.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6128,7 +7047,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("CoAntiCor.Infrastructure.Data.ApplicationUser", null)
+                    b.HasOne("CoAntiCor.Core.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6143,6 +7062,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
             modelBuilder.Entity("CoAntiCor.Core.Domain.Address.Commune", b =>
                 {
                     b.Navigation("Quartiers");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.BrokerOffice", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.Complaint", b =>
@@ -6191,6 +7115,13 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("Complaints");
                 });
 
+            modelBuilder.Entity("CoAntiCor.Core.Domain.Offer", b =>
+                {
+                    b.Navigation("Contract");
+
+                    b.Navigation("Payments");
+                });
+
             modelBuilder.Entity("CoAntiCor.Core.Domain.Organization.OrganizationDetails.PhysicPerson", b =>
                 {
                     b.Navigation("OrganizationAddress");
@@ -6230,6 +7161,13 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
             modelBuilder.Entity("CoAntiCor.Core.Domain.Role", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", b =>
+                {
+                    b.Navigation("EvidenceFiles");
+
+                    b.Navigation("PhaseHistory");
                 });
 
             modelBuilder.Entity("CoAntiCor.Core.Domain.User", b =>

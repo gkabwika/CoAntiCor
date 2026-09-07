@@ -1,4 +1,5 @@
 ﻿using CoAntiCor.Core.Domain;
+using CoAntiCor.Core.Domain;
 using CoAntiCor.Core.Domain.Address;
 using CoAntiCor.Core.Domain.CodeTables;
 using CoAntiCor.Core.Domain.Email;
@@ -12,13 +13,15 @@ using CoAntiCor.Core.Domain.Organization.PaymentMethods;
 using CoAntiCor.Core.Domain.PaymentMethods;
 using CoAntiCor.Core.Domain.Person;
 using CoAntiCor.Core.Domain.Processing;
-using CoAntiCor.Core.Domain;
+using CoAntiCor.Core.Domain.ServiceRequest;
+using CoAntiCor.Core.Interfaces;
 using CoAntiCor.Core.Model;
+using CoAntiCor.Infrastructure.Configurations;
 using CoAntiCor.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.Contracts;
-using CoAntiCor.Core.Interfaces;
 
 namespace CoAntiCor.Infrastructure.Context
 {
@@ -117,8 +120,79 @@ namespace CoAntiCor.Infrastructure.Context
         public DbSet<Core.Domain.Contract> Contracts => Set<Core.Domain.Contract>();
         public DbSet<BrokerOffice> BrokerOffices => Set<BrokerOffice>();
 
+        public DbSet<IncidentRequest> IncidentRequests => Set<IncidentRequest>();
+        public DbSet<IncidentEvidence> IncidentEvidence => Set<IncidentEvidence>();
+        public DbSet<ProcessingPhaseHistory> ProcessingPhaseHistory => Set<ProcessingPhaseHistory>();
+
+
 
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
+
+        public void Configure(EntityTypeBuilder<IncidentRequest> modelBuilder)
+        {
+            // INCIDENT CONFIGURATION ----------------------------------
+
+            modelBuilder.ToTable("IncidentRequests");
+
+            modelBuilder.HasKey(x => x.Id);
+
+            modelBuilder.Property(x => x.IncidentNumber)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            modelBuilder.HasIndex(x => x.IncidentNumber)
+                .IsUnique();
+
+            modelBuilder.Property(x => x.Title)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            modelBuilder.Property(x => x.Description)
+                .IsRequired()
+                .HasMaxLength(4000);
+
+            modelBuilder.Property(x => x.IncidentType)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            modelBuilder.Property(x => x.Category)
+                .IsRequired()
+                .HasMaxLength(150);
+
+            modelBuilder.Property(x => x.Province)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            modelBuilder.Property(x => x.City)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            modelBuilder.Property(x => x.CitizenName)
+                .HasMaxLength(200);
+
+            modelBuilder.Property(x => x.CitizenEmail)
+                .HasMaxLength(200);
+
+            modelBuilder.Property(x => x.CitizenPhone)
+                .HasMaxLength(50);
+
+            modelBuilder.Property(x => x.Status)
+                .HasConversion<int>()
+                .IsRequired();
+
+            modelBuilder.Property(x => x.CreatedAt)
+                .IsRequired();
+
+            //modelBuilder.HasMany(x => x.EvidenceFiles)
+            //    .WithOne()
+            //    .HasForeignKey(e => e.IncidentRequestId)
+            //    .OnDelete(DeleteBehavior.Cascade);
+
+            //modelBuilder.HasMany(x => x.PhaseHistory)
+            //    .WithOne()
+            //    .HasForeignKey(h => h.IncidentRequestId)
+            //    .OnDelete(DeleteBehavior.Cascade);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -192,7 +266,10 @@ namespace CoAntiCor.Infrastructure.Context
                 }
             );
 
-
+            // INCIDENT CONFIGURATION -------------------------------------
+            modelBuilder.ApplyConfiguration(new IncidentRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new IncidentEvidenceConfiguration());
+            modelBuilder.ApplyConfiguration(new ProcessingPhaseHistoryConfiguration());
 
             // COMPLAINT CONFIGURATION -------------------------------------
 
@@ -1180,6 +1257,8 @@ PM> Update-Database -Context CoAntiCorDbContext -StartupProject CoAntiCor.API
  
 PM> Add-Migration InitialIdentity -Context ApplicationDbContext -StartupProject CoAntiCor.API -OutputDir "Data/Migrations/Identity"
 PM> Update-Database -Context ApplicationDbContext -StartupProject CoAntiCor.API
+
+ Remove-Migration -Context CoAntiCorDbContext -StartupProject CoAntiCor.API
 
 PM> Remove-Migration -Context ApplicationDbContext -StartupProject CoAntiCor.API
 

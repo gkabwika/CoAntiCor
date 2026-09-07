@@ -1,13 +1,13 @@
 ﻿
 using CoAntiCor.Core.Model;
-using CoAntiCor.Core.Domain;
+using CoAntiCor.Core.Domain.ServiceRequest;
 
 namespace CoAntiCor.Core.Domain
 {
     public class WorkItem :  EntityBaseObject
     {
         public Guid RequestId { get; set; }
-        public ServiceRequest ServiceRequest { get; set; } = default!;
+        public ServiceRequest.ServiceRequest ServiceRequest { get; set; } = default!;
         public string AssignedToUserId { get; set; } = default!;
         public ComplaintStatus Status { get; set; }
         public string? Comments { get; set; }

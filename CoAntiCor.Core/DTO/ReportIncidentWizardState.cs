@@ -26,7 +26,7 @@ namespace CoAntiCor.Core.DTO
         public string? ReporterEmail { get; set; }
         public string? ReporterPhone { get; set; }
 
-        public Guid? GovernmentOfficeId { get; set; }
+        public Guid GovernmentOfficeId { get; set; }
 
         public List<UploadedFileDto> EvidenceFiles { get; set; } = new();
 

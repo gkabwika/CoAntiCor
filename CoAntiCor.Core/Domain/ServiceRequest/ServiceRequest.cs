@@ -1,4 +1,4 @@
-﻿namespace CoAntiCor.Core.Domain
+﻿namespace CoAntiCor.Core.Domain.ServiceRequest
 {
     public class ServiceRequest
     {

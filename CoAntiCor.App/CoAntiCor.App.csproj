@@ -25,6 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Pages\Admin\" />
+    <Folder Include="Components\Pages\Citizen\" />
+    <Folder Include="Components\Pages\HelpDesk\" />
+    <Folder Include="Components\Pages\Inspector\" />
+    <Folder Include="Components\Pages\Portal\Modal\" />
+    <Folder Include="Components\Pages\Portal\Steps\" />
     <Folder Include="Models\" />
     <Folder Include="Templates\" />
     <Folder Include="wwwroot\uploads\temp\" />
