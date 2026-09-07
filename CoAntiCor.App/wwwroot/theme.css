@@ -1,0 +1,549 @@
+﻿
+.timeline {
+    list-style: none;
+    padding-left: 0;
+}
+
+    .timeline li {
+        margin-bottom: 10px;
+        border-left: 3px solid #0d6efd;
+        padding-left: 10px;
+    }
+
+
+
+/** GENERIC **/
+:root {
+    --color-primary: #003366;
+    --color-primary-light: #0055A5;
+    --color-accent: #E5F1FB;
+    --color-bg: #F7F9FC;
+    --color-text: #1A1A1A;
+    --color-border: #D0D7E1;
+    --radius-sm: 4px;
+    --shadow-soft: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+/* Top header */
+
+.top-header {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 6px 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.top-header-center a {
+    color: var(--color-accent);
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+    .top-header-center a:hover {
+        text-decoration: underline;
+    }
+
+/* Main nav */
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    padding: 10px 16px;
+    gap: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.nav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 6px 4px;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+    .nav-item i {
+        font-size: 0.95rem;
+    }
+
+    .nav-item:hover {
+        color: var(--color-primary-light);
+    }
+
+    .nav-item.active {
+        border-bottom-color: var(--color-primary-light);
+        color: var(--color-primary-light);
+    }
+
+/* Page container */
+
+.page-container {
+    max-width: 1200px;
+    margin: 24px auto 40px auto;
+    padding: 0 16px;
+}
+
+/* Footer */
+
+.footer {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 20px 16px;
+    text-align: center;
+}
+
+.footer-links {
+    margin-bottom: 8px;
+}
+
+    .footer-links a {
+        color: var(--color-accent);
+        margin: 0 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+.footer-copy {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* Cards / panels (for future pages) */
+
+.card {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-soft);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .main-nav {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .nav-item span {
+        font-size: 0.9rem;
+    }
+
+    .top-header-center a {
+        margin: 0 6px;
+        font-size: 0.8rem;
+    }
+
+    .page-container {
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+}
+/*  MAIN  ENDS HERE */
+/*  DASHBOARDS CSS STARTS HERE */
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.dashboard-card {
+    text-align: center;
+    padding: 24px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+.card-icon {
+    font-size: 2.4rem;
+    color: var(--color-primary-light);
+    margin-bottom: 12px;
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: var(--color-primary-light);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .card-link:hover {
+        text-decoration: underline;
+    }
+
+
+
+    /* Wizard css* starst here */
+.form-control {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+}
+
+.wizard-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: #fff;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--color-primary-light);
+    color: #fff;
+    border-color: var(--color-primary-light);
+}
+
+/*  Table styling (add to theme.css) */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+    .table th,
+    .table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--color-border);
+        text-align: left;
+    }
+
+    .table th {
+        background: var(--color-accent);
+        font-weight: 600;
+    }
+
+.subtext {
+    font-size: 0.8rem;
+    color: #555;
+}
+/*  Filter bar + pager CSS (add to theme.css) */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.pager {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/*  tenant CSS */
+.tenant-heatmap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.tenant-sla-card {
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    font-size: 0.85rem;
+}
+
+.tenant-id {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.sla-ok {
+    background: #e6f6e9;
+    border-color: #8bc48f;
+}
+
+.sla-warn {
+    background: #fff7e0;
+    border-color: #e0b85a;
+}
+
+.sla-bad {
+    background: #fde5e5;
+    border-color: #e08a8a;
+}
+
+/* Timeline CSS (add to theme.css) */
+
+.timeline {
+    border-left: 3px solid var(--color-primary-light);
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+.timeline-item {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+    .timeline-item::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: var(--color-primary-light);
+        border-radius: 50%;
+        position: absolute;
+        left: -27px;
+        top: 4px;
+    }
+
+.timeline-time {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.timeline-event {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.timeline-json {
+    background: #f4f4f4;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    overflow-x: auto;
+}
+/* CSS: reuse .timeline styles; add compact table:*/
+.table-compact td,
+.table-compact th {
+    padding: 4px 6px;
+    font-size: 0.8rem;
+}
+
+/*   GitHub‑style green/red diff UI */
+/*  Add any additional styles for future pages here */
+.diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+    .diff-table th,
+    .diff-table td {
+        padding: 4px 6px;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+.diff-added {
+    background: #e6ffed;
+    color: #22863a;
+}
+
+.diff-removed {
+    background: #ffeef0;
+    color: #b31d28;
+}
+
+.diff-unchanged {
+    color: #555;
+}
+
+/* Timeline */
+.timeline {
+    border-left: 3px solid var(--color-primary-light);
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+.timeline-item {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+    .timeline-item::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: var(--color-primary-light);
+        border-radius: 50%;
+        position: absolute;
+        left: -26px;
+        top: 10px;
+    }
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.timeline-event {
+    font-weight: 600;
+}
+
+.timeline-time {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.timeline-body {
+    margin-top: 6px;
+}
+
+/* clean Moder company creation wizard */
+.wizard-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.wizard-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.wizard-step-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    background: #eee;
+    font-weight: 600;
+}
+
+    .wizard-step-item.active {
+        background: #0078d4;
+        color: white;
+    }
+
+.step-content {
+    margin-bottom: 20px;
+}
+
+.step-description {
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.validation-error {
+    color: #b31d28;
+    font-size: 0.8rem;
+}
+
+.summary-list dt {
+    font-weight: bold;
+}
+
+.summary-list dd {
+    margin-bottom: 10px;
+}
+
+.wizard-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Animated transitions (CSS) */
+.wizard-container {
+    max-width: 600px;
+    margin: 0 auto;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.wizard-forward {
+    animation: slide-in-left 0.25s ease;
+}
+
+.wizard-back {
+    animation: slide-in-right 0.25s ease;
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
