@@ -236,7 +236,7 @@ builder.Services.AddScoped<IComplaintNumberGenerator, ComplaintNumberGenerator>(
 
 builder.Services.AddScoped<IListingService, ListingService>();
 
-builder.Services.AddScoped<ITenantContext, TenantContext>();
+builder.Services.AddTransient<ITenantContext, TenantContext>();
 builder.Services.AddScoped<ITenantAuditService, TenantAuditService>();
 
 

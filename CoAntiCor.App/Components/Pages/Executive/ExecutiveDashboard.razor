@@ -1,15 +1,19 @@
 ﻿@page "/executive-dashboard"
 @using CoAntiCor.App.Resources
 @using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.Core.Domain.ServiceRequest
 @using CoAntiCor.Core.Model
+@using CoAntiCor.Infrastructure.Context
+@using Microsoft.AspNetCore.Mvc
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer L
 @inject HttpClient Http
 
+@using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 @inject NavigationManager Nav
 @inject IStringLocalizer<SharedResource> Localizer
-
+@inject IDbContextFactory<CoAntiCorDbContext> _db
 
 <div class="container-fluid py-4">
 
@@ -276,6 +280,8 @@
 
 
 @code {
+    // [Inject]
+    // private CoAntiCorDbContext _db { get; set; } = default!;
     private string SelectedPeriod { get; set; } = "Last30Days";
     private string? SelectedProvince { get; set; }
 
@@ -322,17 +328,19 @@
     private string GetTrendClass(double trend)
         => trend >= 0 ? "text-success" : "text-danger";
 
-    
-        protected override async Task OnInitializedAsync()
+
+    protected override async Task OnInitializedAsync()
     {
         await LoadDashboardData();
     }
 
     private async Task LoadDashboardData()
     {
-        var url = $"api/servicerequests/search?province={SelectedProvince}&period={SelectedPeriod}&page=1&pageSize=50";
+        var url = $"api/servicerequests/searchadavance?province={SelectedProvince}&period={SelectedPeriod}&page=1&pageSize=50";
 
-        var result = await Http.GetFromJsonAsync<PagedResult<ServiceRequestDto>>(url);
+       // var result = await Http.GetFromJsonAsync<PagedResult<ServiceRequestDto>>(url);
+
+        PagedResult<ServiceRequestDto> result = await SearchAdvanceLocal("", "", "", 1, 20);
 
         if (result != null)
         {
@@ -349,5 +357,68 @@
                 .OrderByDescending(x => x.IncidentCount)
                 .ToList();
         }
+    }
+
+    public async Task<PagedResult<ServiceRequestDto>> SearchAdvanceLocal(
+                    string? province,
+                    string? category,
+                    string? period,
+                    int page = 1,
+                    int pageSize = 20)
+    {
+        // FIX: Use a context instance from the factory
+        await using var db = await _db.CreateDbContextAsync();
+
+        var query = db.IncidentRequests.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(province))
+            query = query.Where(x => x.Province == province);
+
+        if (!string.IsNullOrWhiteSpace(category))
+            query = query.Where(x => x.Category == category);
+
+        if (!string.IsNullOrWhiteSpace(period))
+            query = ApplyPeriodFilter(query, period);
+
+        var total = await query.CountAsync();
+
+        var items = await query
+               .OrderByDescending(x => x.CreatedAt)
+               .Skip((page - 1) * pageSize)
+               .Take(pageSize)
+               .Select(x => new ServiceRequestDto
+               {
+                   Id = x.Id,
+                   IncidentNumber = x.IncidentNumber,
+                   Province = x.Province,
+                   Category = x.Category,
+                   IncidentType = x.IncidentType != null ? x.IncidentType.Name : string.Empty,
+                   Status = x.Status,
+                   CreatedAt = x.CreatedAt
+               })
+               .ToListAsync();
+
+        return new PagedResult<ServiceRequestDto>(items, total, page, pageSize);
+    }
+
+    private IQueryable<IncidentRequest> ApplyPeriodFilter(IQueryable<IncidentRequest> query, string period)
+    {
+        // Example: filter by year or month, adjust as needed
+        if (string.IsNullOrWhiteSpace(period))
+            return query;
+
+        if (period.Equals("last30days", StringComparison.OrdinalIgnoreCase))
+        {
+            var fromDate = DateTime.UtcNow.AddDays(-30);
+            return query.Where(x => x.CreatedAt >= fromDate);
+        }
+        if (period.Equals("thisyear", StringComparison.OrdinalIgnoreCase))
+        {
+            var year = DateTime.UtcNow.Year;
+            return query.Where(x => x.CreatedAt.Year == year);
+        }
+        // Add more period filters as needed
+
+        return query;
     }
 }

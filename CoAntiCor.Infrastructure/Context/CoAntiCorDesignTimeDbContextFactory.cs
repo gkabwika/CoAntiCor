@@ -22,7 +22,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<CoAntiCorD
 
         var conn = config.GetConnectionString("DefaultConnection")
                            ?? Environment.GetEnvironmentVariable("APP__DefaultConnection")
-                           ?? "Server=DESKTOP-M3G136G;Database=COANTICOR_DEV;Trusted_Connection=True;";
+                           ?? "Server=DESKTOP-M3G136G;Database=COANTICOR_DEV03;Trusted_Connection=True;";
 
         var builder = new DbContextOptionsBuilder<CoAntiCorDbContext>()
             .UseSqlServer(conn, o => o.MigrationsHistoryTable("__EFMigrationsHistory_App"));
