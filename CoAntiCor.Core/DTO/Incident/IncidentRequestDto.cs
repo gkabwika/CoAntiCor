@@ -1,4 +1,5 @@
 ﻿using CoAntiCor.Core.Enums;
+using CoAntiCor.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,12 @@ namespace CoAntiCor.Core.DTO.Incident
         public IncidentStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? SubmittedAt { get; set; }
+        public string IncidentCategory { get; set; } = default!;
+        public string? ReporterName { get; set; } 
+
+        public List<AttachmentDto> Attachments { get; set; } = new();
+        public List<HistoryDto> History { get; set; } = new();
+        public List<ProcessingPhaseDto> Phases { get; set; } = new();
     }
 
 }

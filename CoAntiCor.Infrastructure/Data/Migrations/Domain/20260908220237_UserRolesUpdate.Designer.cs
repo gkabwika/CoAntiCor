@@ -4,6 +4,7 @@ using CoAntiCor.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
 {
     [DbContext(typeof(CoAntiCorDbContext))]
-    partial class CoAntiCorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260908220237_UserRolesUpdate")]
+    partial class UserRolesUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1094,7 +1097,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         {
                             Id = "90000000-0000-0000-0000-000000000001",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ccec78c-e6ed-4e7d-948a-64d7acffad87",
+                            ConcurrencyStamp = "a7fb3bdc-338c-4768-b46b-050ee1f304c8",
                             Email = "inspector@coanticor.gov",
                             EmailConfirmed = true,
                             FirstName = "Jean",
@@ -1109,7 +1112,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             PreferredLanguage = "fr",
                             PreferredTheme = "light",
                             ProvinceCode = "KIN",
-                            SecurityStamp = "8504805c-1ea7-44ac-b614-a1590e2160f5",
+                            SecurityStamp = "4256c0e2-5277-4728-b50d-3ebf180332f0",
                             TwoFactorEnabled = false,
                             UserName = "inspector@coanticor.gov"
                         },
@@ -1117,7 +1120,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         {
                             Id = "90000000-0000-0000-0000-000000000002",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8205233-b2bc-4e52-83e4-168421a9c3ef",
+                            ConcurrencyStamp = "9c489d05-486e-49f8-a255-9962f3aa06ed",
                             Email = "manager@coanticor.gov",
                             EmailConfirmed = true,
                             FirstName = "Patrick",
@@ -1132,7 +1135,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             PreferredLanguage = "fr",
                             PreferredTheme = "dark",
                             ProvinceCode = "HKT",
-                            SecurityStamp = "206193f1-7cb9-49ae-8f67-b41ca4db8b77",
+                            SecurityStamp = "9cf8f339-a207-4893-abee-7f0514c5a58a",
                             TwoFactorEnabled = false,
                             UserName = "manager@coanticor.gov"
                         },
@@ -1140,7 +1143,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         {
                             Id = "90000000-0000-0000-0000-000000000003",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "22a939b7-fe41-4a62-9ab0-fb65f1198f75",
+                            ConcurrencyStamp = "b9432d65-0618-4a5e-a10b-13802e6f6cac",
                             Email = "admin@coanticor.gov",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -1155,7 +1158,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             PreferredLanguage = "fr",
                             PreferredTheme = "dark",
                             ProvinceCode = "KIN",
-                            SecurityStamp = "64ad79c8-c026-4d58-ab7c-f7596fd8f3c1",
+                            SecurityStamp = "314357a7-0db8-41c7-99b8-2fa8525a2448",
                             TwoFactorEnabled = false,
                             UserName = "admin@coanticor.gov"
                         },
@@ -1163,7 +1166,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         {
                             Id = "90000000-0000-0000-0000-000000000004",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce86d867-aadc-4df5-b1b2-71601aea0428",
+                            ConcurrencyStamp = "710aff7f-612f-4685-85c1-052fe0da4158",
                             Email = "executive@coanticor.gov",
                             EmailConfirmed = true,
                             FirstName = "Marie",
@@ -1178,7 +1181,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             PreferredLanguage = "fr",
                             PreferredTheme = "light",
                             ProvinceCode = "NK",
-                            SecurityStamp = "c8dca5c7-b81d-44a3-b7e3-869044be8044",
+                            SecurityStamp = "2961fc4b-fe5b-4138-ae25-68d4e3b0380d",
                             TwoFactorEnabled = false,
                             UserName = "executive@coanticor.gov"
                         },
@@ -1186,7 +1189,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         {
                             Id = "90000000-0000-0000-0000-000000000005",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5e02f55f-1278-456b-bad9-b85afa4fbc94",
+                            ConcurrencyStamp = "2d28ccb2-3b02-4a9a-84d0-8d63123e59e4",
                             Email = "staff@coanticor.gov",
                             EmailConfirmed = true,
                             FirstName = "Joseph",
@@ -1201,7 +1204,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             PreferredLanguage = "fr",
                             PreferredTheme = "light",
                             ProvinceCode = "SK",
-                            SecurityStamp = "045ff7e0-defe-42c2-b6e3-b961893290a2",
+                            SecurityStamp = "5d899ceb-b183-4805-90f4-e03c1885bc0b",
                             TwoFactorEnabled = false,
                             UserName = "staff@coanticor.gov"
                         },
@@ -1209,7 +1212,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         {
                             Id = "90000000-0000-0000-0000-000000000006",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c517e608-708c-4f18-bd42-d0c827c53820",
+                            ConcurrencyStamp = "47661487-adb1-4ae0-90db-2ac33858dd9d",
                             Email = "citizen1@example.com",
                             EmailConfirmed = true,
                             FirstName = "Citizen",
@@ -1224,7 +1227,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             PreferredLanguage = "fr",
                             PreferredTheme = "light",
                             ProvinceCode = "KIN",
-                            SecurityStamp = "a4852231-7c16-4482-96f6-6b1083309f84",
+                            SecurityStamp = "545445a4-d60d-4477-a063-a83370d50bb3",
                             TwoFactorEnabled = false,
                             UserName = "citizen1@example.com"
                         },
@@ -1232,7 +1235,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         {
                             Id = "90000000-0000-0000-0000-000000000007",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "62ae8a84-d731-421d-9861-1a1c367f4682",
+                            ConcurrencyStamp = "38dc3c42-84aa-4357-b27b-589d51b4c426",
                             Email = "citizen2@example.com",
                             EmailConfirmed = true,
                             FirstName = "Citizen",
@@ -1247,7 +1250,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             PreferredLanguage = "en",
                             PreferredTheme = "light",
                             ProvinceCode = "HK",
-                            SecurityStamp = "8b882724-8ecf-4c20-aaa0-6bca4e0933c7",
+                            SecurityStamp = "dc9b34c0-1147-4031-b587-34019b239e66",
                             TwoFactorEnabled = false,
                             UserName = "citizen2@example.com"
                         });
@@ -1290,9 +1293,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasColumnType("bit");
 
                     b.Property<bool>("MarkForDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("OriginalDocument")
                         .HasColumnType("bit");
 
                     b.Property<string>("OriginalFileName")
@@ -3820,8 +3820,8 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             DisplayOrder = 2,
                             Icon = "fa-solid fa-file-circle-plus",
                             IsActive = true,
-                            Title = "Report an incident",
-                            TitleFrench = "Signaler un incident",
+                            Title = "Report a Complaint",
+                            TitleFrench = "Signaler une plainte",
                             Url = "/wizard"
                         },
                         new
@@ -3830,7 +3830,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             DisplayOrder = 3,
                             Icon = "fa-solid fa-magnifying-glass",
                             IsActive = true,
-                            Title = "Track My Incident",
+                            Title = "Track My Complaint",
                             TitleFrench = "Suivre ma plainte",
                             Url = "/track-complaint"
                         },
@@ -3860,7 +3860,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             DisplayOrder = 6,
                             Icon = "fa-solid fa-envelope",
                             IsActive = true,
-                            Title = "Contact us",
+                            Title = "Contact",
                             TitleFrench = "Contactez-nous",
                             Url = "/contact"
                         },
@@ -5377,15 +5377,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsAssistantPerson")
-                        .IsRequired()
-                        .HasColumnType("bit");
-
                     b.Property<bool?>("IsReporterPerson")
-                        .IsRequired()
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsReporterWitness")
                         .IsRequired()
                         .HasColumnType("bit");
 
@@ -6211,187 +6203,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         });
                 });
 
-            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AggressiveBehaviorDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AggressiveBehaviorDuration")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("AggressiveBehaviorFrequency")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("AggressiveBehaviorObserved")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal?>("ApproxAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("AttachmentChoice")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AttachmentExplanation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("AttachmentToCorruptionMethods")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Commune")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("CorruptionDiscreetlyCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CorruptionWithConfidence")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDT")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CurrencyType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDT")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DepartmentInvolved")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EducationLevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("HasCorruptionStatements")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasPaidAgentBefore")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasPrivateOrganizationInvolved")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("IncidentCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("IncidentCategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("IncidentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("IncidentRequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IncreasedMotivationOrInterest")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IntimidationObserved")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCurrentDocument")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("MarkForDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("OtherOfficial")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PaymentMadeBefore")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PaymentReasonDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PaymentReasonFrequency")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PaymentReasonType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlannedFacts")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrimaryOfficial")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Quartier")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ReasonForPayment")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecondaryOfficial")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SecurityAcknowledged")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("SimilarCorruptionExists")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("TemperamentOptimism")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDT")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VictimDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("VictimLifeInDanger")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VictimProvidesName")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IncidentRequestId")
-                        .IsUnique();
-
-                    b.ToTable("IncidentDetail");
-                });
-
             modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentEvidence", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("AuthenticFile")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ContentType")
                         .IsRequired()
@@ -6410,18 +6226,10 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Property<DateTime?>("DeletedDT")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FileDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("FileTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("IncidentRequestId")
                         .HasColumnType("uniqueidentifier");
@@ -6461,9 +6269,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AccessCode")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -6506,9 +6311,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("CountryCode")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -6532,23 +6334,11 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("GovernmentOfficeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IncidentCategoryId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("IncidentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("IncidentDay")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IncidentMonth")
-                        .HasColumnType("int");
 
                     b.Property<string>("IncidentNumber")
                         .IsRequired()
@@ -6562,9 +6352,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("IncidentYear")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -6585,47 +6372,17 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneCell")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneOffice")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Province")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ProvinceId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Quartier")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ReferenceNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ReporterDateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReporterDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ReporterFullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReporterOccupation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReporterSchoolLevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReporterTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ReporterUserId")
@@ -6685,7 +6442,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             CitizenPhone = "+243812345678",
                             City = "Gombe",
                             Commune = "Gombe",
-                            CreatedAt = new DateTime(2026, 8, 28, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6574),
+                            CreatedAt = new DateTime(2026, 8, 27, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2110),
                             Description = "Un agent aurait transféré des fonds publics vers un compte personnel.",
                             GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000001"),
                             IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000001"),
@@ -6695,7 +6452,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             IsActive = true,
                             IsAnonymous = false,
                             JobRole = "Comptable",
-                            LastUpdatedAt = new DateTime(2026, 8, 30, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6588),
+                            LastUpdatedAt = new DateTime(2026, 8, 29, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2123),
                             MarkForDelete = false,
                             OfficialNotes = "En attente de vérification initiale.",
                             Province = "Kinshasa",
@@ -6704,7 +6461,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             Service = "Direction Financière",
                             Sex = "M",
                             Status = 1,
-                            SubmittedAt = new DateTime(2026, 8, 28, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6584),
+                            SubmittedAt = new DateTime(2026, 8, 27, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2118),
                             Title = "Détournement de fonds publics"
                         },
                         new
@@ -6715,7 +6472,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             Category = "Corruption",
                             City = "Lubumbashi",
                             Commune = "Lubumbashi",
-                            CreatedAt = new DateTime(2026, 8, 20, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6608),
+                            CreatedAt = new DateTime(2026, 8, 19, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2145),
                             Description = "Un fonctionnaire aurait exigé un paiement pour attribuer un contrat.",
                             GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000002"),
                             IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000003"),
@@ -6724,13 +6481,13 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             IncidentTypeOther = "",
                             IsActive = true,
                             IsAnonymous = true,
-                            LastUpdatedAt = new DateTime(2026, 8, 25, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6612),
+                            LastUpdatedAt = new DateTime(2026, 8, 24, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2147),
                             MarkForDelete = false,
                             OfficialNotes = "Inspection en cours.",
                             Province = "Haut-Katanga",
                             Quartier = "Golf",
                             Status = 2,
-                            SubmittedAt = new DateTime(2026, 8, 20, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6611),
+                            SubmittedAt = new DateTime(2026, 8, 19, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2146),
                             Title = "Pot-de-vin pour attribution de marché public"
                         },
                         new
@@ -6746,7 +6503,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             CitizenPhone = "+243990001122",
                             City = "Goma",
                             Commune = "Goma",
-                            CreatedAt = new DateTime(2026, 9, 2, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6625),
+                            CreatedAt = new DateTime(2026, 9, 1, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2166),
                             Description = "Manipulation des appels d’offres pour favoriser une entreprise.",
                             GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000003"),
                             IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000003"),
@@ -6756,7 +6513,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             IsActive = true,
                             IsAnonymous = false,
                             JobRole = "Analyste",
-                            LastUpdatedAt = new DateTime(2026, 9, 4, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6627),
+                            LastUpdatedAt = new DateTime(2026, 9, 3, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2169),
                             MarkForDelete = false,
                             OfficialNotes = "Documents supplémentaires requis.",
                             Province = "Nord-Kivu",
@@ -6765,7 +6522,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             Service = "Service des marchés publics",
                             Sex = "F",
                             Status = 2,
-                            SubmittedAt = new DateTime(2026, 9, 2, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6626),
+                            SubmittedAt = new DateTime(2026, 9, 1, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2167),
                             Title = "Fraude dans les marchés publics"
                         },
                         new
@@ -6775,7 +6532,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             Category = "Conflit d’intérêts",
                             City = "Matadi",
                             Commune = "Matadi",
-                            CreatedAt = new DateTime(2026, 9, 6, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6747),
+                            CreatedAt = new DateTime(2026, 9, 5, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2182),
                             Description = "Un directeur aurait nommé un membre de sa famille sans procédure.",
                             GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000004"),
                             IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000002"),
@@ -6784,13 +6541,13 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             IncidentTypeOther = "",
                             IsActive = true,
                             IsAnonymous = true,
-                            LastUpdatedAt = new DateTime(2026, 9, 7, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6750),
+                            LastUpdatedAt = new DateTime(2026, 9, 6, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2184),
                             MarkForDelete = false,
                             OfficialNotes = "En attente d’analyse.",
                             Province = "Kongo Central",
                             Quartier = "Belvédère",
                             Status = 1,
-                            SubmittedAt = new DateTime(2026, 9, 6, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6749),
+                            SubmittedAt = new DateTime(2026, 9, 5, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2182),
                             Title = "Conflit d’intérêts dans une nomination"
                         },
                         new
@@ -6806,7 +6563,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             CitizenPhone = "+243812222333",
                             City = "Bukavu",
                             Commune = "Kadutu",
-                            CreatedAt = new DateTime(2026, 8, 26, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6763),
+                            CreatedAt = new DateTime(2026, 8, 25, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2204),
                             Description = "Une société aurait dissimulé des revenus pour éviter l’impôt.",
                             GovernmentOfficeId = new Guid("70000000-0000-0000-0000-000000000004"),
                             IncidentCategoryId = new Guid("20000000-0000-0000-0000-000000000001"),
@@ -6816,7 +6573,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             IsActive = true,
                             IsAnonymous = false,
                             JobRole = "Auditeur",
-                            LastUpdatedAt = new DateTime(2026, 8, 28, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6765),
+                            LastUpdatedAt = new DateTime(2026, 8, 27, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2207),
                             MarkForDelete = false,
                             OfficialNotes = "Analyse financière en cours.",
                             Province = "Sud-Kivu",
@@ -6825,7 +6582,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                             Service = "Inspection fiscale",
                             Sex = "M",
                             Status = 2,
-                            SubmittedAt = new DateTime(2026, 8, 26, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6764),
+                            SubmittedAt = new DateTime(2026, 8, 25, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2205),
                             Title = "Évasion fiscale d’une entreprise locale"
                         });
                 });
@@ -6967,519 +6724,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         });
                 });
 
-            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentSecurityDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("BlacklistHit")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("BrowserName")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("BrowserVersion")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<bool>("CookiesEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDT")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDT")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeviceId")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("DeviceManufacturer")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("DeviceModel")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("DeviceOS")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("DeviceOSVersion")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<bool>("DuplicateContentDetected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("EntryUrl")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<DateTime>("FirstAccessedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("GeoAccuracyMeters")
-                        .HasColumnType("float");
-
-                    b.Property<string>("GeoCity")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("GeoCountry")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<double?>("GeoLatitude")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("GeoLongitude")
-                        .HasColumnType("float");
-
-                    b.Property<string>("GeoRegion")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<bool>("HighRiskPatternDetected")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HostingProviderDetected")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("IncidentRequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double?>("InteractionIntervalMs")
-                        .HasColumnType("float");
-
-                    b.Property<string>("IpAddress")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("IpAddressOriginCity")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("IpAddressOriginCountry")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("IpAddressOriginISP")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsBotSuspected")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMobileDevice")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("JavascriptEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Language")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime>("LastAccessedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("LocalStorageEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("MarkForDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MouseMovementPatternHash")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NetworkType")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Platform")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<bool>("ProxyDetected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReferrerUrl")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<bool>("RepeatedSubmissionDetected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RiskLevel")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<int>("RiskScore")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ScreenResolution")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<int>("SessionDurationSeconds")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SessionId")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("SessionReused")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SubmissionAttemptCount")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("SubmissionCompletedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SuspiciousInteractionScore")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TimezoneOffset")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("TorDetected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("TouchPressurePatternHash")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<double?>("TypingSpeedWPM")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDT")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserAgentString")
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.Property<bool>("VpnDetected")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WhitelistHit")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IncidentRequestId")
-                        .IsUnique();
-
-                    b.ToTable("IncidentSecurityDetails", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6458bc8b-8041-420b-9ac9-de9e44341c57"),
-                            BlacklistHit = false,
-                            BrowserName = "Safari",
-                            BrowserVersion = "17.0",
-                            CookiesEnabled = true,
-                            DeviceId = "dev-9f2a1c",
-                            DeviceManufacturer = "Apple",
-                            DeviceModel = "iPhone 13",
-                            DeviceOS = "iOS",
-                            DeviceOSVersion = "17.2",
-                            DuplicateContentDetected = false,
-                            EntryUrl = "https://anti-corruption.gov/report",
-                            FirstAccessedAtUtc = new DateTime(2026, 9, 9, 21, 56, 30, 557, DateTimeKind.Utc).AddTicks(4280),
-                            GeoAccuracyMeters = 120.0,
-                            GeoCity = "Whitby",
-                            GeoCountry = "Canada",
-                            GeoLatitude = 43.896999999999998,
-                            GeoLongitude = -78.941999999999993,
-                            GeoRegion = "Ontario",
-                            HighRiskPatternDetected = false,
-                            HostingProviderDetected = false,
-                            IncidentRequestId = new Guid("51000000-0000-0000-0000-000000000004"),
-                            InteractionIntervalMs = 280.0,
-                            IpAddress = "24.48.102.91",
-                            IpAddressOriginCity = "Whitby",
-                            IpAddressOriginCountry = "Canada",
-                            IpAddressOriginISP = "Rogers Communications",
-                            IsActive = true,
-                            IsBotSuspected = false,
-                            IsMobileDevice = true,
-                            JavascriptEnabled = true,
-                            Language = "fr-CA",
-                            LastAccessedAtUtc = new DateTime(2026, 9, 9, 22, 11, 30, 557, DateTimeKind.Utc).AddTicks(4290),
-                            LocalStorageEnabled = true,
-                            MarkForDelete = false,
-                            NetworkType = "Home",
-                            Platform = "iOS",
-                            ProxyDetected = false,
-                            ReferrerUrl = "",
-                            RepeatedSubmissionDetected = false,
-                            RiskLevel = "Low",
-                            RiskScore = 8,
-                            ScreenResolution = "1170x2532",
-                            SessionDurationSeconds = 900,
-                            SessionId = "sess-1a2b3c",
-                            SessionReused = false,
-                            SubmissionAttemptCount = 1,
-                            SuspiciousInteractionScore = 12,
-                            TimezoneOffset = -240,
-                            TorDetected = false,
-                            TouchPressurePatternHash = "tp-3929ab",
-                            TypingSpeedWPM = 42.0,
-                            UserAgentString = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X)...",
-                            VpnDetected = false,
-                            WhitelistHit = true
-                        },
-                        new
-                        {
-                            Id = new Guid("ddf426c8-55ab-42c5-9376-003cde346563"),
-                            BlacklistHit = false,
-                            BrowserName = "Chrome",
-                            BrowserVersion = "126.0",
-                            CookiesEnabled = true,
-                            DeviceId = "dev-7c1f8e",
-                            DeviceManufacturer = "Samsung",
-                            DeviceModel = "Samsung Galaxy S22",
-                            DeviceOS = "Android",
-                            DeviceOSVersion = "14",
-                            DuplicateContentDetected = false,
-                            EntryUrl = "https://anti-corruption.gov/report",
-                            FirstAccessedAtUtc = new DateTime(2026, 9, 9, 20, 11, 30, 557, DateTimeKind.Utc).AddTicks(4366),
-                            GeoAccuracyMeters = 5000.0,
-                            GeoCity = "Berlin",
-                            GeoCountry = "Germany",
-                            GeoLatitude = 52.520000000000003,
-                            GeoLongitude = 13.404999999999999,
-                            GeoRegion = "Berlin",
-                            HighRiskPatternDetected = false,
-                            HostingProviderDetected = true,
-                            IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
-                            InteractionIntervalMs = 190.0,
-                            IpAddress = "185.220.101.4",
-                            IpAddressOriginCity = "Berlin",
-                            IpAddressOriginCountry = "Germany",
-                            IpAddressOriginISP = "M247 Ltd",
-                            IsActive = true,
-                            IsBotSuspected = false,
-                            IsMobileDevice = true,
-                            JavascriptEnabled = true,
-                            Language = "en-US",
-                            LastAccessedAtUtc = new DateTime(2026, 9, 9, 22, 11, 30, 557, DateTimeKind.Utc).AddTicks(4372),
-                            LocalStorageEnabled = true,
-                            MarkForDelete = false,
-                            NetworkType = "VPN",
-                            Platform = "Android",
-                            ProxyDetected = false,
-                            ReferrerUrl = "",
-                            RepeatedSubmissionDetected = true,
-                            RiskLevel = "Medium",
-                            RiskScore = 42,
-                            ScreenResolution = "1080x2340",
-                            SessionDurationSeconds = 7200,
-                            SessionId = "sess-9f8d1e",
-                            SessionReused = true,
-                            SubmissionAttemptCount = 4,
-                            SuspiciousInteractionScore = 35,
-                            TimezoneOffset = 120,
-                            TorDetected = false,
-                            TouchPressurePatternHash = "tp-9921aa",
-                            TypingSpeedWPM = 55.0,
-                            UserAgentString = "Mozilla/5.0 (Linux; Android 14; SM-S901W)...",
-                            VpnDetected = true,
-                            WhitelistHit = false
-                        },
-                        new
-                        {
-                            Id = new Guid("8e1517af-cc72-454e-b342-5b8813356691"),
-                            BlacklistHit = true,
-                            BrowserName = "Tor Browser",
-                            BrowserVersion = "13.0",
-                            CookiesEnabled = false,
-                            DeviceId = "dev-tor-001",
-                            DeviceManufacturer = "Unknown",
-                            DeviceModel = "Unknown",
-                            DeviceOS = "Linux",
-                            DeviceOSVersion = "Unknown",
-                            DuplicateContentDetected = true,
-                            EntryUrl = "https://anti-corruption.gov/report",
-                            FirstAccessedAtUtc = new DateTime(2026, 9, 9, 22, 6, 30, 557, DateTimeKind.Utc).AddTicks(4404),
-                            GeoCity = "Unknown",
-                            GeoCountry = "Unknown",
-                            GeoRegion = "Unknown",
-                            HighRiskPatternDetected = true,
-                            HostingProviderDetected = true,
-                            IncidentRequestId = new Guid("51000000-0000-0000-0000-000000000002"),
-                            InteractionIntervalMs = 50.0,
-                            IpAddress = "185.220.100.255",
-                            IpAddressOriginCity = "Unknown",
-                            IpAddressOriginCountry = "Unknown",
-                            IpAddressOriginISP = "Tor Exit Node",
-                            IsActive = true,
-                            IsBotSuspected = true,
-                            IsMobileDevice = false,
-                            JavascriptEnabled = false,
-                            Language = "en-US",
-                            LastAccessedAtUtc = new DateTime(2026, 9, 9, 22, 11, 30, 557, DateTimeKind.Utc).AddTicks(4406),
-                            LocalStorageEnabled = false,
-                            MarkForDelete = false,
-                            MouseMovementPatternHash = "mm-0000",
-                            NetworkType = "Tor",
-                            Platform = "Linux",
-                            ProxyDetected = true,
-                            ReferrerUrl = "",
-                            RepeatedSubmissionDetected = true,
-                            RiskLevel = "Critical",
-                            RiskScore = 95,
-                            ScreenResolution = "1920x1080",
-                            SessionDurationSeconds = 300,
-                            SessionId = "sess-tor-001",
-                            SessionReused = true,
-                            SubmissionAttemptCount = 7,
-                            SuspiciousInteractionScore = 88,
-                            TimezoneOffset = 0,
-                            TorDetected = true,
-                            TypingSpeedWPM = 12.0,
-                            UserAgentString = "Mozilla/5.0 (X11; Linux x86_64; rv:102.0)...",
-                            VpnDetected = false,
-                            WhitelistHit = false
-                        },
-                        new
-                        {
-                            Id = new Guid("cb3a14c1-5944-48bc-aead-89ed5c64a25f"),
-                            BlacklistHit = false,
-                            BrowserName = "Edge",
-                            BrowserVersion = "126.0",
-                            CookiesEnabled = true,
-                            DeviceId = "dev-corp-77",
-                            DeviceManufacturer = "Dell",
-                            DeviceModel = "Dell Latitude 7420",
-                            DeviceOS = "Windows",
-                            DeviceOSVersion = "11 Pro",
-                            DuplicateContentDetected = false,
-                            EntryUrl = "https://anti-corruption.gov/report",
-                            FirstAccessedAtUtc = new DateTime(2026, 9, 9, 21, 11, 30, 557, DateTimeKind.Utc).AddTicks(4434),
-                            GeoAccuracyMeters = 300.0,
-                            GeoCity = "Toronto",
-                            GeoCountry = "Canada",
-                            GeoLatitude = 43.652999999999999,
-                            GeoLongitude = -79.382999999999996,
-                            GeoRegion = "Ontario",
-                            HighRiskPatternDetected = false,
-                            HostingProviderDetected = false,
-                            IncidentRequestId = new Guid("51000000-0000-0000-0000-000000000003"),
-                            InteractionIntervalMs = 320.0,
-                            IpAddress = "64.18.12.44",
-                            IpAddressOriginCity = "Toronto",
-                            IpAddressOriginCountry = "Canada",
-                            IpAddressOriginISP = "Bell Canada",
-                            IsActive = true,
-                            IsBotSuspected = false,
-                            IsMobileDevice = false,
-                            JavascriptEnabled = true,
-                            Language = "en-CA",
-                            LastAccessedAtUtc = new DateTime(2026, 9, 9, 22, 11, 30, 557, DateTimeKind.Utc).AddTicks(4437),
-                            LocalStorageEnabled = true,
-                            MarkForDelete = false,
-                            MouseMovementPatternHash = "mm-9921",
-                            NetworkType = "Corporate",
-                            Platform = "Windows",
-                            ProxyDetected = false,
-                            ReferrerUrl = "",
-                            RepeatedSubmissionDetected = false,
-                            RiskLevel = "Low",
-                            RiskScore = 5,
-                            ScreenResolution = "1920x1080",
-                            SessionDurationSeconds = 3600,
-                            SessionId = "sess-corp-77",
-                            SessionReused = false,
-                            SubmissionAttemptCount = 1,
-                            SuspiciousInteractionScore = 10,
-                            TimezoneOffset = -240,
-                            TorDetected = false,
-                            TypingSpeedWPM = 72.0,
-                            UserAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)...",
-                            VpnDetected = false,
-                            WhitelistHit = true
-                        },
-                        new
-                        {
-                            Id = new Guid("ace29b8a-360e-4368-ac2f-af077ddad48d"),
-                            BlacklistHit = false,
-                            BrowserName = "Chrome",
-                            BrowserVersion = "125.0",
-                            CookiesEnabled = true,
-                            DeviceId = "dev-wifi-22",
-                            DeviceManufacturer = "Huawei",
-                            DeviceModel = "Huawei P30",
-                            DeviceOS = "Android",
-                            DeviceOSVersion = "12",
-                            DuplicateContentDetected = false,
-                            EntryUrl = "https://anti-corruption.gov/report",
-                            FirstAccessedAtUtc = new DateTime(2026, 9, 9, 21, 41, 30, 557, DateTimeKind.Utc).AddTicks(4831),
-                            GeoAccuracyMeters = 1500.0,
-                            GeoCity = "Ottawa",
-                            GeoCountry = "Canada",
-                            GeoLatitude = 45.420999999999999,
-                            GeoLongitude = -75.697000000000003,
-                            GeoRegion = "Ontario",
-                            HighRiskPatternDetected = true,
-                            HostingProviderDetected = false,
-                            IncidentRequestId = new Guid("51000000-0000-0000-0000-000000000005"),
-                            InteractionIntervalMs = 210.0,
-                            IpAddress = "172.16.0.22",
-                            IpAddressOriginCity = "Ottawa",
-                            IpAddressOriginCountry = "Canada",
-                            IpAddressOriginISP = "Public WiFi",
-                            IsActive = true,
-                            IsBotSuspected = false,
-                            IsMobileDevice = true,
-                            JavascriptEnabled = true,
-                            Language = "fr-CA",
-                            LastAccessedAtUtc = new DateTime(2026, 9, 9, 22, 11, 30, 557, DateTimeKind.Utc).AddTicks(4834),
-                            LocalStorageEnabled = true,
-                            MarkForDelete = false,
-                            NetworkType = "Public WiFi",
-                            Platform = "Android",
-                            ProxyDetected = true,
-                            ReferrerUrl = "",
-                            RepeatedSubmissionDetected = true,
-                            RiskLevel = "High",
-                            RiskScore = 78,
-                            ScreenResolution = "1080x2340",
-                            SessionDurationSeconds = 1800,
-                            SessionId = "sess-wifi-22",
-                            SessionReused = true,
-                            SubmissionAttemptCount = 3,
-                            SuspiciousInteractionScore = 65,
-                            TimezoneOffset = -240,
-                            TorDetected = false,
-                            TouchPressurePatternHash = "tp-5511",
-                            TypingSpeedWPM = 38.0,
-                            UserAgentString = "Mozilla/5.0 (Linux; Android 12; ELE-L29)...",
-                            VpnDetected = false,
-                            WhitelistHit = false
-                        });
-                });
-
             modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.ProcessingPhaseHistory", b =>
                 {
                     b.Property<Guid>("Id")
@@ -7541,7 +6785,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000001"),
-                            ChangedAt = new DateTime(2026, 9, 6, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6916),
+                            ChangedAt = new DateTime(2026, 9, 5, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2609),
                             IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
                             IsActive = true,
                             MarkForDelete = false,
@@ -7552,7 +6796,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000002"),
-                            ChangedAt = new DateTime(2026, 9, 7, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6922),
+                            ChangedAt = new DateTime(2026, 9, 6, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2618),
                             ChangedByUserId = new Guid("90000000-0000-0000-0000-000000000001"),
                             IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
                             IsActive = true,
@@ -7564,7 +6808,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000003"),
-                            ChangedAt = new DateTime(2026, 9, 8, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6928),
+                            ChangedAt = new DateTime(2026, 9, 7, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2623),
                             ChangedByUserId = new Guid("90000000-0000-0000-0000-000000000001"),
                             IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
                             IsActive = true,
@@ -7576,7 +6820,7 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000004"),
-                            ChangedAt = new DateTime(2026, 9, 9, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(6950),
+                            ChangedAt = new DateTime(2026, 9, 8, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(2634),
                             ChangedByUserId = new Guid("90000000-0000-0000-0000-000000000002"),
                             IncidentRequestId = new Guid("50000000-0000-0000-0000-000000000001"),
                             IsActive = true,
@@ -7714,8 +6958,8 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9c2c0da9-526f-4367-8dca-7c5d26119d38"),
-                            ChangedAt = new DateTime(2026, 9, 6, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(7403),
+                            Id = new Guid("a4b245dd-c811-4437-ab0d-e1b01b27b1dc"),
+                            ChangedAt = new DateTime(2026, 9, 5, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(3158),
                             IncidentId = new Guid("30000000-0000-0000-0000-000000000001"),
                             IsActive = true,
                             MarkForDelete = false,
@@ -7725,8 +6969,8 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         },
                         new
                         {
-                            Id = new Guid("b8f55bda-2b20-4203-93e3-498a8b6cf56b"),
-                            ChangedAt = new DateTime(2026, 9, 7, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(7411),
+                            Id = new Guid("ec5fe323-7d6b-42e1-8805-cc8acb50b517"),
+                            ChangedAt = new DateTime(2026, 9, 6, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(3166),
                             ChangedByUserId = new Guid("10000000-0000-0000-0000-000000000001"),
                             IncidentId = new Guid("30000000-0000-0000-0000-000000000001"),
                             IsActive = true,
@@ -7737,8 +6981,8 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                         },
                         new
                         {
-                            Id = new Guid("6a6364d9-2cfa-45f8-8bb3-bf6fc48f7be0"),
-                            ChangedAt = new DateTime(2026, 9, 8, 22, 11, 30, 573, DateTimeKind.Utc).AddTicks(7415),
+                            Id = new Guid("85e30bd7-b17d-4ce5-a996-d74d51e4d417"),
+                            ChangedAt = new DateTime(2026, 9, 7, 22, 2, 34, 302, DateTimeKind.Utc).AddTicks(3170),
                             ChangedByUserId = new Guid("10000000-0000-0000-0000-000000000001"),
                             IncidentId = new Guid("30000000-0000-0000-0000-000000000001"),
                             IsActive = true,
@@ -8969,15 +8213,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentDetail", b =>
-                {
-                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", null)
-                        .WithOne("IncidentDetail")
-                        .HasForeignKey("CoAntiCor.Core.Domain.ServiceRequest.IncidentDetail", "IncidentRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentEvidence", b =>
                 {
                     b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", null)
@@ -9070,17 +8305,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", "IncidentRequest")
                         .WithMany("IncidentRequestRewards")
                         .HasForeignKey("IncidentRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IncidentRequest");
-                });
-
-            modelBuilder.Entity("CoAntiCor.Core.Domain.ServiceRequest.IncidentSecurityDetail", b =>
-                {
-                    b.HasOne("CoAntiCor.Core.Domain.ServiceRequest.IncidentRequest", "IncidentRequest")
-                        .WithOne()
-                        .HasForeignKey("CoAntiCor.Core.Domain.ServiceRequest.IncidentSecurityDetail", "IncidentRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -9297,8 +8521,6 @@ namespace CoAntiCor.Infrastructure.Data.Migrations.Domain
                     b.Navigation("EvidenceFiles");
 
                     b.Navigation("History");
-
-                    b.Navigation("IncidentDetail");
 
                     b.Navigation("IncidentRequestRewards");
 

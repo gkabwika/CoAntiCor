@@ -1,0 +1,13 @@
+﻿@using CoAntiCor.Core.Domain.Person
+@code {
+    [Parameter] public List<NaturalPerson> Persons { get; set; } = new();
+}
+
+<div class="border rounded p-2 mb-2">
+    <h5>Personnes impliquées</h5>
+    @foreach (var p in Persons)
+    {
+        <div>@p!.FirstName + @p!.LastName (@p!.MiddleName)</div>
+    }
+    <!-- add modal / form to add/edit persons -->
+</div>

@@ -10,8 +10,11 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
     {
         public new Guid Id { get; set; }
         public Guid IncidentRequestId { get; set; }
+        public bool? AuthenticFile { get; set; }  // document ou fichier original-authentique ou pas 
 
         public string FileName { get; set; } = default!;
+        public string FileTitle { get; set; } = default!;
+        public string FileDescription { get; set; } = default!;
         public string ContentType { get; set; } = default!;
         public long SizeBytes { get; set; }
 

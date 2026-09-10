@@ -1,0 +1,55 @@
+﻿@inject NavigationManager Navigation
+
+<select @onchange="OnCultureChanged" class="form-select">
+    <option value="en-US">En | Fr</option>
+    <option value="en-US">En</option>
+    <option value="fr-FR">Fr</option>
+</select>
+@* @foreach (var model in _models)
+{
+    <label class="form-label small">@model.Language</label>
+    <input type="radio" class="form-control mb-3"
+           @bind:get=model.Value
+           @bind:set="(value) => OnCultureChanged2(value, model)" />
+} *@
+@code {
+    private void OnCultureChanged(ChangeEventArgs e)
+    {
+        //Persistence: The cookie ensures the language choice remains active even if the user closes their browser or refreshes the page.
+        var culture = e.Value?.ToString();
+        var uri = new Uri(Navigation.Uri).GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+
+        // Redirect to the controller to set the cookie
+        var query = $"/Culture/Set?culture={culture}&redirectUri={Uri.EscapeDataString(uri)}";
+        //Server Awareness: By using forceLoad: true, the entire page reloads, allowing the Request Localization Middleware to detect the new cookie and set the 
+        //CultureInfo.CurrentCulture for the next session.
+        Navigation.NavigateTo(query, forceLoad: true);
+    }
+    private async Task OnCultureChanged2(string value, Model lang)
+    {
+        // Fake doing some async work
+        await Task.Yield();
+        lang.Value = value;
+
+        //Persistence: The cookie ensures the language choice remains active even if the user closes their browser or refreshes the page.
+        var culture = lang.Value?.ToString();
+        var uri = new Uri(Navigation.Uri).GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+
+        // Redirect to the controller to set the cookie
+        var query = $"/Culture/Set?culture={culture}&redirectUri={Uri.EscapeDataString(uri)}";
+        //Server Awareness: By using forceLoad: true, the entire page reloads, allowing the Request Localization Middleware to detect the new cookie and set the
+        //CultureInfo.CurrentCulture for the next session.
+        Navigation.NavigateTo(query, forceLoad: true);
+    }
+    private List<Model> _models = new()
+    {
+        new(){ Language="English", Value = "en-US" },
+        new(){ Language="Français", Value = "fr-FR" },
+    };
+    public class Model
+    {
+        public string Language { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+    }
+
+}

@@ -1,0 +1,51 @@
+﻿@using CoAntiCor.Core.DTO
+@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.App.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> Localizer
+@code {
+    [Parameter] public WizardDraftState Draft { get; set; } = default!;
+    [Parameter] public IEnumerable<ProvinceDto> Provinces { get; set; } = Enumerable.Empty<ProvinceDto>();
+    [Parameter] public IEnumerable<GovernmentOfficeDto> Offices { get; set; } = Enumerable.Empty<GovernmentOfficeDto>();
+    [Parameter] public EventCallback OnSave { get; set; }
+
+    IEnumerable<GovernmentOfficeDto> FilteredOffices =>
+        Offices.Where(o => o.Name == Draft.Province);
+}
+
+<div class="card p-3">
+    <h4>@Localizer["Wizard_Step4_Title"]</h4>
+
+    <select class="form-select mb-2" @bind="Draft.Province">
+        <option value="">@Localizer["Wizard_SelectOption"]</option>
+        @foreach (var p in Offices.Select(o => o.Province).Distinct())
+        {
+            <option value="@p">@p</option>
+        }
+    </select>
+
+    <input class="form-control mb-2" @bind="Draft.City" placeholder="Ville" />
+    <input class="form-control mb-2" @bind="Draft.Commune" placeholder="Commune" />
+    <input class="form-control mb-2" @bind="Draft.Quartier" placeholder="Quartier" />
+    <input class="form-control mb-2" @bind="Draft.Address" placeholder="Adresse précise" />
+
+     <select class="form-select mb-2" @bind="Draft.GovernmentOfficeId">
+        <option value="">@Localizer["Wizard_SelectOption"]</option>
+        @foreach (var o in Offices.Where(o => Draft.Province == null || o.Province == Draft.Province))
+        {
+            <option value="@o.Id">@o.Name</option>
+        }
+    </select>
+
+@*     <select class="form-select mb-2" @bind="Draft.GovernmentOfficeId">
+        <option value="">Bureau / Tribunal</option>
+        @foreach (var o in FilteredOffices)
+        {
+            <option value="@o.Id">@o.Name (@o.City)</option>
+        }
+    </select> *@
+    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">
+        @Localizer["SearchSimilarCases_SaveButton"]
+    </button>
+  @*   <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">Sauvegarder</button> *@
+</div>

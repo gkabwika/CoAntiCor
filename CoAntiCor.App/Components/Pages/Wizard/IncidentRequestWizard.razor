@@ -1,0 +1,616 @@
+﻿@page "/wizard/{DraftId:guid}"
+@page "/wizard/"
+@using CoAntiCor.App.Resources
+@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.Core.Domain.ServiceRequest
+@using FluentValidation
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IValidator<WizardDraftState> Validator
+@inject IViewLocalizer L
+@inject IStringLocalizer<SharedResource> Localizer
+@inject HttpClient Http
+
+<h2 class="fw-bold mb-3">@Localizer["Wizard_Title"]</h2>
+<div class="wizard-header mb-3">
+   @*  <h3>@Localizer["Wizard_Main_Title"]</h3> *@
+    <p>@string.Format(Localizer["Wizard_Main_StepIndicator"], Step, TotalSteps)</p>
+</div>
+<div class="alert alert-info d-flex align-items-center" role="alert">
+    <span class="me-2">
+        @Localizer["Wizard_Autosave_Status"]:
+        @if (IsSaving)
+        {
+            <span class="text-warning">@Localizer["Wizard_Autosave_Saving"]…</span>
+        }
+        else if (LastSavedUtc.HasValue)
+        {
+            <span class="text-success">@Localizer["Wizard_Autosave_LastSaved"] @LastSavedUtc.Value.ToLocalTime()</span>
+        }
+        else
+        {
+            <span class="text-muted">@Localizer["Wizard_Autosave_NotSaved"]</span>
+        }
+    </span>
+</div>
+
+<ul class="nav nav-pills mb-3">
+    @for (int step = 1; step <= 7; step++)
+    {
+        var active = step == Draft.CurrentStep ? "active" : "";
+        <li class="nav-item">
+            <button class="nav-link @active" @onclick="() => GoToStep(step)">
+                @Localizer[$"Wizard_Step_{step}"] 
+            </button>
+        </li>
+    }
+</ul>
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+@if (ValidationErrors.Any())
+{
+    <div id="ToValidationsummary" class="company-type-details alert alert-heading">
+        @* <div class="alert alert-danger"> *@
+        <span class="text-danger"> <i class="fas fa-exclamation-circle"></i></span>  <span class="text-black"> @Localizer["ErrorSummary"] (@Localizer["Step"] @Draft.CurrentStep)</span>
+        <ul class="validation-errors">
+            @foreach (var err in ValidationErrors)
+            {
+                <li>
+                    @err.Message
+                    <a href="javascript:void(0)" @onclick="() => ScrollToAndHighlight(err.ElementId)">
+                        @Localizer["Fix"]
+                    </a>
+                </li>
+            }
+        </ul>
+
+    </div>
+}
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        @switch (Draft.CurrentStep)
+        {
+            case 1:
+                <WizardStep1_Search Draft="Draft" OnSave="SaveDraftAsync" />
+                break;
+            case 2:
+                <WizardStep2_Type Draft="Draft" OnSave="SaveDraftAsync" />
+                break;
+            case 3:
+                <WizardStep3_Identity Draft="Draft" OnSave="SaveDraftAsync" />
+                break;
+            case 4:
+                <WizardStep4_Location Draft="Draft" OnSave="SaveDraftAsync" />
+                break;
+            case 5:
+                <WizardStep5_Description Draft="Draft" OnSave="SaveDraftAsync" />
+                break;
+             case 6:
+               <WizardStep6_IdentityChoice Draft="Draft" OnSave="SaveDraftAsync" />
+                break;
+            case 7:
+                <WizardStep7_Review Draft="Draft" OnSubmit="SubmitAsync" />
+                break;
+        }
+    </div>
+</div>
+
+
+<div class="mt-3 d-flex justify-content-between">
+    <button class="btn btn-outline-secondary" @onclick="PreviousStep" disabled="@(Draft.CurrentStep == 1)">
+        @Localizer["Wizard_Previous"]
+    </button>
+    <div class="d-flex gap-2">
+        <button class="btn btn-secondary" @onclick="SaveDraftAsync">
+            @Localizer["Wizard_SaveDraft"]
+        </button>
+        @if (Draft.CurrentStep < 7)
+        {
+            <button class="btn btn-primary" @onclick="NextStep">
+                @Localizer["Wizard_Next"]
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-success" @onclick="SubmitAsync">
+                @Localizer["Wizard_Submit"]
+            </button>
+        }
+    </div>
+</div>
+
+
+<div>
+
+
+    <EditForm Model="@Detail" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <h3>@Localizer["IncidentDetail_Title"]</h3>
+
+        <!-- SECTION: Éducation / Contexte -->
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Education_Level"]</label>
+            <InputText class="form-control" @bind-Value="Detail.EducationLevel" />
+        </div>
+
+        <!-- SECTION: Catégorie / Type -->
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Case_Category"]</label>
+            <InputText class="form-control" @bind-Value="Detail.IncidentCategoryName" />
+        </div>
+
+        <!-- SECTION: Victime / Témoin -->
+        <h5 class="mt-4">@Localizer["Victim_Info_Title"]</h5>
+
+        <div class="form-check mb-2">
+            <InputCheckbox class="form-check-input" @bind-Value="Detail.VictimProvidesName" />
+            <label class="form-check-label">@Localizer["Victim_ProvidesName"]</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Victim_Description"]</label>
+            <InputTextArea class="form-control" Rows="4" @bind-Value="Detail.VictimDescription" />
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["Province"]</label>
+                <InputText class="form-control" @bind-Value="Detail.Province" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["City_Commune_Quartier"]</label>
+                <InputText class="form-control" @bind-Value="Detail.City" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Commune"]</label>
+                <InputText class="form-control" @bind-Value="Detail.Commune" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Quartier"]</label>
+                <InputText class="form-control" @bind-Value="Detail.Quartier" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Address"]</label>
+                <InputText class="form-control" @bind-Value="Detail.Address" />
+            </div>
+        </div>
+
+        <div class="form-check mb-3">
+            <InputCheckbox class="form-check-input" @bind-Value="Detail.HasPrivateOrganizationInvolved" />
+            <label class="form-check-label">@Localizer["Private_Organization_Involved"]</label>
+        </div>
+
+        <!-- SECTION: Problématiques de corruption -->
+        <h5 class="mt-4">@Localizer["Corruption_Description_Title"]</h5>
+
+        <div class="form-check mb-2">
+            <InputCheckbox class="form-check-input" @bind-Value="Detail.HasCorruptionStatements" />
+            <label class="form-check-label">@Localizer["Corruption_Statements"]</label>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["Department_Involved"]</label>
+                <InputText class="form-control" @bind-Value="Detail.DepartmentInvolved" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["Planned_Facts"]</label>
+                <InputText class="form-control" @bind-Value="Detail.PlannedFacts" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Primary_Official"]</label>
+                <InputText class="form-control" @bind-Value="Detail.PrimaryOfficial" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Secondary_Official"]</label>
+                <InputText class="form-control" @bind-Value="Detail.SecondaryOfficial" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Other_Official"]</label>
+                <InputText class="form-control" @bind-Value="Detail.OtherOfficial" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Incident_Date"]</label>
+                <InputDate class="form-control" @bind-Value="Detail.IncidentDate" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Currency_Type"]</label>
+                <InputText class="form-control" @bind-Value="Detail.CurrencyType" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">@Localizer["Approx_Amount"]</label>
+                <InputNumber class="form-control" @bind-Value="Detail.ApproxAmount" />
+            </div>
+        </div>
+
+        <!-- Flags: danger, comportement, intimidation -->
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.VictimLifeInDanger" />
+                    <label class="form-check-label">@Localizer["Victim_Life_In_Danger"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.ReasonForPayment" />
+                    <label class="form-check-label">@Localizer["Reason_For_Payment"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.PaymentMadeBefore" />
+                    <label class="form-check-label">@Localizer["Payment_Made_Before"]</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.AggressiveBehaviorObserved" />
+                    <label class="form-check-label">@Localizer["Aggressive_Behavior_Observed"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.IncreasedMotivationOrInterest" />
+                    <label class="form-check-label">@Localizer["Increased_Motivation_Interest"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.IntimidationObserved" />
+                    <label class="form-check-label">@Localizer["Intimidation_Observed"]</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Descriptions détaillées paiement / comportement -->
+        <div class="mb-3">
+            <label class="form-label">@Localizer["PaymentReason_Description"]</label>
+            <InputTextArea class="form-control" Rows="3" @bind-Value="Detail.PaymentReasonDescription" />
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["PaymentReason_Type"]</label>
+                <InputText class="form-control" @bind-Value="Detail.PaymentReasonType" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["PaymentReason_Frequency"]</label>
+                <InputNumber class="form-control" @bind-Value="Detail.PaymentReasonFrequency" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["AggressiveBehavior_Description"]</label>
+            <InputTextArea class="form-control" Rows="3" @bind-Value="Detail.AggressiveBehaviorDescription" />
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["AggressiveBehavior_Duration"]</label>
+                <InputText class="form-control" @bind-Value="Detail.AggressiveBehaviorDuration" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">@Localizer["AggressiveBehavior_Frequency"]</label>
+                <InputNumber class="form-control" @bind-Value="Detail.AggressiveBehaviorFrequency" />
+            </div>
+        </div>
+
+        <!-- SECTION: Facteurs favorisant le corrupteur -->
+        <h5 class="mt-4">@Localizer["Favoring_Factors_Title"]</h5>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.TemperamentOptimism" />
+                    <label class="form-check-label">@Localizer["Temperament_Optimism"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.CorruptionDiscreetlyCompleted" />
+                    <label class="form-check-label">@Localizer["Corruption_Discreet"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.HasPaidAgentBefore" />
+                    <label class="form-check-label">@Localizer["Paid_Agent_Before"]</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.CorruptionWithConfidence" />
+                    <label class="form-check-label">@Localizer["Corruption_With_Confidence"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.AttachmentToCorruptionMethods" />
+                    <label class="form-check-label">@Localizer["Attachment_Corruption"]</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input" @bind-Value="Detail.SimilarCorruptionExists" />
+                    <label class="form-check-label">@Localizer["Similar_Corruption"]</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: Pièces jointes -->
+        <h5 class="mt-4">@Localizer["Attachments_Title"]</h5>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Attachment_Explanation"]</label>
+            <InputTextArea class="form-control" Rows="3" @bind-Value="Detail.AttachmentExplanation" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Attachment_Choice"]</label>
+            <InputSelect class="form-select" @bind-Value="Detail.AttachmentChoice">
+                <option value="Original">@Localizer["Attachment_Original"]</option>
+                <option value="NonOriginal">@Localizer["Attachment_NonOriginal"]</option>
+                <option value="None">@Localizer["Attachment_None"]</option>
+            </InputSelect>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Document_Name"]</label>
+            <InputText class="form-control" @bind-Value="Detail.DocumentName" />
+        </div>
+
+        <div class="form-check mb-3">
+            <InputCheckbox class="form-check-input" @bind-Value="Detail.IsCurrentDocument" />
+            <label class="form-check-label">@Localizer["Document_Current"]</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Document_Path"]</label>
+            <InputText class="form-control" @bind-Value="Detail.DocumentPath" />
+        </div>
+
+        <div class="form-check mb-3">
+            <InputCheckbox class="form-check-input" @bind-Value="Detail.SecurityAcknowledged" />
+            <label class="form-check-label">@Localizer["Security_Acknowledged"]</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">@Localizer["Wizard_Submit"]</button>
+    </EditForm>
+
+    
+</div>
+
+@code {
+    [Parameter] public Guid? DraftId { get; set; }
+    [Parameter] public Guid IncidentRequestId { get; set; }
+    private IncidentDetail Detail { get; set; } = new IncidentDetail();
+    private WizardDraftState Draft { get; set; } = new() { CurrentStep = 1 };
+    private bool IsSaving { get; set; }
+    private DateTime? LastSavedUtc { get; set; }
+
+    public int Step { get; set; }
+    public int TotalSteps { get; set; } = 7;
+
+    [Inject] IJSRuntime? JS { get; set; }
+    bool IsBusy;
+    string TransitionClass = "";
+    protected string? ErrorMessage = null;
+    private List<(string Message, string ElementId)> ValidationErrors = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if(DraftId != null){
+            Draft.DraftId = (Guid) DraftId;
+            await LoadDraftAsync();
+
+            Step = Draft.CurrentStep;
+            CurrentStep(Step);
+        }
+
+    }
+    private Task OnValidSubmit()
+    {
+        // Persist Detail to DB (IncidentDetail linked to IncidentRequestId)
+        return Task.CompletedTask;
+    }
+    private async Task LoadDraftAsync()
+    {
+        try
+        {
+            var result = await Http.GetFromJsonAsync<WizardDraftState>($"api/v1/wizard/{DraftId}");
+            if (result != null)
+            {
+                Draft = result;
+                LastSavedUtc = DateTime.UtcNow;
+            }
+        }
+        catch
+        {
+            // New draft
+            Draft = new WizardDraftState
+            {
+                DraftId = (Guid)DraftId,
+                CurrentStep = 1,
+                Version = 0,
+                IsAnonymous = true
+            };
+        }
+    }
+
+    private void GoToStep(int step)
+    {
+        Draft.CurrentStep = step;
+    }
+
+    private void PreviousStep()
+    {
+        if (Draft.CurrentStep > 1)
+            Draft.CurrentStep--;
+    }
+
+    private async Task NextStep()
+    {
+        if (Draft.CurrentStep < 7)
+            Draft.CurrentStep++;
+
+        ErrorMessage = null;
+        IsBusy = true;
+
+        if (!await ValidateCurrentStepAsync())
+        {
+            IsBusy = false;
+            return;
+        }
+        if (Draft.CurrentStep == 1)
+        {
+            //1. Setup group of company type
+            // SetMyEntrepriseGroupType();
+            // Draft.NaturalPersonRequerant ??= new Person();
+            // Draft.NaturalPersonRequerant.CurrentAddress ??= new Core.Domain.Address.Address();
+            // Draft.NaturalPersonRequerant.NationalityCountry ??= new Core.Domain.Address.Country();
+            // Draft.NaturalPersonRequerant.BirthCountry ??= new Core.Domain.Address.Country();
+            // Draft.Person!.BirthCountry ??= new Core.Domain.Address.Country();
+            // Draft.NaturalPerson!.BirthCountry ??= new Core.Domain.Address.Country();
+        }
+        if (Draft.CurrentStep == 2)
+        {
+            
+            
+        
+        }
+
+       var s = SaveDraftAsync();
+    }
+    async Task<bool> ValidateCurrentStepAsync()
+    {
+        var ruleset = Draft.CurrentStep switch
+        {
+            1 => "Step1",
+            2 => "Step2",
+            3 => "Step3",
+            4 => "Step4",
+            5 => "Step5",
+            6 => "Step6",
+            _ => null
+        };
+
+        // if (ruleset == null) return true;
+
+        // var result = await Validator.ValidateAsync(Draft, opts => opts.IncludeRuleSets(ruleset));
+        // // You can surface errors via a ValidationSummary or custom UI
+        // if(!result.IsValid)
+        // {
+        //     // ErrorMessage = string.Join("; ", result.Errors.Select(e => e.ErrorMessage));
+        //     ErrorMessage = string.Join("<br/>", result.Errors.Select(e => e.ErrorMessage));
+        // }
+
+
+        ValidationErrors.Clear();
+
+        var result = await Validator.ValidateAsync(Draft, opts => opts.IncludeRuleSets(ruleset));
+
+        if (!result.IsValid)
+        {
+            ValidationErrors = result.Errors
+                .Select(e => (e.ErrorMessage, e.CustomState?.ToString() ?? ""))
+                .ToList();
+
+            return false;
+        }
+        return result.IsValid;
+    }
+
+    private async Task SaveDraftAsync()
+    {
+        IsSaving = true;
+
+        var request = new SaveDraftRequest { Draft = Draft };
+        var response = await Http.PostAsJsonAsync("api/v1/wizard/save", request);
+        var result = await response.Content.ReadFromJsonAsync<SaveDraftResponse>();
+
+        if (result != null)
+        {
+            if (result.IsConflict && result.ServerVersion != null)
+            {
+                // Simple strategy: take server version, but you could show a merge dialog
+                Draft = result.ServerVersion;
+            }
+            else
+            {
+                Draft = result.Draft;
+            }
+
+            LastSavedUtc = DateTime.UtcNow;
+        }
+
+        IsSaving = false;
+        StateHasChanged();
+    }
+
+    private async Task SubmitAsync()
+    {
+        var response = await Http.PostAsJsonAsync("api/v1/wizard/submit", Draft);
+        if (response.IsSuccessStatusCode)
+        {
+            // You can navigate to confirmation page or show toast
+        }
+    }
+    async Task ScrollToAndHighlight(string id)
+    {
+        await JS!.InvokeVoidAsync("scrollToAndHighlight", id);
+    }
+
+    void CurrentStep(int currentStep)
+    {
+        if (currentStep == 1)
+        {
+            Draft.CurrentStep = 1;
+        }
+        else if (currentStep == 2)
+        {
+            Draft.CurrentStep = 2;
+        }
+        else if (currentStep == 3)
+        {
+            Draft.CurrentStep = 3;
+        }
+        else if (currentStep == 4)
+        {
+            Draft.CurrentStep = 4;
+        }
+        else if (currentStep == 5)
+        {
+            Draft.CurrentStep =5;
+        }
+        else if (currentStep == 6)
+        {
+            Draft.CurrentStep = 6;
+        }
+        else if (currentStep == 7)
+        {
+            Draft.CurrentStep = 7;
+        }
+
+    }
+  
+}

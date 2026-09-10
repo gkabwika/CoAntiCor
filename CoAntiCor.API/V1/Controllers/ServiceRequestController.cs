@@ -1,4 +1,5 @@
-﻿using CoAntiCor.Core.Domain.ServiceRequest;
+﻿using Azure.Core;
+using CoAntiCor.Core.Domain.ServiceRequest;
 using CoAntiCor.Core.DTO;
 using CoAntiCor.Core.DTO.Incident;
 using CoAntiCor.Core.Interfaces;
@@ -46,10 +47,61 @@ public class ServiceRequestController : ControllerBase
         var results = await _service.SearchAsync(dto.Term,1000);
         return Ok(results);
     }
+    /// <summary>
+    /// Added Take(max) to restrict results to at most 1000. Filtering is performed in SQL (StringComparison isn't translatable)
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    // POST /api/v1/ServiceRequest/AI/SearchIncident
+    [HttpPost("SearchIncident")]
+    public async Task<ActionResult<List<IncidentRequestDto>>> SearchIncident([FromBody] SearchRequestDto request)
+    {
+
+        // limit to top 1000 (or request.MaxResults if provided and <= 1000)
+        var max = (request.MaxResults.HasValue) ? Math.Min(request.MaxResults.Value, 1000) : 1000;
+
+        // Use EF.Functions.Like so filtering is performed in SQL (StringComparison isn't translatable)
+        var query = await _db.IncidentRequests
+            .Where(c => EF.Functions.Like(c.Title, $"%{request.Term}%") || EF.Functions.Like(c.Description, $"%{request.Term}%"))
+            .Take(max)
+            .ToListAsync();
+
+       
+        //query = query.Where(x => x.Category == request.Term
+        //    || x.Province == request.Term || x.IncidentType!.NameFrench == request.Term);
+
+        var results = query
+            .Select(x => new IncidentRequestDto
+            {
+                Id = x.Id,
+                IncidentNumber = x.IncidentNumber,
+                Title = x.Title,
+                Description = x.Description,
+                IncidentType = x.IncidentType != null ? x.IncidentType.Name : string.Empty,
+                Category = x.Category,
+                Province = x.Province,
+                City = x.City,
+                IsAnonymous = x.IsAnonymous,
+                CitizenName = x.CitizenName,
+                CitizenEmail = x.CitizenEmail,
+                CitizenPhone = x.CitizenPhone,
+                Status = x.Status,
+                CreatedAt = x.CreatedAt,
+                SubmittedAt = x.SubmittedAt,
+                IncidentCategory = x.IncidentCategory != null ? x.IncidentCategory.Name : string.Empty,
+                ReporterName = x.ReporterFullName,
+                Attachments = new List<AttachmentDto>(), // Populate as needed
+                History = new List<HistoryDto>(), // Populate as needed
+                Phases = new List<ProcessingPhaseDto>() // Populate as needed
+            })
+            .ToList();
+
+        return Ok(results);
+    }
 
 
     [HttpGet("searchadvance")]
-    public async Task<ActionResult<PagedResult<ServiceRequestDto>>> SearchAdvance(
+    public async Task<ActionResult<PagedResult<IncidentRequestDto>>> SearchAdvance(
     [FromQuery] string? province,
     [FromQuery] string? category,
     [FromQuery] string? period,
@@ -73,7 +125,7 @@ public class ServiceRequestController : ControllerBase
                .OrderByDescending(x => x.CreatedAt)
                .Skip((page - 1) * pageSize)
                .Take(pageSize)
-               .Select(x => new ServiceRequestDto
+               .Select(x => new IncidentRequestDto
                {
                    Id = x.Id,
                    IncidentNumber = x.IncidentNumber,
@@ -85,7 +137,7 @@ public class ServiceRequestController : ControllerBase
                })
                .ToListAsync();
 
-        return new PagedResult<ServiceRequestDto>(items, total, page, pageSize);
+        return new PagedResult<IncidentRequestDto>(items, total, page, pageSize);
     }
 
     private IQueryable<IncidentRequest> ApplyPeriodFilter(IQueryable<IncidentRequest> query, string period)

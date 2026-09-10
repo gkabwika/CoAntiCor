@@ -17,6 +17,8 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
     {
         public new Guid Id { get; set; }
         public string IncidentNumber { get; set; } = default!;
+        public string? AccessCode { get; set; } = default!;
+        public string? ReferenceNumber { get; set; } = default!;
 
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
@@ -29,8 +31,13 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
         public IncidentCategory? IncidentCategory { get; set; } = default!;
         public string IncidentTypeOther { get; set; } = default!;   // e.g. "Fraud", "ConflictOfInterest"
         public string Category { get; set; } = default!;       // finer-grained reason
-
+        public int? IncidentYear { get; set; }
+        public int? IncidentMonth { get; set; }
+        public int? IncidentDay { get; set; }
+        public DateTime? IncidentDate { get; set; }
         public string Province { get; set; } = default!;
+        public string? ProvinceId { get; set; } = default!;
+        public string? CountryCode { get; set; } = default!;
         public string City { get; set; } = default!;
         public string Commune { get; set; } = default!;
         public string Quartier { get; set; } = default!;
@@ -44,9 +51,18 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
         public string? Service { get; set; }
         public string? JobRole { get; set; }
         public string? Sex { get; set; }
+        public string? PhoneCell { get; set; }
+        public string? PhoneOffice { get; set; }
+        public string? Phone { get; set; }
+        public string? Email { get; set; }
         public string? AgeGroups { get; set; }
         public int? AgeGroup { get; set; }  //1=1-18, 2=19-35, 3=36-60, 4=60+  
         public string? ReporterFullName { get; set; }
+        public string? ReporterDisplayName { get; set; }
+        public string? ReporterTitle { get; set; }
+        public string? ReporterSchoolLevel { get; set; }
+        public string? ReporterOccupation { get; set; }
+        public DateTime? ReporterDateOfBirth { get; set; }
         //public Guid NaturalPersonId { get; set; }
         //[ForeignKey(nameof(NaturalPersonId))]
         [Display(Name = "Person Details")]
@@ -72,7 +88,8 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
         public DateTime? LastUpdatedAt { get; set; }
 
         public Guid? CreatedByUserId { get; set; }
-
+        public IncidentDetail? IncidentDetail { get; set; }
+        
         public ICollection<IncidentEvidence> EvidenceFiles { get; set; } = new List<IncidentEvidence>();
         public ICollection<ComplaintAttachment> Attachments { get; set; } = new List<ComplaintAttachment>();
         public ICollection<ProcessingPhaseHistory> PhaseHistory { get; set; } = new List<ProcessingPhaseHistory>();

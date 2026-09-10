@@ -35,6 +35,14 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
         public string? CategoryOther { get; set; }
         // Step 3
         public bool IsAnonymous { get; set; } = true;
+        public int Version { get; set; } = 0; // Incremented on each save to detect conflicts
+        public string? IdentityChoice { get; set; }
+        public string? Sex { get; set; }
+        public int? AgeGroup { get; set; }
+        public string? AgeGroups { get; set; }
+        public string? Service { get; set; }
+        public string? JobRole { get; set; }
+        public string? ReporterFullName { get; set; }
         public string? ReporterName { get; set; }
         public string? ReporterEmail { get; set; }
         public string? ReporterPhone { get; set; }
@@ -71,7 +79,7 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
         //Draft Conflict Resolution Flow (Two Devices Editing at Once)
         //This is essential for multi-device editing. We’ll implement a Last-Write-Wins with Merge Prompt strategy.
 
-        public int Version { get; set; } = 0; // Incremented on each save to detect conflicts
+
     }
 
 }

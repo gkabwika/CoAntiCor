@@ -1,12 +1,93 @@
 ﻿@using System.Security.Claims
 @using Microsoft.AspNetCore.Identity
 @using CoAntiCor.Core.Domain
+@using Microsoft.Extensions.Localization
 @inject AuthenticationStateProvider AuthStateProvider
-@inject NavigationManager Nav
+@inject NavigationManager NavigationManager
 @inject SignInManager<ApplicationUser> SignInManager
+@using global::CoAntiCor.App.Resources
+@inject IStringLocalizer<SharedResource> Localizer
 
 <header class="top-header">
-    <div class="top-header-center">
+        <div class="tricolore"></div>
+    <div class="col-md-7 col-sm-6 top-header-center">
+        <a class="navbar-brand" href="#">coAntiCor</a>
+        <a  href="#">@Localizer["Home"]</a><span class="text-white">| </span>
+        <a class="text-white" href="citizen/dashboard">Mon compte</a><span class="text-white">| </span>
+        
+        <a class="text-white" href="internal/work-items">coAntiCor Internal</a><span class="text-white">| </span>
+        <a class="text-white" href="/admin/new">coAntiCor Admin</a><span class="text-white">| </span>
+        <a class="text-white" href="/selfservice">@Localizer["SelfService"]</a>
+    
+@* 
+            <!-- solid style -->
+        <i class="fa-solid fa-user"></i>
+
+        <!-- regular style -->
+        <i class="fa-regular fa-user"></i>
+
+        <!-- light style -->
+        <i class="fa-light fa-user"></i>
+
+        <!-- thin style -->
+        <i class="fa-thin fa-user"></i>
+
+        <!-- duotone style -->
+        <i class="fa-duotone fa-solid fa-user"></i>
+
+        <!-- sharp solid style -->
+        <i class="fa-sharp fa-solid fa-user"></i>
+
+        <!-- sharp regular style -->
+        <i class="fa-sharp fa-regular fa-user"></i>
+
+        <!-- sharp light style -->
+        <i class="fa-sharp fa-light fa-user"></i>
+
+        <!-- sharp thin style -->
+        <i class="fa-sharp fa-thin fa-user"></i>
+
+        <!-- all new sharp duotone style -->
+        <i class="fa-sharp-duotone fa-solid fa-user"></i>
+
+        <!--brand icon-->
+        <i class="fa-brands fa-github-square"></i> *@
+    </div>
+    <div class="col-md-4 col-sm-6 top-header-center">
+        @*   <a  href="company-wizard">New Company</a> *@
+        @if (authUser?.Identity?.IsAuthenticated == true)
+        {
+            @*           <!-- InternalStaff,Admin -->
+            <AuthorizeView Roles="InternalStaff,Admin">
+                <Authorized>
+                    <a class="nav-link" href="internal/dashboard">Internal Dashboard</a>
+                </Authorized>
+            </AuthorizeView>
+
+            <!-- Admin -->
+            <AuthorizeView Roles="Admin">
+                <Authorized>
+                    <a class="nav-link" href="admin/users">User Management</a>
+                </Authorized>
+            </AuthorizeView> *@
+            <span>Bonjour, @authUser.Identity.Name</span>
+            <a href="/dashboard">@Localizer["Dashboard"]</a>
+           <a href="/dashboard">@Localizer["MyAccount"]</a>
+            <a href="/FredTicketCreation/Create"><i class="fa-brands fa-github-square"></i> @Localizer["CreateTicket"]</a> <span>|</span>
+            <a href="#" @onclick="Logout"><i class="fa-solid fa-right-to-bracket"></i> @Localizer["Logout"]</a>
+        }
+        else
+        {
+           <a href="/FredTicketCreation/Create"><i class="fa-brands fa-github-square"></i> @Localizer["CreateTicket"]</a> <span>|</span>
+           <a href="/account/login"><i class="fa-solid fa-right-to-bracket"></i> @Localizer["Login"]</a> <span>|</span>
+            <a href="/account/register"><i class="fa-solid fa-user-plus"></i> @Localizer["Register"]</a>
+        }
+
+    </div>
+    <div class="col-md-1 col-sm-2 top-header-center">
+        <CultureSelector />
+    </div>
+@*     <div class="top-header-center">
         @if (authUser?.Identity?.IsAuthenticated == true)
         {
             <span>Hello, @authUser.Identity.Name</span>
@@ -18,21 +99,37 @@
             <a href="/login">Login</a>
             <a href="/register">Register</a>
         }
-    </div>
+    </div> *@
+   
 </header>
 
 @code {
     ClaimsPrincipal? authUser;
+    private string? currentUrl;
 
+ 
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthStateProvider.GetAuthenticationStateAsync();
         authUser = state.User;
+  
+
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
     }
 
     async Task Logout()
     {
         await SignInManager.SignOutAsync();
-        Nav.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
+    }
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+     public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }

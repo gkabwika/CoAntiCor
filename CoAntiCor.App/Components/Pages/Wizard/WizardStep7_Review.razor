@@ -1,0 +1,38 @@
+﻿@using CoAntiCor.App.Resources
+@using CoAntiCor.Core.DTO.Incident
+@using Microsoft.Extensions.Localization
+@using System.Text.Json
+@inject IStringLocalizer<SharedResource> Localizer
+
+@code {
+    [Parameter] public WizardDraftState Draft { get; set; } = default!;
+    [Parameter] public EventCallback OnSubmit { get; set; }
+
+    private string GetDraftJson() => JsonSerializer.Serialize(Draft, new JsonSerializerOptions { WriteIndented = true });
+}
+
+<div class="card p-3">
+    <h4>@Localizer["Wizard_Step7_Title"]</h4>
+
+    <p>@Localizer["Wizard_Step7_ReviewInformation"]</p>
+
+    <pre class="bg-light p-3 border">
+        @GetDraftJson()
+    </pre>
+
+    <dl class="row">
+        <dt class="col-sm-3">Titre</dt>
+        <dd class="col-sm-9">@Draft.Title</dd>
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">@Draft.Description</dd>
+        <dt class="col-sm-3">Province</dt>
+        <dd class="col-sm-9">@Draft.Province</dd>
+        <dt class="col-sm-3">Anonyme</dt>
+        <dd class="col-sm-9">@Draft.IsAnonymous</dd>
+        <dt class="col-sm-3">Choix identité</dt>
+        <dd class="col-sm-9">@Draft.IdentityChoice</dd>
+    </dl>
+    <button class="btn btn-success" @onclick="() => OnSubmit.InvokeAsync()">
+        @Localizer["Wizard_Step7_Submit"]
+    </button>
+</div>

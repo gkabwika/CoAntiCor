@@ -1,0 +1,62 @@
+﻿@page "/admin/cybersecurity"
+@using CoAntiCor.App.Resources
+@using CoAntiCor.Core.Domain.ServiceRequest
+@using Microsoft.Extensions.Localization
+@inject HttpClient Http
+@inject IStringLocalizer<SharedResource> L
+
+<h3>@L["Security_List_Title"]</h3>
+
+@if (_items == null)
+{
+    <p>@L["Loading"]</p>
+}
+else
+{
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>@L["Security_IncidentId"]</th>
+                <th>@L["Security_IP"]</th>
+                <th>@L["Security_Country"]</th>
+                <th>@L["Security_City"]</th>
+                <th>@L["Security_RiskScore"]</th>
+                <th>@L["Security_RiskLevel"]</th>
+                <th>@L["Security_VpnProxyTor"]</th>
+                <th>@L["Security_LastAccess"]</th>
+                <th>@L["Security_Details"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _items)
+            {
+                <tr>
+                    <td>@item.IncidentRequestId</td>
+                    <td>@item.IpAddress</td>
+                    <td>@item.IpAddressOriginCountry</td>
+                    <td>@item.IpAddressOriginCity</td>
+                    <td>@item.RiskScore</td>
+                    <td>@item.RiskLevel</td>
+                    <td>
+                        @(item.VpnDetected ? "VPN " : "")
+                        @(item.ProxyDetected ? "Proxy " : "")
+                        @(item.TorDetected ? "Tor" : "")
+                    </td>
+                    <td>@item.LastAccessedAtUtc.ToLocalTime()</td>
+                    <td>
+                        <a href="@($"/admin/cybersecurity/{item.IncidentRequestId}")">@L["Security_View"]</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<IncidentSecurityDetail>? _items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _items = await Http.GetFromJsonAsync<List<IncidentSecurityDetail>>("/api/v1/admin/security/list");
+    }
+}

@@ -1,0 +1,74 @@
+﻿@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.App.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> Localizer
+@code {
+    [Parameter] public WizardDraftState Draft { get; set; } = default!;
+    [Parameter] public EventCallback OnSave { get; set; }
+    [Parameter] public EventCallback OnAddPerson { get; set; }
+    [Parameter] public EventCallback<Guid> OnRemovePerson { get; set; }
+}
+
+<div class="card p-3">
+    <h4>Identité du déclarant</h4>
+
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" @bind="Draft.IsAnonymous" />
+        <label class="form-check-label">Je souhaite rester anonyme</label>
+    </div>
+
+    @if (!Draft.IsAnonymous)
+    {
+        <input class="form-control mb-2" @bind="Draft.CitizenName" placeholder="Nom complet" />
+        <input class="form-control mb-2" @bind="Draft.CitizenEmail" placeholder="Courriel" />
+        <input class="form-control mb-2" @bind="Draft.CitizenPhone" placeholder="Téléphone" />
+        <input class="form-control mb-2" @bind="Draft.ReporterFullName" placeholder="Nom complet (officiel)" />
+        <input class="form-control mb-2" @bind="Draft.Service" placeholder="Service" />
+        <input class="form-control mb-2" @bind="Draft.JobRole" placeholder="Fonction" />
+
+        <select class="form-select mb-2" @bind="Draft.Sex">
+            <option value="">Sexe</option>
+            <option value="M">Masculin</option>
+            <option value="F">Féminin</option>
+        </select>
+
+        <select class="form-select mb-2" @bind="Draft.AgeGroup">
+            <option value="">Tranche d’âge</option>
+            <option value="1">1–18</option>
+            <option value="2">19–35</option>
+            <option value="3">36–60</option>
+            <option value="4">60+</option>
+        </select>
+
+        <NaturalPersonSubWizard />
+        <PhysicPersonSubWizard />
+    }
+
+    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">Sauvegarder</button>
+</div>
+
+
+-- New Version ????? see below --
+
+<div class="card p-3">
+    <h4>@Localizer["Wizard_Step3_Title"]</h4>
+
+    <button class="btn btn-secondary mb-2" @onclick="() => OnAddPerson.InvokeAsync()">
+        @Localizer["Wizard_Step3_AddPerson"]
+    </button>
+
+    @foreach (var p in Draft!.People)
+    {
+        <div class="border p-2 mb-2">
+            <strong>@p.FirstName</strong>  <strong>@p.LastName</strong>
+            <button class="btn btn-danger btn-sm float-end"
+                    @onclick="() => OnRemovePerson.InvokeAsync(p.Id)">
+                @Localizer["Wizard_Step3_RemovePerson"]
+            </button>
+        </div>
+    }
+
+    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">
+        @Localizer["SearchSimilarCases_SaveButton"]
+    </button>
+</div>

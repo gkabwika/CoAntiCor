@@ -7,6 +7,7 @@ namespace CoAntiCor.Core.Domain
         public string FileName { get; set; } = default!;
         public long Size { get; set; }
         public string OriginalFileName { get; set; } = default!;
+        public bool? OriginalDocument { get; set; }  // document original ou pas 
         public string StoredFileName { get; set; } = default!;
         public string FileType { get; set; } = default!;
         public long FileSize { get; set; }

@@ -2,23 +2,26 @@
 using CoAntiCor.App.Components;
 using CoAntiCor.App.Components.Account;
 using CoAntiCor.App.Data;
+using CoAntiCor.App.Services;
+using CoAntiCor.App.Services.Menu;
+using CoAntiCor.Core.Domain;
+using CoAntiCor.Core.Domain.ServiceRequest;
+using CoAntiCor.Core.DTO.Incident;
 using CoAntiCor.Core.Interfaces;
 using CoAntiCor.Core.Model;
 using CoAntiCor.Core.Services;
-
-using CoAntiCor.Core.Domain;
-
 using CoAntiCor.Infrastructure.Context;
-using CoAntiCor.App.Services;
-using CoAntiCor.App.Services.Menu;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 using System.Text;
 using ApplicationDbContext = CoAntiCor.Infrastructure.Context.ApplicationDbContext;
 using ApplicationUser = CoAntiCor.Core.Domain.ApplicationUser;
@@ -28,8 +31,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions { TrackStatistics = true, SizeLimit = 25000 }));
 
+builder.Services.AddLocalization();
 
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+//builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -50,6 +54,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddRazorPages()
     .AddViewLocalization()
     .AddDataAnnotationsLocalization();
+
 builder.Services.AddServerSideBlazor()
 
     .AddCircuitOptions(options =>
@@ -238,21 +243,27 @@ builder.Services.AddScoped<IListingService, ListingService>();
 
 builder.Services.AddTransient<ITenantContext, TenantContext>();
 builder.Services.AddScoped<ITenantAuditService, TenantAuditService>();
-
+builder.Services.AddScoped<IValidator<WizardDraftState>, ServiceRequestCreationStateValidator>();
 
 /////////////////////////////
 ///
 
 
-
 var app = builder.Build();
-var supportedCultures = new[] { "fr-CD", "en-US" };
-app.UseRequestLocalization(options =>
-{
-    options.SetDefaultCulture("fr-CD")
-           .AddSupportedCultures(supportedCultures)
-           .AddSupportedUICultures(supportedCultures);
-});
+
+
+
+// 2. Localisation - Define supported cultures
+//var supportedCultures = new[] { "en-US", "fr-FR" };
+var supportedCultures = new[] { "en", "fr" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+// 3. Localisation - Use the middleware (must be before MapRazorComponents)
+app.UseRequestLocalization(localizationOptions);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -278,5 +289,10 @@ app.MapRazorComponents<App>()
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
-
+app.MapAdditionalIdentityEndpoints();
+//app.UseMiddleware<JwtExpiryLogoutMiddleware>();
+app.MapRazorPages();
+//app.MapBlazorHub();
+//app.MapFallbackToPage("/_Host");
+app.MapControllers();
 app.Run();

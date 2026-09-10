@@ -5,7 +5,12 @@
 @inject IMenuService MenuService
 @inject NavigationManager Nav
 
-<nav class="main-nav">
+@using System.Globalization
+
+
+
+
+@* <nav class="main-nav">
     @if (Menu is not null)
     {
         @foreach (var item in Menu)
@@ -17,6 +22,32 @@
             </a>
         }
     }
+</nav> *@
+<nav class="main-nav">
+    <a href="#" class="nav-item">
+        @* <img src="img/logo_guce_square 60x60.png" /> *@<img src="img/drc_logo_gov2_60x60.png" height="60%" width="60%" />@* <img src="~/img/logoguce.svg" /> *@
+    </a>
+    @if (Menu is not null)
+    {
+        @foreach (var item in Menu)
+        {
+            <a href="@item.Url"
+               class="nav-item @(IsActive(item.Url) ? "active" : "")">
+                <i class="@item.Icon"></i>
+                @if (@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToLower() == "fr")
+                {
+                    <span>@item.TitleFrench</span>
+                }
+                else
+                {
+                    <span>@item.Title</span>
+                }
+            </a>
+        }
+    }
+    <a href="#" class="nav-item">
+        <img src="img/drc_logo_gov2_60x60.png" />
+    </a>
 </nav>
 
 @code {

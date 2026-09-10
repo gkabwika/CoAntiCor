@@ -1,0 +1,136 @@
+﻿.tricolore {
+    height: 4px;
+    background: linear-gradient(90deg, var(--sky) 0 34%, var(--gold) 34% 67%, var(--red) 67% 100%);
+}
+/*
+.form-field labelblack {
+    display: block;
+    font-size: 0.8rem;
+    color: black;
+    margin-bottom: 0.25rem;
+}
+.form-field labelnavy {
+    display: block;
+    font-size: 0.8rem;
+    color: navy;
+    margin-bottom: 0.25rem;
+}
+
+*/
+
+    /* eGUCE custom styles end here */
+
+/*   COPANY TYPE IN STEP 1 CSS STARTS HERE */
+.company-type-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.company-type-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    border: 1px solid #d0d7de;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .company-type-pill.selected {
+        background: #0969da;
+        color: #fff;
+        border-color: #0969da;
+    }
+
+.company-type-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.company-type-details {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ef0101;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    width:98%
+}
+
+.company-type-preview {
+    width: 120px;
+    margin-top: 1rem;
+}
+/*   COPANY TYPE IN STEP 1 CSS STARTS ENDS HERE */
+
+/*
+/*Drop <SessionTimeoutBanner /> into MainLayout.razor.*/
+.session-warning {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    z-index: 1000;
+}
+
+.fa-exclamation-circle {
+    --fa: "\f06a";
+}
+.fas {
+    --fa-family: var(--fa-family-classic);
+    --fa-style: 900;
+}
+
+
+.fa-solid, .fa-regular, .fa-brands, .fa-classic, .fas, .far, .fab, .fa {
+    --_fa-family: var(--fa-family, var(--fa-style-family, "Font Awesome 7 Free"));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: var(--fa-display, inline-block);
+    font-family: var(--_fa-family);
+    font-feature-settings: normal;
+    font-style: normal;
+    font-synthesis: none;
+    font-variant: normal;
+    font-weight: var(--fa-style, 900);
+    line-height: 1;
+    text-align: center;
+    text-rendering: auto;
+    width: var(--fa-width, 1.25em);
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+.text-danger {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
+}
+
+.alert {
+    --bs-alert-bg: transparent;
+    --bs-alert-padding-x: 1rem;
+    --bs-alert-padding-y: 1rem;
+    --bs-alert-margin-bottom: 1rem;
+    --bs-alert-color: inherit;
+    --bs-alert-border-color: transparent;
+    --bs-alert-border: var(--bs-border-width) solid var(--bs-alert-border-color);
+    --bs-alert-border-radius: var(--bs-border-radius);
+    --bs-alert-link-color: inherit;
+    position: relative;
+    padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
+    margin-bottom: var(--bs-alert-margin-bottom);
+    color: var(--bs-alert-color);
+    background-color: var(--bs-alert-bg);
+    border: var(--bs-alert-border);
+    border-radius: var(--bs-alert-border-radius);
+}*/

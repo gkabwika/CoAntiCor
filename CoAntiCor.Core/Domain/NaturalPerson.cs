@@ -15,7 +15,12 @@ namespace CoAntiCor.Core.Domain.Person
         [Display(Name = "Is this reporter person?")]
         [Required]
         public bool? IsReporterPerson { get; set; } = false;
-
+        [Display(Name = "Is this assistant or lawyer?")]
+        [Required]
+        public bool? IsAssistantPerson { get; set; } = false;
+        [Display(Name = "Is this reporter witness?")]
+        [Required]
+        public bool? IsReporterWitness { get; set; } = false;
         [Display(Name = "Company")]
        // public Guid PhysicPersonId { get; set; } // Company / societe
         //[ForeignKey(nameof(PhysicPersonId))]

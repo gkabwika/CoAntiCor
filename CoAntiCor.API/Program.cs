@@ -1,9 +1,12 @@
 using CoAntiCor.API.Services;
+using CoAntiCor.API.Services.Interface;
+using CoAntiCor.Core.DTO.Incident;
 using CoAntiCor.Core.Interfaces;
 using CoAntiCor.Core.Model;
 using CoAntiCor.Core.Services;
 using CoAntiCor.Infrastructure.Context;
 using CoAntiCor.Infrastructure.Data;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -108,6 +111,8 @@ builder.Services.AddScoped<ITenantAuditService, TenantAuditService>();
 builder.Services.AddScoped<IAttachmentService, AttachmentService>();
 builder.Services.AddScoped<IListingService, ListingService>();
 
+builder.Services.AddScoped<IIncidentSecurityRiskService, IncidentSecurityRiskService>();
+builder.Services.AddScoped<IValidator<WizardDraftState>, ServiceRequestCreationStateValidator>();
 
 
 var app = builder.Build();

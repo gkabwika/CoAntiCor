@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blazor-ApexCharts" Version="7.0.0" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.20" />
@@ -17,22 +18,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Shared\SharedResource.fr.resx">
+    <EmbeddedResource Update="Resources\SharedResource.fr.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Shared\SharedResource.resx">
+    <EmbeddedResource Update="Resources\SharedResource.resx">
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Pages\Admin\" />
     <Folder Include="Components\Pages\Citizen\" />
     <Folder Include="Components\Pages\HelpDesk\" />
     <Folder Include="Components\Pages\Inspector\" />
     <Folder Include="Components\Pages\Portal\Modal\" />
     <Folder Include="Components\Pages\Portal\Steps\" />
     <Folder Include="Models\" />
+    <Folder Include="Resources\Shared\" />
     <Folder Include="Templates\" />
     <Folder Include="wwwroot\uploads\temp\" />
   </ItemGroup>
@@ -40,6 +43,14 @@
   <ItemGroup>
     <ProjectReference Include="..\CoAntiCor.API\CoAntiCor.API.csproj" />
     <ProjectReference Include="..\CoAntiCor.Core\CoAntiCor.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\SharedResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SharedResource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

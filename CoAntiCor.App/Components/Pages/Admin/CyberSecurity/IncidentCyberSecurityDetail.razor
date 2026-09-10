@@ -1,0 +1,93 @@
+﻿@page "/admin/cybersecurity/{IncidentRequestId:guid}"
+@using CoAntiCor.App.Resources
+@using CoAntiCor.Core.Domain.ServiceRequest
+@using Microsoft.Extensions.Localization
+@inject HttpClient Http
+@inject IStringLocalizer<SharedResource> L
+
+<h3>@L["Security_Detail_Title"] @IncidentRequestId</h3>
+
+@if (_detail == null)
+{
+    <p>@L["Loading"]</p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <h5>@L["Security_DeviceSection"]</h5>
+            <p><b>@L["Security_DeviceModel"]:</b> @_detail.DeviceModel</p>
+            <p><b>@L["Security_DeviceOS"]:</b> @_detail.DeviceOS @_detail.DeviceOSVersion</p>
+            <p><b>@L["Security_Browser"]:</b> @_detail.BrowserName @_detail.BrowserVersion</p>
+            <p><b>@L["Security_UserAgent"]:</b> @_detail.UserAgentString</p>
+            <p><b>@L["Security_ScreenResolution"]:</b> @_detail.ScreenResolution</p>
+            <p><b>@L["Security_IsMobile"]:</b> @_detail.IsMobileDevice</p>
+        </div>
+        <div class="col-md-6">
+            <h5>@L["Security_NetworkSection"]</h5>
+            <p><b>@L["Security_IP"]:</b> @_detail.IpAddress</p>
+            <p><b>@L["Security_Country"]:</b> @_detail.IpAddressOriginCountry</p>
+            <p><b>@L["Security_City"]:</b> @_detail.IpAddressOriginCity</p>
+            <p><b>@L["Security_ISP"]:</b> @_detail.IpAddressOriginISP</p>
+            <p><b>@L["Security_VPN"]:</b> @_detail.VpnDetected</p>
+            <p><b>@L["Security_Proxy"]:</b> @_detail.ProxyDetected</p>
+            <p><b>@L["Security_Tor"]:</b> @_detail.TorDetected</p>
+            <p><b>@L["Security_HostingProvider"]:</b> @_detail.HostingProviderDetected</p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h5>@L["Security_GeoSection"]</h5>
+            <p><b>@L["Security_Latitude"]:</b> @_detail.GeoLatitude</p>
+            <p><b>@L["Security_Longitude"]:</b> @_detail.GeoLongitude</p>
+            <p><b>@L["Security_Accuracy"]:</b> @_detail.GeoAccuracyMeters</p>
+            <p><b>@L["Security_GeoCountry"]:</b> @_detail.GeoCountry</p>
+            <p><b>@L["Security_GeoCity"]:</b> @_detail.GeoCity</p>
+            <p><b>@L["Security_GeoRegion"]:</b> @_detail.GeoRegion</p>
+        </div>
+        <div class="col-md-6">
+            <h5>@L["Security_RiskSection"]</h5>
+            <p><b>@L["Security_RiskScore"]:</b> @_detail.RiskScore</p>
+            <p><b>@L["Security_RiskLevel"]:</b> @_detail.RiskLevel</p>
+            <p><b>@L["Security_RepeatedSubmission"]:</b> @_detail.RepeatedSubmissionDetected</p>
+            <p><b>@L["Security_DuplicateContent"]:</b> @_detail.DuplicateContentDetected</p>
+            <p><b>@L["Security_HighRiskPattern"]:</b> @_detail.HighRiskPatternDetected</p>
+            <p><b>@L["Security_BlacklistHit"]:</b> @_detail.BlacklistHit</p>
+            <p><b>@L["Security_WhitelistHit"]:</b> @_detail.WhitelistHit</p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h5>@L["Security_SessionSection"]</h5>
+            <p><b>@L["Security_FirstAccess"]:</b> @_detail.FirstAccessedAtUtc.ToLocalTime()</p>
+            <p><b>@L["Security_LastAccess"]:</b> @_detail.LastAccessedAtUtc.ToLocalTime()</p>
+            <p><b>@L["Security_Attempts"]:</b> @_detail.SubmissionAttemptCount</p>
+            <p><b>@L["Security_SessionDuration"]:</b> @_detail.SessionDurationSeconds</p>
+            <p><b>@L["Security_SessionId"]:</b> @_detail.SessionId</p>
+            <p><b>@L["Security_SessionReused"]:</b> @_detail.SessionReused</p>
+        </div>
+        <div class="col-md-6">
+            <h5>@L["Security_SystemSection"]</h5>
+            <p><b>@L["Security_JSEnabled"]:</b> @_detail.JavascriptEnabled</p>
+            <p><b>@L["Security_CookiesEnabled"]:</b> @_detail.CookiesEnabled</p>
+            <p><b>@L["Security_LSEnabled"]:</b> @_detail.LocalStorageEnabled</p>
+            <p><b>@L["Security_TimezoneOffset"]:</b> @_detail.TimezoneOffset</p>
+            <p><b>@L["Security_Language"]:</b> @_detail.Language</p>
+            <p><b>@L["Security_Platform"]:</b> @_detail.Platform</p>
+            <p><b>@L["Security_Referrer"]:</b> @_detail.ReferrerUrl</p>
+            <p><b>@L["Security_EntryUrl"]:</b> @_detail.EntryUrl</p>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid IncidentRequestId { get; set; }
+    private IncidentSecurityDetail? _detail;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _detail = await Http.GetFromJsonAsync<IncidentSecurityDetail>($"/api/v1/admin/security/{IncidentRequestId}");
+    }
+}

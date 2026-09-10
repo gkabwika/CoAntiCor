@@ -1,4 +1,6 @@
 ﻿@page "/executive-dashboard"
+@page "/internal/dashboard"
+
 @using CoAntiCor.App.Resources
 @using CoAntiCor.Core.DTO.Incident
 @using CoAntiCor.Core.Domain.ServiceRequest
@@ -211,6 +213,42 @@
                 YValue="GetForecastValue" />
 </ApexChart>
 
+
+
+ <div class="card p-3">
+        <h3>@Localizer["Dashboard_Title"]</h3>
+
+        <input class="form-control mb-3" placeholder="@Localizer["Dashboard_Search"]" />
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>@Localizer["Dashboard_ViewDetails"]</th>
+                    <th>@Localizer["Dashboard_OpenIncidents"]</th>
+                    <th>@Localizer["Dashboard_ClosedIncidents"]</th>
+                    <th>@Localizer["Dashboard_PendingIncidents"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Incidents)
+                {
+                    <tr>
+                        <td><a href="/incident/@i.Id">@Localizer["Dashboard_ViewDetails"]</a></td>
+                        <td>@i.OpenCount</td>
+                        <td>@i.ClosedCount</td>
+                        <td>@i.PendingCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (!Incidents.Any())
+        {
+            <p>@Localizer["Dashboard_NoResults"]</p>
+        }
+    </div>
+
+
 @code {
     public class ForecastPoint
     {
@@ -280,6 +318,8 @@
 
 
 @code {
+    [Parameter] public IEnumerable<IncidentSummaryDto> Incidents { get; set; } = Enumerable.Empty<IncidentSummaryDto>();
+
     // [Inject]
     // private CoAntiCorDbContext _db { get; set; } = default!;
     private string SelectedPeriod { get; set; } = "Last30Days";
@@ -339,7 +379,7 @@
         var url = $"api/servicerequests/searchadavance?province={SelectedProvince}&period={SelectedPeriod}&page=1&pageSize=50";
 
        // var result = await Http.GetFromJsonAsync<PagedResult<ServiceRequestDto>>(url);
-
+        
         PagedResult<ServiceRequestDto> result = await SearchAdvanceLocal("", "", "", 1, 20);
 
         if (result != null)

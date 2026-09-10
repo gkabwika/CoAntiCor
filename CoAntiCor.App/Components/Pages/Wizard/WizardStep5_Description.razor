@@ -1,0 +1,69 @@
+﻿@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.Core.Domain
+@using CoAntiCor.App.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> Localizer
+@code {
+    [Parameter] public WizardDraftState Draft { get; set; } = default!;
+    [Parameter] public EventCallback OnUpload { get; set; }
+    [Parameter] public EventCallback<Guid> OnRemove { get; set; }
+    [Parameter] public EventCallback OnSave { get; set; }
+
+    async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles(10))
+        {
+            // call api/evidence/upload, get temp id/path
+            Draft.Attachments.Add(new AttachmentDraftItem
+            {
+                Id = Guid.NewGuid(),
+                FileName = file.Name,
+                StoragePath = $"temp/{file.Name}"
+            });
+        }
+        await OnSave.InvokeAsync();
+    }
+}
+
+<div class="card p-3">
+    <h4>@Localizer["Wizard_Step5_Title"]</h4>
+
+    <input class="form-control mb-2" @bind="Draft.Title" placeholder="Titre de l’incident" />
+    <textarea class="form-control mb-2" rows="5" @bind="Draft.Description" placeholder="Description détaillée"></textarea>
+
+    <InputFile OnChange="OnInputFileChange" multiple />
+
+    <ul class="mt-2">
+        @foreach (var a in Draft.Attachments)
+        {
+            <li>@a.FileName</li>
+        }
+    </ul>
+
+    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">Sauvegarder</button>
+</div>
+
+below new version
+
+<div class="card p-3">
+    <h4>@Localizer["Wizard_Step5_Title"]</h4>
+
+    <button class="btn btn-secondary mb-2" @onclick="() => OnUpload.InvokeAsync()">
+        @Localizer["Wizard_Step5_UploadAttachment"]
+    </button>
+
+    @foreach (var a in Draft.Attachments)
+    {
+        <div class="border p-2 mb-2">
+            <strong>@a.FileName</strong>
+            <button class="btn btn-danger btn-sm float-end"
+                    @onclick="() => OnRemove.InvokeAsync(a.Id)">
+                @Localizer["Wizard_Step5_RemoveAttachment"]
+            </button>
+        </div>
+    }
+
+    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">
+        @Localizer["SearchSimilarCases_SaveButton"]
+    </button>
+</div>

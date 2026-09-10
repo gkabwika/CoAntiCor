@@ -1,0 +1,54 @@
+﻿@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.App.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> Localizer
+@code {
+    [Parameter] public WizardDraftState Draft { get; set; } = default!;
+    [Parameter] public EventCallback OnSave { get; set; }
+
+    [Parameter] public EventCallback<string> OnSelectIdentity { get; set; }
+
+
+    void Choose(string choice) => Draft.IdentityChoice = choice;
+}
+
+<div class="card p-3">
+    <h4>@Localizer["Wizard_Step6_Title"]</h4>
+
+    <p>Vous pouvez continuer en mode anonyme, créer un compte fictif ou utiliser un compte réel.</p>
+
+    <div class="list-group mb-3">
+        <button class="list-group-item" @onclick="ChooseAnonymous">
+            @Localizer["Identity_ContinueAnonymous"]
+        </button>
+        <button class="list-group-item" @onclick="ChooseFake">
+            @Localizer["Identity_FakeAccount"]
+        </button>
+        <button class="list-group-item" @onclick="ChooseReal">
+            @Localizer["Identity_RealAccount"]
+        </button>
+    </div>
+
+    @if (Draft.IdentityChoice == "fake")
+    {
+        <input class="form-control mb-2" placeholder="Nom d’utilisateur fictif" />
+        <!-- hook to a fake account API if needed -->
+    }
+
+    @if (Draft.IdentityChoice == "real")
+    {
+        <p>Redirection vers la page de connexion…</p>
+        <!-- you can trigger navigation to /login -->
+    }
+
+    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">Sauvegarder</button>
+</div>
+
+
+
+
+@code {
+    private void ChooseAnonymous() => Choose("anonymous");
+    private void ChooseFake() => Choose("fake");
+    private void ChooseReal() => Choose("real");
+}

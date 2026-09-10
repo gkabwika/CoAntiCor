@@ -1,0 +1,138 @@
+﻿@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.Core.Domain
+@using CoAntiCor.App.Resources
+@using Microsoft.Extensions.Localization
+
+@using CoAntiCor.Core.DTO
+@using System.Timers
+@inject HttpClient Http
+
+@inject IStringLocalizer<SharedResource> Localizer
+
+<PageTitle>@Localizer["ReportAnIncident"] / @Localizer["Wizard_Step1_Title"]</PageTitle>
+<div class="card p-3">
+    <h4>@Localizer["Step"] 2: @Localizer["Wizard_Step1_Title"]</h4>
+    <div class="mb-3">
+        <label class="form-label">Incident Type</label>
+        <select required class="form-select mb-2" @bind="Draft.IncidentTypeId">
+            <option value="">@Localizer["Wizard_SelectOption"]</option>
+            @foreach (var t in _incidentTypes)
+            {
+                <option value="@t.Id">@t.NameFrench</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Incident Category</label>
+        <select required class="form-select mb-2" @bind="Draft.IncidentCategoryId">
+            <option value="">@Localizer["Wizard_SelectOption"]</option>
+            @foreach (var c in Categories)
+            {
+                <option value="@c.Id">@c.NameFrench</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@Localizer["Wizard_Step1_IncidentTypeOther"]</label>
+        <input class="form-control mb-2"
+               @bind="Draft.IncidentTypeOther"
+               placeholder="@Localizer["Wizard_Step1_IncidentTypeOther"]" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">@Localizer["Wizard_Step1_CategoryOther"]</label>
+        <input class="form-control mb-2"
+               @bind="Draft.CategoryOther"
+               placeholder="@Localizer["Wizard_Step1_CategoryOther"]" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Title of your complaint</label>
+        <input id="stp2-inc-title" required class="form-control" @bind="Draft.Title" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Describe the incident in detail</label>
+        <textarea id="stp2-inc-desc"  required class="form-control" rows="5" @bind="Draft.Description"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Province of Incident</label>
+        @*   <input class="form-control" @bind="Draft.Province" /> *@
+        <select class="form-select" @bind="Draft.ProvinceId">
+            <option value="">-- Select Province --</option>
+            @foreach (var cat in _provinces)
+            {
+                <option value="@cat.Id">@cat.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">City or Territory of Incident</label>
+        <input class="form-control" @bind="Draft.City" />
+    </div>
+
+
+    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">
+        @Localizer["SearchSimilarCases_SaveButton"]
+    </button>
+</div>
+
+
+  @*   <button class="btn btn-primary" @onclick="NextIfValid">Next</button> *@
+ 
+
+@code {
+    [Parameter] public WizardDraftState Draft { get; set; } = default!;
+    [Parameter] public IEnumerable<IncidentType> IncidentTypes { get; set; } = Enumerable.Empty<IncidentType>();
+    [Parameter] public IEnumerable<IncidentCategory> Categories { get; set; } = Enumerable.Empty<IncidentCategory>();
+    [Parameter] public EventCallback OnSave { get; set; }
+
+    //[Parameter] public ReportIncidentWizardState Draft { get; set; } = default!;
+    [Parameter] public EventCallback OnBack { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+
+    private List<IncidentTypeDto> _incidentTypes = new();
+    private List<IncidentCategoryDto> _incidentCategories = new();
+    private List<ProvinceDto> _provinces = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _incidentCategories = await Http.GetFromJsonAsync<List<IncidentCategoryDto>>("api/v1/lookups/incidentcategories") ?? new();
+            // Simulate delay for loading
+            await Task.Delay(100);
+            _incidentTypes = await Http.GetFromJsonAsync<List<IncidentTypeDto>>("api/v1/lookups/incidenttypes")
+                     ?? new();
+            // Simulate delay for loading
+            await Task.Delay(100);
+            _provinces = await Http.GetFromJsonAsync<List<ProvinceDto>>("api/v1/lookups/provinces")
+                     ?? new();
+
+        }
+        catch (Exception ex)
+        {
+            // Handle error (e.g. log, show message)
+            Console.Error.WriteLine($"Error loading types/provinces, incident categories and types: {ex.Message}");
+            // For simplicity, we just continue with empty lists
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task NextIfValid()
+    {
+        if (Draft.IncidentTypeId is null || Draft.IncidentCategoryId is null || string.IsNullOrWhiteSpace(Draft.Description))
+        {
+            // TODO: show validation messages
+            return;
+        }
+
+        await OnNext.InvokeAsync();
+    }
+
+
+}

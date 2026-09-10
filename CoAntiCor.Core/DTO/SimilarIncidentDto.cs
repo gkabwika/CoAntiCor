@@ -8,7 +8,8 @@ namespace CoAntiCor.Core.DTO
 {
     public class SimilarIncidentDto
     {
-        public Guid ComplaintId { get; set; }
+        public Guid? ComplaintId { get; set; }
+        public Guid? IncidentRequestId { get; set; }
         public string ComplaintNumber { get; set; } = default!;
         public string Title { get; set; } = default!;
         public string ShortDescription { get; set; } = default!;

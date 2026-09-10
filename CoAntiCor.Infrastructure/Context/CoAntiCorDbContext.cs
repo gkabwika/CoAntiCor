@@ -131,6 +131,7 @@ namespace CoAntiCor.Infrastructure.Context
         public DbSet<ServiceRequestHistory> ServiceRequestHistorys => Set<ServiceRequestHistory>(); 
         public DbSet<ServiceRequestWorkflowState> ServiceRequestWorkflowStates => Set<ServiceRequestWorkflowState>();
         public DbSet<IncidentRequestNaturalPerson> IncidentRequestNaturalPersons => Set<IncidentRequestNaturalPerson>();
+        public DbSet<IncidentSecurityDetail> IncidentSecurityDetails => Set<IncidentSecurityDetail>();
 
         
 
@@ -246,11 +247,21 @@ namespace CoAntiCor.Infrastructure.Context
                     Id = Guid.Parse("11121111-2312-1111-3333-111117111111"),
                     Name = "Admin"
                 },
+                  new Role
+                  {
+                      Id = Guid.Parse("11121111-2422-1111-3333-111117111111"),
+                      Name = "SuperUser" // // Developer or technical support
+                  },
                 new Role
                 {
                     Id = Guid.Parse("22212222-3333-2222-3333-222272622222"),
-                    Name = "Citizen"
+                    Name = "Citizen" // citizen who want to request info or buy report
                 },
+                 new Role
+                      {
+                          Id = Guid.Parse("22212222-4444-2222-3333-222272622222"),
+                          Name = "CitizenOnly" // citizen who report incident
+                  },
                 new Role
                 {
                     Id = Guid.Parse("33134333-3223-1111-3333-333345333333"),
@@ -552,11 +563,13 @@ namespace CoAntiCor.Infrastructure.Context
 
 
 
-
+            
             // INCIDENT CONFIGURATION -------------------------------------
             modelBuilder.ApplyConfiguration(new IncidentRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new IncidentSecurityDetailConfiguration());
             modelBuilder.ApplyConfiguration(new IncidentEvidenceConfiguration());
             modelBuilder.ApplyConfiguration(new ProcessingPhaseHistoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceRequestWorkflowStateConfiguration());
 
             modelBuilder.Entity<IncidentRequest>()
             .HasOne(i => i.AssignedToUser)
@@ -565,7 +578,13 @@ namespace CoAntiCor.Infrastructure.Context
             .IsRequired(false) // Set to true if an assignment is mandatory
             .OnDelete(DeleteBehavior.Restrict); // Use Restrict/NoAction to prevent cascade path conflicts
 
-                                            // ServiceRequestWorkflowState CONFIGURATION -------------------------------------
+            //How to register the seed data in EF Core
+            modelBuilder.Entity<IncidentSecurityDetail>().HasData(
+                 IncidentSecurityDetailSeed.GetSeed()
+             );
+
+
+            // ServiceRequestWorkflowState CONFIGURATION -------------------------------------
 
             modelBuilder.Entity<ServiceRequestWorkflowState>()
                 .Property(e => e.StepCompletedUtc)
@@ -1005,7 +1024,7 @@ namespace CoAntiCor.Infrastructure.Context
                 {
                     Id = Guid.Parse("40000000-0000-0000-0000-000000000003"),
                     IncidentRequestId = Guid.Parse("50000000-0000-0000-0000-000000000001"),
-                    Phase = "INVESTIGATION",
+                    Phase = "INVESTIGATION", 
                     Status = IncidentStatus.InReview,
                     Notes = "Investigation started by inspector.",
                     ChangedByUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"),
@@ -1717,8 +1736,8 @@ namespace CoAntiCor.Infrastructure.Context
                 new MenuItem
                 {
                     Id = 2,
-                    Title = "Report a Complaint",
-                    TitleFrench = "Signaler une plainte",
+                    Title = "Report an incident",
+                    TitleFrench = "Signaler un incident",
                     Icon = "fa-solid fa-file-circle-plus",
                     Url = "/wizard",
                     DisplayOrder = 2,
@@ -1727,7 +1746,7 @@ namespace CoAntiCor.Infrastructure.Context
                 new MenuItem
                 {
                     Id = 3,
-                    Title = "Track My Complaint",
+                    Title = "Track My Incident",
                     TitleFrench = "Suivre ma plainte",
                     Icon = "fa-solid fa-magnifying-glass",
                     Url = "/track-complaint",
@@ -1757,7 +1776,7 @@ namespace CoAntiCor.Infrastructure.Context
                  new MenuItem
                  {
                      Id = 6,
-                     Title = "Contact",
+                     Title = "Contact us",
                      TitleFrench = "Contactez-nous",
                      Icon = "fa-solid fa-envelope",
                      Url = "/contact",
@@ -1791,10 +1810,10 @@ namespace CoAntiCor.Infrastructure.Context
                 new MenuItem
                 {
                     Id = 12,
-                    Title = "Complaints",
-                    TitleFrench = "Plaintes",
+                    Title = "Incidents",
+                    TitleFrench = "Incidents",
                     Icon = "fa-solid fa-folder-open",
-                    Url = "/internal/complaints",
+                    Url = "/internal/incidents",
                     DisplayOrder = 2,
                     ParentId = 10,
                     Role = "Staff"

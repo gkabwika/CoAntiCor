@@ -1,0 +1,14 @@
+﻿@using CoAntiCor.Core.Domain.Organization.OrganizationDetails
+@code {
+    [Parameter] public List<PhysicPerson> Organizations { get; set; } = new();
+}
+
+<div class="border rounded p-2 mb-2">
+    <h5>Organisations impliquées</h5>
+    @foreach (var o in Organizations)
+    {
+     
+        <div>@o!.OrganizationName + @o!.EnterpriseType (@o!.IdNumP)</div>
+    }
+    <!-- add modal / form to add/edit orgs -->
+</div>
