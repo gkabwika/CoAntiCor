@@ -16,12 +16,12 @@
     margin-bottom: 0.25rem;
 }
 
-*/
+*/var  
 
     /* eGUCE custom styles end here */
 
 /*   COPANY TYPE IN STEP 1 CSS STARTS HERE */
-/*.company-type-selector {
+.company-type-selector {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
@@ -64,12 +64,14 @@
     width: 120px;
     margin-top: 1rem;
 }
-*/
+.text-danger {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
+}
 /*   COPANY TYPE IN STEP 1 CSS STARTS ENDS HERE */
 
 
 /*Drop <SessionTimeoutBanner /> into MainLayout.razor.*/
-/*.session-warning {
     position: fixed;
     bottom: 1rem;
     right: 1rem;
@@ -80,6 +82,7 @@
     z-index: 1000;
 }
 
+.session-warning {
 .fa-exclamation-circle {
     --fa: "\f06a";
 }
@@ -89,7 +92,7 @@
 }
 
 
-.fa-solid, .fa-regular, .fa-brands, .fa-classic, .fas, .far, .fab, .fa {
+/*.fa-solid, .fa-regular, .fa-brands, .fa-classic, .fas, .far, .fab, .fa {
     --_fa-family: var(--fa-family, var(--fa-style-family, "Font Awesome 7 Free"));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -112,10 +115,7 @@
     border-style: solid;
     border-color: #e5e7eb;
 }
-.text-danger {
-    --bs-text-opacity: 1;
-    color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
-}
+
 
 .alert {
     --bs-alert-bg: transparent;

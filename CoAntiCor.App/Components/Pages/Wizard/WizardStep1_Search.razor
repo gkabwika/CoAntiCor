@@ -33,10 +33,10 @@
             @Localizer["Search"]
         </button>
     }
-    <button class="btn btn-success  mt-2"
+@*     <button class="btn btn-success  mt-2"
             @onclick="() => OnSave.InvokeAsync()">
         @(Localizer != null ? Localizer["Save_Name"] : "Save")
-    </button>
+    </button> *@
     @if (Draft.SimilarIncidents.Any())
     {
         <h5 class="mt-3">Similar incidents found</h5>

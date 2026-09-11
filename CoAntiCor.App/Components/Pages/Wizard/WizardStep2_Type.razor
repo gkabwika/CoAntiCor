@@ -1,6 +1,7 @@
-﻿@using CoAntiCor.Core.DTO.Incident
+﻿    @using CoAntiCor.Core.DTO.Incident
 @using CoAntiCor.Core.Domain
 @using CoAntiCor.App.Resources
+@using CoAntiCor.Core.Domain.ServiceRequest
 @using Microsoft.Extensions.Localization
 
 @using CoAntiCor.Core.DTO
@@ -12,72 +13,213 @@
 <PageTitle>@Localizer["ReportAnIncident"] / @Localizer["Wizard_Step1_Title"]</PageTitle>
 <div class="card p-3">
     <h4>@Localizer["Step"] 2: @Localizer["Wizard_Step1_Title"]</h4>
-    <div class="mb-3">
-        <label class="form-label">Incident Type</label>
-        <select required class="form-select mb-2" @bind="Draft.IncidentTypeId">
-            <option value="">@Localizer["Wizard_SelectOption"]</option>
-            @foreach (var t in _incidentTypes)
-            {
-                <option value="@t.Id">@t.NameFrench</option>
-            }
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Incident Category</label>
-        <select required class="form-select mb-2" @bind="Draft.IncidentCategoryId">
-            <option value="">@Localizer["Wizard_SelectOption"]</option>
-            @foreach (var c in Categories)
-            {
-                <option value="@c.Id">@c.NameFrench</option>
-            }
-        </select>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">@Localizer["Wizard_Step1_IncidentTypeOther"]</label>
-        <input class="form-control mb-2"
-               @bind="Draft.IncidentTypeOther"
-               placeholder="@Localizer["Wizard_Step1_IncidentTypeOther"]" />
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">@Localizer["Wizard_Step1_CategoryOther"]</label>
-        <input class="form-control mb-2"
-               @bind="Draft.CategoryOther"
-               placeholder="@Localizer["Wizard_Step1_CategoryOther"]" />
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Title of your complaint</label>
-        <input id="stp2-inc-title" required class="form-control" @bind="Draft.Title" />
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Describe the incident in detail</label>
-        <textarea id="stp2-inc-desc"  required class="form-control" rows="5" @bind="Draft.Description"></textarea>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Province of Incident</label>
-        @*   <input class="form-control" @bind="Draft.Province" /> *@
-        <select class="form-select" @bind="Draft.ProvinceId">
-            <option value="">-- Select Province --</option>
-            @foreach (var cat in _provinces)
-            {
-                <option value="@cat.Id">@cat.Name</option>
-            }
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">City or Territory of Incident</label>
-        <input class="form-control" @bind="Draft.City" />
-    </div>
+  
+    <div>
 
 
-    <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">
-        @Localizer["SearchSimilarCases_SaveButton"]
-    </button>
+         <EditForm Model="@Detail" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <h3>@Localizer["IncidentDetail_Title"]</h3>
+
+
+            <fieldset class="row sec-group col-md-12 col-sm-12">
+
+                <legend class="text-black-50">@Localizer["IncidentDetail_Title"]</legend>
+                <h3>@Localizer["IncidentDetail_Title"]</h3>
+                <div class="row g-3">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="mb-3">
+                            <label class="form-label">Incident Category</label>
+                            <select required class="form-select mb-2" @bind="Draft.IncidentCategoryId">
+                                <option value="">@Localizer["Wizard_SelectOption"]</option>
+                                @foreach (var c in Categories)
+                                {
+                                    <option value="@c.Id">@c.NameFrench</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="mb-3">
+                            <label class="form-label">Incident Type</label>
+                            <select required class="form-select mb-2" @bind="Draft.IncidentTypeId">
+                                <option value="">@Localizer["Wizard_SelectOption"]</option>
+                                @foreach (var t in _incidentTypes)
+                                {
+                                    <option value="@t.Id">@t.NameFrench</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">@Localizer["Wizard_Step1_IncidentTypeOther"]</label>
+                            <input class="form-control mb-2"
+                                   @bind="Draft.IncidentTypeOther"
+                                   placeholder="@Localizer["Wizard_Step1_IncidentTypeOther"]" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">@Localizer["Wizard_Step1_CategoryOther"]</label>
+                            <input class="form-control mb-2"
+                                   @bind="Draft.CategoryOther"
+                                   placeholder="@Localizer["Wizard_Step1_CategoryOther"]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="mb-3">
+                            <label class="form-label">Title of your complaint</label>
+                            <input id="stp2-inc-title" required class="form-control" @bind="Draft.Title" />
+                        </div>
+                    </div>
+                </div>
+     
+            </fieldset>
+            <p></p>
+              <fieldset class="row sec-group col-md-12 col-sm-12">
+
+                <legend class="text-black-50">@Localizer["IncidentDetail_Title"]</legend>
+                <h3>@Localizer["IncidentDetail_Title"]</h3>
+                <div class="row g-3">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Province of Incident</label>
+                                @*   <input class="form-control" @bind="Draft.Province" /> *@
+                                <select class="form-select" @bind="Draft.ProvinceId">
+                                    <option value="">-- Select Province --</option>
+                                    @foreach (var cat in _provinces)
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Province of Incident</label>
+                                @*   <input class="form-control" @bind="Draft.Province" /> *@
+                                <select class="form-select" @bind="Draft.ProvinceId">
+                                    <option value="">-- Select Province --</option>
+                                    @foreach (var cat in _provinces)
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="row g-3">
+                        <div class="mb-3">
+                            <div class="col-md-3 col-sm-6">                           
+                                <label class="form-label">City or Territory of Incident</label>
+                                <input class="form-control" @bind="Draft.City" />
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label class="form-label">@Localizer["Commune"]</label>
+                                <InputText class="form-control" @bind-Value="Detail.Commune" />
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label class="form-label">@Localizer["Quartier"]</label>
+                                <InputText class="form-control" @bind-Value="Detail.Quartier" />
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label class="form-label">@Localizer["Address"]</label>
+                                <InputText class="form-control" @bind-Value="Detail.Address" />l,
+                            </div>
+                        </div>
+                    </div>
+                </div>
+     
+            </fieldset>
+  
+            <p></p>
+            <fieldset class="row sec-group col-md-12 col-sm-12">
+
+                <legend class="text-black-50">@Localizer["Victim_Info_Title"]</legend>
+                <h3>@Localizer["Victim_Info_Title"]</h3>
+                <div class="row g-3">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-check mb-2">
+                                <InputCheckbox class="form-check-input" @bind-Value="Detail.VictimProvidesName" />
+                                <label class="form-check-label">@Localizer["Victim_ProvidesName"]</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-3">
+                                <InputCheckbox class="form-check-input" @bind-Value="Detail.HasPrivateOrganizationInvolved" />
+                                <label class="form-check-label">@Localizer["Private_Organization_Involved"]</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-check mb-2">
+                                <InputCheckbox class="form-check-input" @bind-Value="Detail.VictimLifeInDanger" />
+                                <label class="form-check-label">@Localizer["Victim_Life_In_Danger"]</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">@Localizer["Education_Level"]</label>
+                                <InputText class="form-control" @bind-Value="Detail.EducationLevel" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="mb-3">
+                            <label class="form-label">Describe the incident in detail</label>
+                            <textarea id="stp2-inc-desc" required class="form-control" rows="5" @bind="Draft.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="row g-3">
+                        <div class="col-md-12 col-sm-12">
+
+                            <div class="mb-3">
+                                <label class="form-label">@Localizer["Victim_Description"]</label>
+                                <InputTextArea class="form-control" Rows="4" @bind-Value="Detail.VictimDescription" />
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+              
+  
+            </fieldset>
+       
+
+
+
+            <button class="btn btn-primary" @onclick="() => OnSave.InvokeAsync()">
+                @Localizer["SearchSimilarCases_SaveButton"]
+            </button>
+
+            <button type="submit" class="btn btn-primary">@Localizer["Wizard_Submit"]</button>
+        </EditForm>
+
+
+    </div>
+  
 </div>
 
 
@@ -93,7 +235,7 @@
     //[Parameter] public ReportIncidentWizardState Draft { get; set; } = default!;
     [Parameter] public EventCallback OnBack { get; set; }
     [Parameter] public EventCallback OnNext { get; set; }
-
+    private IncidentDetail Detail { get; set; } = new IncidentDetail();
     private List<IncidentTypeDto> _incidentTypes = new();
     private List<IncidentCategoryDto> _incidentCategories = new();
     private List<ProvinceDto> _provinces = new();
@@ -134,5 +276,9 @@
         await OnNext.InvokeAsync();
     }
 
-
+    private Task OnValidSubmit()
+    {
+        // Persist Detail to DB (IncidentDetail linked to IncidentRequestId)
+        return Task.CompletedTask;
+    }
 }
