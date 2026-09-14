@@ -58,20 +58,39 @@
                 <dd class="col-sm-9">@Draft.IdentityChoice</dd>
             </dl>
 
-            <button class="btn btn-primary" @onclick="() => OnSubmit.InvokeAsync()">
+       @*      <button class="btn btn-primary" @onclick="() => OnSubmit.InvokeAsync()">
                 @Localizer["SearchSimilarCases_SaveButton"]
-            </button>
+            </button> *@
 
             <button type="submit" class="btn btn-primary">@Localizer["Wizard_Submit"]</button>
         </EditForm>
 
     </div>
 
+    <!-- Navigation buttons -->
+    <div class="mt-3 d-flex justify-content-between">
+        <button class="btn btn-outline-secondary" disabled>
+            @Localizer["Wizard_Previous"]
+        </button>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-secondary" @onclick="() => OnSave.InvokeAsync()">
+                @Localizer["Wizard_SaveDraft"]
+            </button>
+
+            @* <button class="btn btn-primary" @onclick="() => OnSubmit.InvokeAsync()">
+                @Localizer["Wizard_Submit"]
+            </button> *@
+        </div>
+    </div>
 </div>
 
 @code {
     [Parameter] public WizardDraftState Draft { get; set; } = default!;
     [Parameter] public EventCallback OnSubmit { get; set; }
+    [Parameter] public EventCallback OnSave { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnPrevious { get; set; }
 
     private string GetDraftJson() => JsonSerializer.Serialize(Draft, new JsonSerializerOptions { WriteIndented = true });
 

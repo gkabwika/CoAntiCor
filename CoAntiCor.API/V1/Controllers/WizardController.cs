@@ -1,4 +1,5 @@
-﻿using CoAntiCor.Core.Domain.ServiceRequest;
+﻿using CoAntiCor.API.Services;
+using CoAntiCor.Core.Domain.ServiceRequest;
 using CoAntiCor.Core.DTO.Incident;
 using CoAntiCor.Core.Enums;
 using CoAntiCor.Infrastructure.Context;
@@ -29,6 +30,22 @@ namespace CoAntiCor.API.V1.Controllers
                 return NotFound();
 
             return MapToDto(state);
+        }
+
+        // Autosave load
+        [HttpGet("{draftId:guid}")]
+        public async Task<ActionResult<WizardDraftState>> Get(Guid draftId)
+        {
+            var draft = await _db.IncidentRequests
+                .Include(x => x.IncidentDetail)
+                .Include(x => x.SecurityDetail)
+                .FirstOrDefaultAsync(x => x.DraftId == draftId);
+
+            if (draft == null)
+                return NotFound();
+
+            var state = IncidentWizardMapper.ToWizardDraftState(draft);
+            return Ok(state);
         }
 
         // POST api/v1/wizard/save
@@ -89,10 +106,56 @@ namespace CoAntiCor.API.V1.Controllers
                 IsConflict = false
             };
         }
+        // Autosave save
+        [HttpPost("save")]
+        public async Task<ActionResult> Save([FromBody] WizardDraftState state)
+        {
+            var existing = await _db.IncidentRequests
+                .Include(x => x.IncidentDetail)
+                .Include(x => x.SecurityDetail)
+                .FirstOrDefaultAsync(x => x.DraftId == state.DraftId);
 
-        // SUBMIT
+            if (existing == null)
+            {
+                var request = IncidentWizardMapper.ToIncidentRequest(state);
+                _db.IncidentRequests.Add(request);
+            }
+            else
+            {
+                IncidentWizardMapper.UpdateIncidentRequest(existing, state);
+            }
+
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // Final submit
         [HttpPost("submit")]
-        public async Task<ActionResult> Submit([FromBody] WizardDraftState dto)
+        public async Task<ActionResult> Submit([FromBody] WizardDraftState state)
+        {
+            var existing = await _db.IncidentRequests
+                .Include(x => x.IncidentDetail)
+                .Include(x => x.SecurityDetail)
+                .FirstOrDefaultAsync(x => x.DraftId == state.DraftId);
+
+            if (existing == null)
+            {
+                var request = IncidentWizardMapper.ToIncidentRequest(state);
+                request.Status = IncidentStatus.Submitted;
+                _db.IncidentRequests.Add(request);
+            }
+            else
+            {
+                IncidentWizardMapper.UpdateIncidentRequest(existing, state);
+                existing.Status = IncidentStatus.Submitted;
+            }
+
+            await _db.SaveChangesAsync();
+            return Ok(new { state.DraftId });
+        }
+        // SUBMIT
+        [HttpPost("submitold")]
+        public async Task<ActionResult> SubmitOld([FromBody] WizardDraftState dto)
         {
             var state = await _db.ServiceRequestWorkflowStates
                 .FirstOrDefaultAsync(x => x.DraftId == dto.DraftId);

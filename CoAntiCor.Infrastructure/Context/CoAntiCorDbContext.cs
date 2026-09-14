@@ -133,8 +133,10 @@ namespace CoAntiCor.Infrastructure.Context
         public DbSet<IncidentRequestNaturalPerson> IncidentRequestNaturalPersons => Set<IncidentRequestNaturalPerson>();
         public DbSet<IncidentSecurityDetail> IncidentSecurityDetails => Set<IncidentSecurityDetail>();
 
-        
+        public DbSet<IncidentDetail> IncidentDetail  => Set<IncidentDetail>();
 
+
+        
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
 
         public void Configure(EntityTypeBuilder<IncidentRequest> modelBuilder)
@@ -570,6 +572,7 @@ namespace CoAntiCor.Infrastructure.Context
             modelBuilder.ApplyConfiguration(new IncidentEvidenceConfiguration());
             modelBuilder.ApplyConfiguration(new ProcessingPhaseHistoryConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceRequestWorkflowStateConfiguration());
+            modelBuilder.ApplyConfiguration(new IncidentDetailConfiguration());
 
             modelBuilder.Entity<IncidentRequest>()
             .HasOne(i => i.AssignedToUser)
@@ -768,217 +771,212 @@ namespace CoAntiCor.Infrastructure.Context
             // SEED DATA - IncidentRequest
 
             modelBuilder.Entity<IncidentRequest>().HasData(
-                new IncidentRequest
-                {
-                    Id = Guid.Parse("50000000-0000-0000-0000-000000000001"),
-                    IncidentNumber = "INC-2026-000001",
-                    Title = "Détournement de fonds publics",
-                    Description = "Un agent aurait transféré des fonds publics vers un compte personnel.",
+            new IncidentRequest
+            {
+                Id = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                IncidentNumber = "INC-2026-000001",
+                Title = "Détournement de fonds publics",
+                Description = "Un agent aurait transféré des fonds publics vers un compte personnel.",
+                IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000002"),
+                IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000001"),
+                IncidentTypeOther = "",
+                Category = "Détournement de fonds",
+                Province = "Kinshasa",
+                City = "Gombe",
+                Commune = "Gombe",
+                Quartier = "Commercial",
+                Address = "Avenue des Huileries 12",
+                IsAnonymous = false,
+                CitizenName = "Jean Mbala",
+                CitizenEmail = "jean.mbala@example.com",
+                CitizenPhone = "+243812345678",
+                Service = "Direction Financière",
+                JobRole = "Comptable",
+                Sex = "M",
+                AgeGroups = "36-60",
+                AgeGroup = 3,
+                ReporterFullName = "Jean Mbala",
+                GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000001"),
+                Status = IncidentStatus.Submitted,
+                ReporterUserId = null,
+                AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"),
+                OfficialNotes = "En attente de vérification initiale.",
+                CreatedAt = DateTime.UtcNow.AddDays(-12),
+                SubmittedAt = DateTime.UtcNow.AddDays(-12),
+                LastUpdatedAt = DateTime.UtcNow.AddDays(-10),
+                CreatedByUserId = null
+            },
 
-                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000002"), // Embezzlement
-                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000001"), // Financial Misconduct
-                    IncidentTypeOther = "",
-                    Category = "Détournement de fonds",
+            new IncidentRequest
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000002"),
+                IncidentNumber = "INC-2026-000002",
+                Title = "Pot-de-vin pour attribution de marché public",
+                Description = "Un fonctionnaire aurait exigé un paiement pour attribuer un contrat.",
+                IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000001"),
+                IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000003"),
+                IncidentTypeOther = "",
+                Category = "Corruption",
+                Province = "Haut-Katanga",
+                City = "Lubumbashi",
+                Commune = "Lubumbashi",
+                Quartier = "Golf",
+                Address = "Boulevard Kamanyola 45",
+                IsAnonymous = true,
+                GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000002"),
+                Status = IncidentStatus.InReview,
+                ReporterUserId = null,
+                AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000002"),
+                OfficialNotes = "Inspection en cours.",
+                CreatedAt = DateTime.UtcNow.AddDays(-20),
+                SubmittedAt = DateTime.UtcNow.AddDays(-20),
+                LastUpdatedAt = DateTime.UtcNow.AddDays(-15),
+                CreatedByUserId = null
+            },
 
-                    Province = "Kinshasa",
-                    City = "Gombe",
-                    Commune = "Gombe",
-                    Quartier = "Commercial",
-                    Address = "Avenue des Huileries 12",
+            new IncidentRequest
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000003"),
+                IncidentNumber = "INC-2026-000003",
+                Title = "Fraude dans les marchés publics",
+                Description = "Manipulation des appels d’offres pour favoriser une entreprise.",
+                IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000003"),
+                IncidentTypeOther = "",
+                Category = "Fraude",
+                Province = "Nord-Kivu",
+                City = "Goma",
+                Commune = "Goma",
+                Quartier = "Katindo",
+                Address = "Avenue du Lac 8",
+                IsAnonymous = false,
+                CitizenName = "Marie Kaseba",
+                CitizenEmail = "marie.kaseba@example.com",
+                CitizenPhone = "+243990001122",
+                Service = "Service des marchés publics",
+                JobRole = "Analyste",
+                Sex = "F",
+                AgeGroups = "19-35",
+                AgeGroup = 2,
+                ReporterFullName = "Marie Kaseba",
+                GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000003"),
+                Status = IncidentStatus.InReview,
+                ReporterUserId = null,
+                AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"),
+                OfficialNotes = "Documents supplémentaires requis.",
+                CreatedAt = DateTime.UtcNow.AddDays(-7),
+                SubmittedAt = DateTime.UtcNow.AddDays(-7),
+                LastUpdatedAt = DateTime.UtcNow.AddDays(-5),
+                CreatedByUserId = null
+            },
 
-                    IsAnonymous = false,
-                    CitizenName = "Jean Mbala",
-                    CitizenEmail = "jean.mbala@example.com",
-                    CitizenPhone = "+243812345678",
-                    Service = "Direction Financière",
-                    JobRole = "Comptable",
-                    Sex = "M",
-                    AgeGroups = "36-60",
-                    AgeGroup = 3,
-                    ReporterFullName = "Jean Mbala",
+            new IncidentRequest
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000004"),
+                IncidentNumber = "INC-2026-000004",
+                Title = "Conflit d’intérêts dans une nomination",
+                Description = "Un directeur aurait nommé un membre de sa famille sans procédure.",
+                IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000004"),
+                IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000002"),
+                IncidentTypeOther = "",
+                Category = "Conflit d’intérêts",
+                Province = "Kongo Central",
+                City = "Matadi",
+                Commune = "Matadi",
+                Quartier = "Belvédère",
+                Address = "Rue de la Mission 21",
+                IsAnonymous = true,
+                GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000004"),
+                Status = IncidentStatus.Submitted,
+                ReporterUserId = null,
+                AssignedToUserId = null,
+                OfficialNotes = "En attente d’analyse.",
+                CreatedAt = DateTime.UtcNow.AddDays(-3),
+                SubmittedAt = DateTime.UtcNow.AddDays(-3),
+                LastUpdatedAt = DateTime.UtcNow.AddDays(-2),
+                CreatedByUserId = null
+            },
 
-                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000001"), // Financial Tribunal Kinshasa
+            new IncidentRequest
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000005"),
+                IncidentNumber = "INC-2026-000005",
+                Title = "Évasion fiscale d’une entreprise locale",
+                Description = "Une société aurait dissimulé des revenus pour éviter l’impôt.",
+                IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000007"),
+                IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000001"),
+                IncidentTypeOther = "",
+                Category = "Évasion fiscale",
+                Province = "Sud-Kivu",
+                City = "Bukavu",
+                Commune = "Kadutu",
+                Quartier = "Nyawera",
+                Address = "Avenue Patrice Lumumba 5",
+                IsAnonymous = false,
+                CitizenName = "Patrick Lushombo",
+                CitizenEmail = "patrick.l@example.com",
+                CitizenPhone = "+243812222333",
+                Service = "Inspection fiscale",
+                JobRole = "Auditeur",
+                Sex = "M",
+                AgeGroups = "36-60",
+                AgeGroup = 3,
+                ReporterFullName = "Patrick Lushombo",
+                GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000004"),
+                Status = IncidentStatus.InReview,
+                ReporterUserId = null,
+                AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000002"),
+                OfficialNotes = "Analyse financière en cours.",
+                CreatedAt = DateTime.UtcNow.AddDays(-14),
+                SubmittedAt = DateTime.UtcNow.AddDays(-14),
+                LastUpdatedAt = DateTime.UtcNow.AddDays(-12),
+                CreatedByUserId = null
+            }
+        );
 
-                    Status = IncidentStatus.Submitted,
-                    ReporterUserId = null,
-                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"), // Inspector
+                    // SEED DATA - IncidentDetail
 
-                    OfficialNotes = "En attente de vérification initiale.",
-                    CreatedAt = DateTime.UtcNow.AddDays(-12),
-                    SubmittedAt = DateTime.UtcNow.AddDays(-12),
-                    LastUpdatedAt = DateTime.UtcNow.AddDays(-10),
-                    CreatedByUserId = null
-                },
-
-                new IncidentRequest
-                {
-                    Id = Guid.Parse("51000000-0000-0000-0000-000000000002"),
-                    IncidentNumber = "INC-2026-000002",
-                    Title = "Pot-de-vin pour attribution de marché public",
-                    Description = "Un fonctionnaire aurait exigé un paiement pour attribuer un contrat.",
-
-                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000001"), // Bribery
-                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000003"), // Corruption and Influence
-                    IncidentTypeOther = "",
-                    Category = "Corruption",
-
-                    Province = "Haut-Katanga",
-                    City = "Lubumbashi",
-                    Commune = "Lubumbashi",
-                    Quartier = "Golf",
-                    Address = "Boulevard Kamanyola 45",
-
-                    IsAnonymous = true,
-                    CitizenName = null,
-                    CitizenEmail = null,
-                    CitizenPhone = null,
-                    Service = null,
-                    JobRole = null,
-                    Sex = null,
-                    AgeGroups = null,
-                    AgeGroup = null,
-                    ReporterFullName = null,
-
-                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000002"), // Anti-Corruption Office Lubumbashi
-
-                    Status = IncidentStatus.InReview,
-                    ReporterUserId = null,
-                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000002"), // Manager
-
-                    OfficialNotes = "Inspection en cours.",
-                    CreatedAt = DateTime.UtcNow.AddDays(-20),
-                    SubmittedAt = DateTime.UtcNow.AddDays(-20),
-                    LastUpdatedAt = DateTime.UtcNow.AddDays(-15),
-                    CreatedByUserId = null
-                },
-
-                new IncidentRequest
-                {
-                    Id = Guid.Parse("51000000-0000-0000-0000-000000000003"),
-                    IncidentNumber = "INC-2026-000003",
-                    Title = "Fraude dans les marchés publics",
-                    Description = "Manipulation des appels d’offres pour favoriser une entreprise.",
-
-                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000008"), // Public Procurement Fraud
-                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000003"), // Corruption and Influence
-                    IncidentTypeOther = "",
-                    Category = "Fraude",
-
-                    Province = "Nord-Kivu",
-                    City = "Goma",
-                    Commune = "Goma",
-                    Quartier = "Katindo",
-                    Address = "Avenue du Lac 8",
-
-                    IsAnonymous = false,
-                    CitizenName = "Marie Kaseba",
-                    CitizenEmail = "marie.kaseba@example.com",
-                    CitizenPhone = "+243990001122",
-                    Service = "Service des marchés publics",
-                    JobRole = "Analyste",
-                    Sex = "F",
-                    AgeGroups = "19-35",
-                    AgeGroup = 2,
-                    ReporterFullName = "Marie Kaseba",
-
-                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000003"), // Goma Tribunal
-
-                    Status = IncidentStatus.InReview,
-                    ReporterUserId = null,
-                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000001"),
-
-                    OfficialNotes = "Documents supplémentaires requis.",
-                    CreatedAt = DateTime.UtcNow.AddDays(-7),
-                    SubmittedAt = DateTime.UtcNow.AddDays(-7),
-                    LastUpdatedAt = DateTime.UtcNow.AddDays(-5),
-                    CreatedByUserId = null
-                },
-
-                new IncidentRequest
-                {
-                    Id = Guid.Parse("51000000-0000-0000-0000-000000000004"),
-                    IncidentNumber = "INC-2026-000004",
-                    Title = "Conflit d’intérêts dans une nomination",
-                    Description = "Un directeur aurait nommé un membre de sa famille sans procédure.",
-
-                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000004"), // Conflict of Interest
-                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000002"), // Administrative Misconduct
-                    IncidentTypeOther = "",
-                    Category = "Conflit d’intérêts",
-
-                    Province = "Kongo Central",
-                    City = "Matadi",
-                    Commune = "Matadi",
-                    Quartier = "Belvédère",
-                    Address = "Rue de la Mission 21",
-
-                    IsAnonymous = true,
-                    CitizenName = null,
-                    CitizenEmail = null,
-                    CitizenPhone = null,
-                    Service = null,
-                    JobRole = null,
-                    Sex = null,
-                    AgeGroups = null,
-                    AgeGroup = null,
-                    ReporterFullName = null,
-
-                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000004"),
-
-                    Status = IncidentStatus.Submitted,
-                    ReporterUserId = null,
-                    AssignedToUserId = null,
-
-                    OfficialNotes = "En attente d’analyse.",
-                    CreatedAt = DateTime.UtcNow.AddDays(-3),
-                    SubmittedAt = DateTime.UtcNow.AddDays(-3),
-                    LastUpdatedAt = DateTime.UtcNow.AddDays(-2),
-                    CreatedByUserId = null
-                },
-
-                new IncidentRequest
-                {
-                    Id = Guid.Parse("51000000-0000-0000-0000-000000000005"),
-                    IncidentNumber = "INC-2026-000005",
-                    Title = "Évasion fiscale d’une entreprise locale",
-                    Description = "Une société aurait dissimulé des revenus pour éviter l’impôt.",
-
-                    IncidentTypeId = Guid.Parse("10000000-0000-0000-0000-000000000007"), // Tax Evasion
-                    IncidentCategoryId = Guid.Parse("20000000-0000-0000-0000-000000000001"), // Financial Misconduct
-                    IncidentTypeOther = "",
-                    Category = "Évasion fiscale",
-
-                    Province = "Sud-Kivu",
-                    City = "Bukavu",
-                    Commune = "Kadutu",
-                    Quartier = "Nyawera",
-                    Address = "Avenue Patrice Lumumba 5",
-
-                    IsAnonymous = false,
-                    CitizenName = "Patrick Lushombo",
-                    CitizenEmail = "patrick.l@example.com",
-                    CitizenPhone = "+243812222333",
-                    Service = "Inspection fiscale",
-                    JobRole = "Auditeur",
-                    Sex = "M",
-                    AgeGroups = "36-60",
-                    AgeGroup = 3,
-                    ReporterFullName = "Patrick Lushombo",
-
-                    GovernmentOfficeId = Guid.Parse("70000000-0000-0000-0000-000000000004"),
-
-                    Status = IncidentStatus.InReview,
-                    ReporterUserId = null,
-                    AssignedToUserId = Guid.Parse("90000000-0000-0000-0000-000000000002"),
-
-                    OfficialNotes = "Analyse financière en cours.",
-                    CreatedAt = DateTime.UtcNow.AddDays(-14),
-                    SubmittedAt = DateTime.UtcNow.AddDays(-14),
-                    LastUpdatedAt = DateTime.UtcNow.AddDays(-12),
-                    CreatedByUserId = null
-                }
-            );
-
+                    modelBuilder.Entity<IncidentDetail>().HasData(
+            new IncidentDetail
+            {
+                Id = Guid.Parse("60000000-0000-0000-0000-000000000001"),
+                IncidentRequestId = Guid.Parse("50000000-0000-0000-0000-000000000001"),
+                VictimDescription = "Le plaignant a observé des transferts suspects.",
+                HasCorruptionStatements = true,
+                DepartmentInvolved = "Direction Financière",
+                PlannedFacts = "Transfert non autorisé",
+                PrimaryOfficial = "Chef de Division",
+                SecondaryOfficial = "Comptable",
+                OtherOfficial = null,
+                IncidentDate = DateTime.UtcNow.AddDays(-15),
+                CurrencyType = "CDF",
+                ApproxAmount = 15000000,
+                VictimLifeInDanger = false,
+                ReasonForPayment = false,
+                PaymentMadeBefore = false,
+                AggressiveBehaviorObserved = false,
+                IncreasedMotivationOrInterest = false,
+                IntimidationObserved = false,
+                PaymentReasonDescription = null,
+                PaymentReasonType = null,
+                PaymentReasonFrequency = null,
+                AggressiveBehaviorDescription = null,
+                AggressiveBehaviorDuration = null,
+                AggressiveBehaviorFrequency = null,
+                TemperamentOptimism = false,
+                CorruptionDiscreetlyCompleted = true,
+                HasPaidAgentBefore = false,
+                CorruptionWithConfidence = false,
+                AttachmentToCorruptionMethods = false,
+                SimilarCorruptionExists = false,
+                AttachmentExplanation = null,
+                AttachmentChoice = "None",
+                DocumentName = null,
+                IsCurrentDocument = false,
+                DocumentPath = null,
+                SecurityAcknowledged = true
+            }
+        );
 
 
             // SEED DATA -             new IncidentRequestReward - REWARD

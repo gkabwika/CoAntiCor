@@ -1,6 +1,7 @@
 ﻿using CoAntiCor.Core.Domain;
 using CoAntiCor.Core.Domain.Organization.OrganizationDetails;
 using CoAntiCor.Core.Domain.Person;
+using CoAntiCor.Core.DTO.Incident.CoAntiCor.Core.DTO.Incident;
 using CoAntiCor.Core.Enums;
 using CoAntiCor.Core.Model;
 using System;
@@ -16,6 +17,7 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
     public class IncidentRequest:EntityBaseObject
     {
         public new Guid Id { get; set; }
+        public Guid? DraftId { get; set; }
         public string IncidentNumber { get; set; } = default!;
         public string? AccessCode { get; set; } = default!;
         public string? ReferenceNumber { get; set; } = default!;
@@ -88,13 +90,16 @@ namespace CoAntiCor.Core.Domain.ServiceRequest
         public DateTime? LastUpdatedAt { get; set; }
 
         public Guid? CreatedByUserId { get; set; }
-        public IncidentDetail? IncidentDetail { get; set; }
-        
+        public IncidentDetail? IncidentDetail { get; set; } 
+        public IncidentSecurityDetail? SecurityDetail { get; set; }
+
         public ICollection<IncidentEvidence> EvidenceFiles { get; set; } = new List<IncidentEvidence>();
         public ICollection<ComplaintAttachment> Attachments { get; set; } = new List<ComplaintAttachment>();
         public ICollection<ProcessingPhaseHistory> PhaseHistory { get; set; } = new List<ProcessingPhaseHistory>();
         public ICollection<IncidentRequestHistory> History { get; set; } = new List<IncidentRequestHistory>();
         public ICollection<IncidentRequestReward> IncidentRequestRewards { get; set; } = new List<IncidentRequestReward>();
-      
+        public int CurrentStep { get; set; }
+        public int Version { get; set; }
+        public string? ShortDescription { get; set; }
     }
 }

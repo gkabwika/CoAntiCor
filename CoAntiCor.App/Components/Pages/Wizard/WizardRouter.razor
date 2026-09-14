@@ -1,0 +1,33 @@
+﻿@using CoAntiCor.Core.DTO.Incident
+@code {
+    [Parameter] public WizardDraftState? Draft { get; set; }
+    [Parameter] public EventCallback OnSave { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnPrevious { get; set; }
+    [Parameter] public EventCallback OnSubmit { get; set; }
+}
+
+@switch (Draft.CurrentStep)
+{
+    case 1:
+        <WizardStep1_Search Draft="Draft" OnSave="OnSave" OnNext="OnNext" />
+        break;
+    case 2:
+        <WizardStep2_Type Draft="Draft" OnSave="OnSave" OnNext="OnNext" OnPrevious="OnPrevious" />
+        break;
+    case 3:
+        <WizardStep3_Identity Draft="Draft" OnSave="OnSave" OnNext="OnNext" OnPrevious="OnPrevious" />
+        break;
+    case 4:
+        <WizardStep4_Location Draft="Draft" OnSave="OnSave" OnNext="OnNext" OnPrevious="OnPrevious" />
+        break;
+    case 5:
+        <WizardStep5_Description Draft="Draft" OnSave="OnSave" OnNext="OnNext" OnPrevious="OnPrevious" />
+        break;
+    case 6:
+        <WizardStep6_IdentityChoice Draft="Draft" OnSave="OnSave" OnNext="OnNext" OnPrevious="OnPrevious" />
+        break;
+    case 7:
+        <WizardStep7_Review Draft="Draft" OnSubmit="OnSubmit" OnPrevious="OnPrevious" />
+        break;
+}

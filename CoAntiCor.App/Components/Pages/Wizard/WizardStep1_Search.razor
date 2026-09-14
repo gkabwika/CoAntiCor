@@ -1,45 +1,46 @@
-﻿@using CoAntiCor.App.Resources
-@using CoAntiCor.Core.DTO
-@using CoAntiCor.Core.DTO.Incident
+﻿@using CoAntiCor.Core.DTO.Incident
+@using CoAntiCor.Core.Domain
+@using CoAntiCor.App.Resources
+@using CoAntiCor.Core.Domain.ServiceRequest
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<SharedResource> Localizer
+
+@using CoAntiCor.Core.DTO
+@using System.Timers
 @inject HttpClient Http
 
-<br />
+@inject IStringLocalizer<SharedResource> Localizer
+
 <PageTitle>@Localizer["ReportAnIncident"] / @Localizer["SearchSimilarCases_Title"]</PageTitle>
+
 <div class="card p-3">
     <h4>@Localizer["Step"] 1: @Localizer["SearchSimilarCases_Title"]</h4>
-    <p>
-        @Localizer["DescribeyourincidentWewillsearchforsimilarcasesintheCoAntiCorsystem"]
-    </p>
-    <input class="form-control mb-2" id="stp1-search-something" name="stp1-search-something"
-           @bind="Draft.SearchQuery" data-rule-required="true" aria-invalid="false"
+    <p>@Localizer["DescribeyourincidentWewillsearchforsimilarcasesintheCoAntiCorsystem"]</p>
+
+    <input class="form-control mb-2"
+           id="stp1-search-something"
+           @bind="Draft.SearchQuery"
            placeholder="@Localizer["SearchSimilarCases_SearchQuery_Placeholder"]" />
 
     <input class="form-control mb-2"
            @bind="Draft.AccessCode"
            placeholder="@Localizer["SearchSimilarCases_AccessCode_Placeholder"]" />
 
-
     @if (_isSearching)
     {
-        <button id="stp1-search-id02" class="btn btn-primary mt-2" @onclick="SearchAsync" disabled="@_isSearching">
+        <button class="btn btn-primary mt-2" disabled>
             @Localizer["Searching"]...
         </button>
     }
     else
     {
-        <button id="stp1-search-id03" class="btn btn-primary mt-2" @onclick="SearchAsync" disabled="@_isSearching">
+        <button class="btn btn-primary mt-2" @onclick="SearchAsync">
             @Localizer["Search"]
         </button>
     }
-@*     <button class="btn btn-success  mt-2"
-            @onclick="() => OnSave.InvokeAsync()">
-        @(Localizer != null ? Localizer["Save_Name"] : "Save")
-    </button> *@
+
     @if (Draft.SimilarIncidents.Any())
     {
-        <h5 class="mt-3">Similar incidents found</h5>
+        <h5 class="mt-3">@Localizer["SimilarIncidentsFound"]</h5>
         <ul class="list-group">
             @foreach (var incident in Draft.SimilarIncidents)
             {
@@ -52,32 +53,46 @@
         </ul>
 
         <div class="mt-3">
-            <p>
-                @Localizer["Ifyourcaseisdifferentoryoustillwanttoreportanewincidentcontinue"]
-            </p>
+            <p>@Localizer["Ifyourcaseisdifferentoryoustillwanttoreportanewincidentcontinue"]</p>
         </div>
     }
-</div>
 
+    <!-- Navigation buttons -->
+    <div class="mt-3 d-flex justify-content-between">
+        <button class="btn btn-outline-secondary" disabled>
+            @Localizer["Wizard_Previous"]
+        </button>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-secondary" @onclick="() => OnSave.InvokeAsync()">
+                @Localizer["Wizard_SaveDraft"]
+            </button>
+
+            <button class="btn btn-primary" @onclick="() => OnNext.InvokeAsync()">
+                @Localizer["Wizard_Next"]
+            </button>
+        </div>
+    </div>
+</div>
 
 @code {
     [Parameter] public WizardDraftState Draft { get; set; } = default!;
     [Parameter] public EventCallback OnSave { get; set; }
-    //[Parameter] public WizardDraftState State { get; set; } = default!;
-  //  [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback? OnPrevious { get; set; }  // optional
 
     private bool _isSearching;
 
     private async Task SearchAsync()
     {
-        if (string.IsNullOrWhiteSpace(Draft!.SearchQuery))
+        if (string.IsNullOrWhiteSpace(Draft.SearchQuery))
             return;
 
         _isSearching = true;
 
         var response = await Http.PostAsJsonAsync("/api/v1/ServiceRequest/SearchIncident", new
         {
-            Term = Draft!.SearchQuery,
+            Term = Draft.SearchQuery,
             MaxResults = 10
         });
 
@@ -89,4 +104,3 @@
         _isSearching = false;
     }
 }
-

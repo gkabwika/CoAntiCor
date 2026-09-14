@@ -1,6 +1,7 @@
 ﻿using CoAntiCor.Core.Domain;
 using CoAntiCor.Core.Domain.Person;
 using CoAntiCor.Core.Domain.ServiceRequest;
+using CoAntiCor.Core.DTO.Incident.CoAntiCor.Core.DTO.Incident;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,9 @@ namespace CoAntiCor.Core.DTO.Incident
         public int CurrentStep { get; set; }
         public int Version { get; set; }
         public List<SimilarIncidentDto> SimilarIncidents { get; set; } = new();
-
+        public IncidentRequestDto IncidentRequest { get; set; } = new();
+        public IncidentDetailDto IncidentDetail { get; set; } = new();
+        public IncidentSecurityDetailDto SecurityDetail { get; set; } = new();
         // Step 1
         public string? SearchQuery { get; set; }
         public string? AccessCode { get; set; }

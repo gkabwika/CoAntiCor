@@ -106,12 +106,31 @@
 
     </div>
 
+    <!-- Navigation buttons -->
+    <div class="mt-3 d-flex justify-content-between">
+        <button class="btn btn-outline-secondary" disabled>
+            @Localizer["Wizard_Previous"]
+        </button>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-secondary" @onclick="() => OnSave.InvokeAsync()">
+                @Localizer["Wizard_SaveDraft"]
+            </button>
+
+            <button class="btn btn-primary" @onclick="() => OnNext.InvokeAsync()">
+                @Localizer["Wizard_Next"]
+            </button>
+        </div>
+    </div>
 </div>
 
 
 @code {
     [Parameter] public WizardDraftState Draft { get; set; } = default!;
     [Parameter] public EventCallback OnSave { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnPrevious { get; set; }
+
     [Parameter] public EventCallback OnAddPerson { get; set; }
     [Parameter] public EventCallback<Guid> OnRemovePerson { get; set; }
 

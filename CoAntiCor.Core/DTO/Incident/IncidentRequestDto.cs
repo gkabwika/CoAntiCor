@@ -31,6 +31,7 @@ namespace CoAntiCor.Core.DTO.Incident
         public List<AttachmentDto> Attachments { get; set; } = new();
         public List<HistoryDto> History { get; set; } = new();
         public List<ProcessingPhaseDto> Phases { get; set; } = new();
+        public string? ShortDescription { get; set; }
     }
 
 }
